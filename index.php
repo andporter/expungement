@@ -27,28 +27,19 @@
 
         <div class="container theme-showcase" role="main">
             <div class="well">
-                <form data-toggle="validator" role="form">
+                <form role="form" data-parsley-validate>
                     <ol>
-                        <div class="form-group">
-                            <div class="form-group">
-                                <h4><li>This is questions 1?</li></h4>
-                                <label class="radio-inline"><input type="radio" name="q1" required>Yes</label>
-                                <label class="radio-inline"><input type="radio" name="q1" required>No</label>
-                            </div>
-                            <div class="form-group">
-                                <h4><li><p>This is questions 2?</p></li></h4>
-                                <label class="radio-inline"><input type="radio" name="q2" required>Yes</label>
-                                <label class="radio-inline"><input type="radio" name="q2" required>No</label>
-                            </div>
-                            <div class="form-group">
-                                <h4><li><p>This is questions 3?</p></li></h4>
-                                <label class="radio-inline"><input type="radio" name="q3" required>Yes</label>
-                                <label class="radio-inline"><input type="radio" name="q3" required>No</label>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
+                        <h4><li><label for="question">This is question 1</label></li></h4>
+                        <p>
+                            <input type="radio" name="q1" id="q1y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Must select no!" /> Yes
+                            <input type="radio" name="q1" id="q1n "value="no" /> No
+                        </p>
+                        <h4><li><label for="question">This is question 2</label></li></h4>
+                        <p>
+                            <input type="radio" name="q2" id="q2y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Must select no!" /> Yes
+                            <input type="radio" name="q2" id="q2n" value="no" /> No
+                        </p>
+                        <input type="submit" class="btn btn-primary" />
                     </ol>
                 </form>
             </div>
@@ -56,7 +47,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="js/validator.min.js"></script>
-
+        <script src="js/parsley.min.js" type="text/javascript"></script>
     </body>
 </html>
