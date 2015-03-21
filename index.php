@@ -1,92 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Cottages of Hope - Expungement Form</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link href="css/my.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
+<?php
 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/index.php">Home</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" data-toggle="modal" data-target="#adminLoginModal"><span class="glyphicon glyphicon-log-in"></span> Admin Login</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+// checking for minimum PHP version
+if (version_compare(PHP_VERSION, '5.3.7', '<')) {
+    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
+} else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+    // if you are using PHP 5.3 or PHP 5.4 you have to include the password_api_compatibility_library.php
+    // (this library adds the PHP 5.5 password hashing functions to older versions of PHP)
+    require_once("libraries/password_compatibility_library.php");
+}
 
-        <div class="container theme-showcase" role="main">
-            <div class="well">
-                <form role="form" id="initial-form" data-parsley-validate>
-                    <ol>
-                        <h4><li><label for="question">This is question 1</label></li></h4>
-                        <p>
-                            <input type="radio" name="q1" id="q1y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Must select no!" /> Yes
-                            <input type="radio" name="q1" id="q1n" value="no" /> No
-                        </p>
-                        <h4><li><label for="question">This is question 2</label></li></h4>
-                        <p>
-                            <input type="radio" name="q2" id="q2y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Must select no!" /> Yes
-                            <input type="radio" name="q2" id="q2n" value="no" /> No
-                        </p>
-                        <input type="submit" class="btn btn-primary" />
-                    </ol>
-                </form>
-            </div>
-        </div>
+// include the configs / constants for the database connection
+require_once("config/db.php");
 
-        <div id="contactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content well">
-                    <div class="well">
-                        <p>Please fill out the form below to have a specialist contact you!</p>
-                    </div>
-                    <form role="form" id="contactForm" data-parsley-validate>
-                        <h4><label>First Name</label></h4>
-                        <p>
-                            <input type="text" name="firstName" id="firstName" required />
-                        </p>
-                        <h4><label>Last Name</label></h4>
-                        <p>
-                            <input type="text" name="lastName" id="lastName" required />
-                        </p>
-                        <input type="submit" class="btn btn-primary" />
-                    </form>
-                </div>
-            </div>
-        </div>
+// load the login class
+require_once("classes/Login.php");
 
-        <div id="adminLoginModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content well">
-                    <form role="form" id="adminLoginForm" data-parsley-validate>
-                        <h4><label>Username:</label></h4>
-                        <p>
-                            <input type="text" name="adminUsername" id="adminUsername" required />
-                        </p>
-                        <h4><label>Password:</label></h4>
-                        <p>
-                            <input type="password" name="adminPassword" id="adminPassword" required />
-                        </p>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+// create a login object. when this object is created, it will do all login/logout stuff automatically
+// so this single line handles the entire login process. in consequence, you can simply ...
+$login = new Login();
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="js/parsley.min.js" type="text/javascript"></script>
-        <script src="js/my.js" type="text/javascript"></script>
-    </body>
-</html>
+// ... ask if we are logged in here:
+if ($login->isUserLoggedIn() == true) {
+    // the user is logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are logged in" view.
+    include("views/logged_in.php");
+
+} else {
+    // the user is not logged in. you can do whatever you want here.
+    // for demonstration purposes, we simply show the "you are not logged in" view.
+    //include("views/not_logged_in.php");
+    include ("views/index_form.php");
+}
