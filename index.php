@@ -19,15 +19,19 @@ require_once("classes/Login.php");
 // so this single line handles the entire login process. in consequence, you can simply ...
 $login = new Login();
 
+require_once("header.php");
+
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     // the user is logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are logged in" view.
+    include ("menu_authed.php");
     include("views/logged_in.php");
 
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.
     //include("views/not_logged_in.php");
+    include ("menu_unauthed.php");
     include ("views/index_form.php");
 }
