@@ -14,7 +14,7 @@
                
            </ul>
            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#adminLogoutConfirmModal"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#adminLogoutConfirmModal"><span class="glyphicon glyphicon-user"></span> Logout, <?php echo $_SESSION['user_name']; ?></a></li>
            </ul>
       </div>
    </div>
