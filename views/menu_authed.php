@@ -1,24 +1,25 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-   <div class="container-fluid" id="navfluid">
-       <div class="navbar-header">
-           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
-               <span class="sr-only">Toggle navigation</span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
+<nav class="navbar navbar-fixed-top">
+    <div class="container-fluid" id="navfluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
-       </div>
-       <div class="collapse navbar-collapse" id="navigationbar">
-           <ul class="nav navbar-nav">
-               
-           </ul>
-           <ul class="nav navbar-nav navbar-right">
+            <a href="/index.php" class="pull-left"><img src="../images/logo1.jpg" alt="Cottages of Hope" height="70"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navigationbar">
+            <ul class="nav navbar-nav">
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#adminLogoutConfirmModal"><span class="glyphicon glyphicon-user"></span> Logout, <?php echo $_SESSION['user_name']; ?></a></li>
-           </ul>
-      </div>
-   </div>
+            </ul>
+        </div>
+    </div>
 </nav>
+<hr/>
 
 <div id="adminLogoutConfirmModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
