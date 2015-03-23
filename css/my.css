@@ -9,6 +9,10 @@ li a#logout:hover{
     font-weight: bold;
 }
 
+#fromdatepicker,#todatepicker {
+    background: white url(../images/calendar_icon.png) right no-repeat;
+    padding-right: 17px;
+}
 
 /*.navbar-toggle .icon-bar
 {
