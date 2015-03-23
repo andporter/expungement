@@ -1,9 +1,27 @@
 body 
 { 
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
-/*.modal.in 
+.navbar-toggle .icon-bar
 {
-   display:block;
-}*/
+    background: black;
+}
+
+ul.nav.navbar-nav.navbar-right
+{
+     background: #eee; 
+}
+
+.navbar-inner 
+{
+    min-height: 0px;
+}
+
+.navbar-brand,
+.navbar-nav li a 
+{
+    line-height: 60px;
+    height: 60px;
+    padding-top: 0;
+}

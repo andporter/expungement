@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/index.php" class="pull-left"><img src="../images/logo1.jpg" alt="Cottages of Hope" height="70"></a>
+            <a href="/index.php" class="pull-left"><img src="../images/logo1.jpg" alt="Cottages of Hope" height="50"></a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
