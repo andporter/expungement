@@ -10,11 +10,14 @@
             <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
-            <ul class="nav navbar-nav">
-
-            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#adminLogoutConfirmModal"><span class="glyphicon glyphicon-user"></span> Logout, <?php echo $_SESSION['user_name']; ?></a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <?php echo $_SESSION['user_name']; ?> <span class="caret"></span>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Edit Account</a></li>
+                        <li><a href="#" id="logout" data-toggle="modal" data-target="#adminLogoutConfirmModal">Logout</a></li> 
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

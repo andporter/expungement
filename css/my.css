@@ -3,6 +3,13 @@ body
     padding-top: 60px;
 }
 
+li a#logout:hover{
+    background-color: rgb(217, 83, 79);
+    color: white;
+    font-weight: bold;
+}
+
+
 /*.navbar-toggle .icon-bar
 {
     background: black;

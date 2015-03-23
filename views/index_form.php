@@ -7,7 +7,7 @@ if (isset($login))
         foreach ($login->errors as $error)
         {
             echo "<div class=\"container theme-showcase\">";
-            echo "<div class=\"alert alert-danger\" role=\"alert\">" . $error;
+            echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
             echo "</div>";
             echo "</div>";
