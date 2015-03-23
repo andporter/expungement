@@ -67,10 +67,10 @@ if (isset($login))
                             <p>Email: Email Paul at <a href="mailto:pmorgan@cottagesofhope.org?Subject=Expungement">pmorgan@cottagesofhope.org</a> Please use “Expungement” as the subject</p>
                         </div>
                         <form role="form" id="contactForm" data-parsley-validate>
-                            <p><input type="text" name="firstName" id="firstName" placeholder="* First Name" required data-parsley-required-message="Please enter your First Name"/></p>
-                            <p><input type="text" name="lastName" id="lastName" placeholder="* Last Name" required data-parsley-required-message="Please enter your Last Name"/></p>
-                            <p><input type="email" name="email" id="email" placeholder="* Email" data-parsley-group="email"/></p>
-                            <p><input type="text" name="phone" id="phone" placeholder="* Phone" data-parsley-group="phone" data-parsley-length="[7, 10]"/></p>
+                            <p><input type="text" name="firstName" id="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name"/></p>
+                            <p><input type="text" name="lastName" id="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name"/></p>
+                            <p><input type="email" name="email" id="email" placeholder="Email" data-parsley-group="email"/></p>
+                            <p><input type="text" name="phone" id="phone" placeholder="Phone" data-parsley-group="phone" data-parsley-length="[7, 10]"/></p>
                             <div class="invalid-form-error-message"></div>
                             <input type="submit" value="Submit" class="btn btn-primary" />
                         </form>
