@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid" id="navfluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/index.php" class="pull-left"><img src="../images/logo1.jpg" alt="Cottages of Hope" height="50"></a>
+            <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
@@ -19,7 +19,6 @@
         </div>
     </div>
 </nav>
-<hr/>
 
 <div id="adminLogoutConfirmModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">

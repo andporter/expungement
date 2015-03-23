@@ -1,9 +1,9 @@
 body 
 { 
-    padding-top: 40px;
+    padding-top: 60px;
 }
 
-.navbar-toggle .icon-bar
+/*.navbar-toggle .icon-bar
 {
     background: black;
 }
@@ -24,4 +24,4 @@ ul.nav.navbar-nav.navbar-right
     line-height: 60px;
     height: 60px;
     padding-top: 0;
-}
+}*/
