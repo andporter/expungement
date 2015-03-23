@@ -10,7 +10,7 @@ date_default_timezone_set('America/Denver');
             <input type="text" class="input-small" placeholder="mm/dd/yyyy" value="<?php echo date('m/01/Y'); ?>" id="fromdatepicker"/>
             <span class="add-on">to</span>
             <input type="text" class="input-small" placeholder="mm/dd/yyyy" value="<?php echo date('m/d/Y'); ?>" id="todatepicker"/>
-            <input type="submit" name="runreport" value="Run Report" class="btn btn-success btn-ok">
+            <input type="submit" name="runreport" value="Run Report" class="btn btn-sm btn-success btn-ok">
         </div>
     </div>
 </div>
