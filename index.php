@@ -22,16 +22,25 @@ $login = new Login();
 require("views/header.php");
 
 // ... ask if we are logged in here:
-if ($login->isUserLoggedIn() == true) {
-    // the user is logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are logged in" view.
+if ($login->isUserLoggedIn() == true)  //the user is logged in.
+{
     require("views/menu_authed.php");
-    require("views/logged_in.php");
-
-} else {
-    // the user is not logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are not logged in" view.
-    //include("views/not_logged_in.php");
+    
+    if (isset($_GET["inbox"])) 
+    {
+        require("views/logged_in_inbox.php");
+    }
+    else if (isset($_GET["reports"])) 
+    {
+        require("views/logged_in_reports.php");
+    }
+    else
+    {
+        require("views/logged_in_inbox.php");
+    }
+} 
+else //the user is not logged in.
+{
     require("views/menu_unauthed.php");
     require("views/index_form.php");
 }

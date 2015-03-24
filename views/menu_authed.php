@@ -10,6 +10,14 @@
             <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="index.php?inbox">Inbox</a>
+                </li>
+                <li>
+                    <a href="index.php?reports">Reports</a>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <?php echo $_SESSION['user_name']; ?> <span class="caret"></span>

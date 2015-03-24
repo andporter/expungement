@@ -118,11 +118,6 @@ if (isset($login))
     </div>
 
     <script type="text/javascript">
-        $('#contactModal').on('shown.bs.modal', function () {
-            $('#firstName').focus();
-        });
-
-
         $(function () {
             $('#initial-form').submit(function (e)
             {
