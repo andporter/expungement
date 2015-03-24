@@ -1,3 +1,17 @@
+<?php 
+
+function echoActiveClassIfRequestMatches($requestUri)
+{
+    $current_file_name = $_SERVER['REQUEST_URI'];
+
+    if ($current_file_name == $requestUri)
+    {
+        echo 'class="active"';
+    }  
+}
+
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid" id="navfluid">
         <div class="navbar-header">
@@ -11,16 +25,16 @@
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="index.php?inbox">Inbox</a>
+                <li <?=echoActiveClassIfRequestMatches("/index.php")?>>
+                    <a href="index.php">Inbox</a>
                 </li>
-                <li>
+                <li <?=echoActiveClassIfRequestMatches("/index.php?reports")?>>
                     <a href="index.php?reports">Reports</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <?php echo $_SESSION['user_name']; ?> <span class="caret"></span>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <?php echo ucwords($_SESSION['user_name']); ?> <span class="caret"></span>
                     <ul class="dropdown-menu">
                         <li><a href="#">Edit Account</a></li>
                         <li><a href="#" id="logout" data-toggle="modal" data-target="#adminLogoutConfirmModal">Logout</a></li> 
