@@ -66,13 +66,45 @@ if (isset($login))
                             <p>Phone: Call Cottages of Hope (801-393-4011) and ask for Paul the Expungement Specialist.</p>
                             <p>Email: Email Paul at <a href="mailto:pmorgan@cottagesofhope.org?Subject=Expungement">pmorgan@cottagesofhope.org</a> Please use “Expungement” as the subject</p>
                         </div>
-                        <form role="form" id="contactForm" data-parsley-validate>
-                            <p><input type="text" name="firstName" id="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name"/></p>
-                            <p><input type="text" name="lastName" id="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name"/></p>
-                            <p><input type="email" name="email" id="email" placeholder="Email" data-parsley-group="email"/></p>
-                            <p><input type="text" name="phone" id="phone" placeholder="Phone" data-parsley-group="phone" data-parsley-length="[7, 10]"/></p>
+                        <form class="form-horizontal" id="contactForm" data-parsley-validate>
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-2 control-label">First Name:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">Email:</label>
+                                <div class="col-xs-4">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" data-parsley-group="email"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-sm-2 control-label">Phone:</label>
+                                <div class="col-xs-4" id="phone">
+                                    <div class="col-xs-4">
+                                        <input type="number" class="form-control" id="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <input type="number" class="form-control" id="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <input type="number" class="form-control" id="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="invalid-form-error-message"></div>
-                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -112,8 +144,8 @@ if (isset($login))
 
                 // and display a gentle message
                 $('.invalid-form-error-message')
-                        .html("&#09;&#149;You must provide either your email address or phone number.")
-                        .addClass("filled");
+                        .html("You must provide either your email address or phone number.")
+                        .addClass("parsley-required");
                 return;
             });
         });
