@@ -3,13 +3,13 @@
 date_default_timezone_set('America/Denver');
 ?>
 
-<div class="container theme-showcase" role="main">
+<div class="container-fluid" role="main">
     <div class="well">
-        <div class="input-daterange">
+        <div>
             <h4><p>Report Date Range:</p></h4>
-            <input type="text" class="input-small" placeholder="mm/dd/yyyy" value="<?php echo date('m/01/Y'); ?>" id="fromdatepicker"/>
+            <input type="text" placeholder="mm/dd/yyyy" value="<?php echo date('m/01/Y'); ?>" id="fromdatepicker"/>
             <span class="add-on">to</span>
-            <input type="text" class="input-small" placeholder="mm/dd/yyyy" value="<?php echo date('m/d/Y'); ?>" id="todatepicker"/>
+            <input type="text" placeholder="mm/dd/yyyy" value="<?php echo date('m/d/Y'); ?>" id="todatepicker"/>
             <input type="submit" name="runreport" value="Run Report" class="btn btn-sm btn-success btn-ok">
         </div>
     </div>

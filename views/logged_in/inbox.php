@@ -17,6 +17,8 @@
            data-click-to-select="true"
            data-search="true"
            data-show-refresh="true"
+           data-show-export="true"
+           data-export-types="['csv', 'txt', 'excel']"
            data-toolbar="#toolbar"
            data-classes="table table-hover table-condensed"
            data-striped="true"

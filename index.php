@@ -27,7 +27,7 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
     {
         require("views/logged_in/reports.php");
     }
-    else
+    else //inbox is default view
     {
         require("views/logged_in/inbox.php");
     }
