@@ -24,7 +24,6 @@ date_default_timezone_set('America/Denver');
                     dateFormat: 'mm/dd/yy'
                 });
             }
-
     );
 
     $(document).ready(
@@ -35,6 +34,5 @@ date_default_timezone_set('America/Denver');
                     dateFormat: 'mm/dd/yy'
                 });
             }
-
     );
 </script>
