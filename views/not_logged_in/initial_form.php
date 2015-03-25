@@ -28,18 +28,35 @@ if (isset($login))
 ?>
 
 <body>
-    
-    <div>
-        
+    <div id="divTanf" class="container theme-showcase">
+        <div class="panel panal-content panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">TANF Form</h3>
+            </div>
+            <div class="panel-body">
+                <!--<form role="form" id="formTanf">-->
+                    <ol>
+                        <h4><li><label>This is question 1</label></li></h4>
+                        <input type="radio" value="yes" /> Yes
+                        <input type="radio" value="no" /> No
+                        <h4><li><label>This is question 2</label></li></h4>
+                        <input type="radio" value="yes" /> Yes
+                        <input type="radio" value="no" /> No     
+                    </ol>
+<!--                    <input type="submit" value="Next" class="btn btn-primary" />-->
+                    <button id="buttonTanfNext" class="btn btn-primary">Next</button>
+                <!--</form>-->
+            </div>
+        </div>
     </div>
-    
-    <div class="container theme-showcase" role="main">
+
+    <div id="divInital" class="container theme-showcase">
         <div class="panel panal-content panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Initial Expungement Questionnaire</h3>
             </div>
             <div class="panel-body">
-                <form role="form" id="initial-form" data-parsley-validate>
+                <form role="form" id="formInitial" data-parsley-validate>
                     <ol>
                         <h4><li><label for="q1">This is question 1</label></li></h4>
                         <p><input type="radio" name="q1" id="q1y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #1" /> Yes
@@ -49,14 +66,14 @@ if (isset($login))
                         <p><input type="radio" name="q2" id="q2y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #2" /> Yes
                             <input type="radio" name="q2" id="q2n" value="no" /> No
                         </p>
-                        <input type="submit" value="Submit" class="btn btn-primary" />
                     </ol>
+                    <input type="submit" value="Submit" class="btn btn-primary" />
                 </form>
             </div>
         </div>
     </div>
 
-    <div id="contactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="divContactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="panel-content panel-success">
@@ -118,17 +135,6 @@ if (isset($login))
     </div>
 
     <script type="text/javascript">
-        $(function () {
-            $('#initial-form').submit(function (e)
-            {
-                e.preventDefault();
-                if ($(this).parsley().isValid())
-                {
-                    console.log("Validation Passed!");
-                    $('#contactModal').modal('show');
-                }
-            });
-        });
 
         $(document).ready(function () {
             $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) {
@@ -147,6 +153,23 @@ if (isset($login))
                         .html("You must provide either your email address or phone number.")
                         .addClass("parsley-required");
                 return;
+            });
+
+            $('#buttonTanfNext').click(function ()
+            {
+                console.log("TANF Passed!");
+                $("#divTanf").hide();
+                $("#divInital").show();
+            });
+
+            $('#formInitial').submit(function (e)
+            {
+                e.preventDefault();
+                if ($(this).parsley().isValid())
+                {
+                    console.log("Inital Form Validation Passed!");
+                    $('#divContactModal').modal('show');
+                }
             });
         });
     </script>

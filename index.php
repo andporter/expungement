@@ -17,7 +17,8 @@ require_once("classes/Login.php");
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 $login = new Login();
 
-require("views/globalCSSandJS.php");
+require("views/globalCSS.php");
+require("views/globalJS.php");
 
 if ($login->isUserLoggedIn() == true)  //the user is logged in.
 {

@@ -25,12 +25,8 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
-                <li <?=echoActiveClassIfRequestMatches("/index.php?inbox","/index.php")?>>
-                    <a href="index.php?inbox">Inbox</a>
-                </li>
-                <li <?=echoActiveClassIfRequestMatches("/index.php?reports","/index.php?reports")?>>
-                    <a href="index.php?reports">Reports</a>
-                </li>
+                <li <?php echoActiveClassIfRequestMatches("/index.php?inbox","/index.php") ?>><a href="index.php?inbox">Inbox</a></li>
+                <li <?php echoActiveClassIfRequestMatches("/index.php?reports","/index.php?reports") ?>><a href="index.php?reports">Reports</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

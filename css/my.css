@@ -14,9 +14,14 @@ body
     padding-right: 17px;
 }
 
-div.col-xs-4{
+div.col-xs-4 {
     padding: 0;
 }
+
+#divInital {
+    display:none;
+}
+
 
 
 /*.navbar-toggle .icon-bar
