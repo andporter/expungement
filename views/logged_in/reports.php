@@ -23,11 +23,7 @@ date_default_timezone_set('America/Denver');
                     changeYear: true, //this option for allowing user to select from year range
                     dateFormat: 'mm/dd/yy'
                 });
-            }
-    );
 
-    $(document).ready(
-            function () {
                 $("#todatepicker").datepicker({
                     changeMonth: true, //this option for allowing user to select month
                     changeYear: true, //this option for allowing user to select from year range

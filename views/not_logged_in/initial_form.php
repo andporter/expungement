@@ -31,21 +31,23 @@ if (isset($login))
     <div id="divTanf" class="container theme-showcase">
         <div class="panel panal-content panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">TANF Form</h3>
+                <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
             </div>
             <div class="panel-body">
-                <!--<form role="form" id="formTanf">-->
+                <div class="alert alert-warning" role="alert">
+                    <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
+                </div>
+                <form id="formTanf">
                     <ol>
-                        <h4><li><label>This is question 1</label></li></h4>
-                        <input type="radio" value="yes" /> Yes
-                        <input type="radio" value="no" /> No
-                        <h4><li><label>This is question 2</label></li></h4>
-                        <input type="radio" value="yes" /> Yes
-                        <input type="radio" value="no" /> No     
+                        <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
+                        <p><input type="radio" value="yes" required/> Yes
+                            <input type="radio" value="no" /> No </p>
+                        <h4><li>Are you receiving any assistance from a Department of Workforce program, such as Medicaid, CHIP, Food Stamps, Refugee Cash Assistance, Family Employment Program, Temporary Assistance for Needy Families, or the WIC program?</li></h4>
+                        <p><input type="radio" value="yes" required/> Yes
+                            <input type="radio" value="no" /> No</p>
                     </ol>
-<!--                    <input type="submit" value="Next" class="btn btn-primary" />-->
-                    <button id="buttonTanfNext" class="btn btn-primary">Next</button>
-                <!--</form>-->
+                </form>
+                <button id="buttonTanfNext" class="btn btn-primary pull-right">Next</button>
             </div>
         </div>
     </div>
@@ -56,18 +58,18 @@ if (isset($login))
                 <h3 class="panel-title">Initial Expungement Questionnaire</h3>
             </div>
             <div class="panel-body">
-                <form role="form" id="formInitial" data-parsley-validate>
+                <form id="formInitial" data-parsley-validate>
                     <ol>
-                        <h4><li><label for="q1">This is question 1</label></li></h4>
+                        <h4><li>Do you have any criminal charges pending in court?</li></h4>
                         <p><input type="radio" name="q1" id="q1y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #1" /> Yes
                             <input type="radio" name="q1" id="q1n" value="no" /> No
                         </p>
-                        <h4><li><label for="q2">This is question 2</label></li></h4>
+                        <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?  </li></h4>
                         <p><input type="radio" name="q2" id="q2y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #2" /> Yes
                             <input type="radio" name="q2" id="q2n" value="no" /> No
                         </p>
                     </ol>
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <input type="submit" value="Submit" class="btn btn-primary pull-right" />
                 </form>
             </div>
         </div>
@@ -124,7 +126,7 @@ if (isset($login))
                             <div class="invalid-form-error-message"></div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                    <input type="submit" value="Submit" class="btn btn-primary pull-right" />
                                 </div>
                             </div>
                         </form>
@@ -135,7 +137,6 @@ if (isset($login))
     </div>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
             $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) {
 
@@ -173,5 +174,4 @@ if (isset($login))
             });
         });
     </script>
-
 </body>

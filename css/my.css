@@ -1,9 +1,8 @@
-body 
-{ 
+body { 
     padding-top: 60px;
 }
 
-#logout:hover{
+#logout:hover {
     background-color: rgb(201, 48, 44);
     color: white;
     font-weight: bold;
@@ -21,28 +20,3 @@ div.col-xs-4 {
 #divInital {
     display:none;
 }
-
-
-
-/*.navbar-toggle .icon-bar
-{
-    background: black;
-}
-
-ul.nav.navbar-nav.navbar-right
-{
-     background: #eee; 
-}
-
-.navbar-inner 
-{
-    min-height: 0px;
-}
-
-.navbar-brand,
-.navbar-nav li a 
-{
-    line-height: 60px;
-    height: 60px;
-    padding-top: 0;
-}*/
