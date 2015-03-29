@@ -4,11 +4,10 @@
 
 <div class="container-fluid" role="main">
     <div id="toolbar" class="btn-group">
-        <a a href="#" data-toggle="modal" rel="tooltip" data-target="#IncrementCountConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
-        <a a href="#" data-toggle="modal" rel="tooltip" data-target="#DeleteContactsConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+        <a href="#" data-toggle="modal" rel="tooltip" data-target="#IncrementCountConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
+        <a ahref="#" data-toggle="modal" rel="tooltip" data-target="#DeleteContactsConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
     </div>
-    <table data-toggle="table"
-           data-url="https://api.github.com/users/wenzhixin/repos"
+    <table id="inboxTable"
            data-query-params="queryParams"
            data-click-to-select="true"
            data-search="true"
@@ -81,4 +80,20 @@
     $(function () {
         $('[rel="tooltip"]').tooltip()
     })
+
+    function jsonContactData() {
+        var contacts = [
+            {"date": "2015-03-29 04:48:59", "firstName": "John", "lastName": "Doe", "phone": "8015551234", "email": "test@example.com", "contactAttempts": "0"},
+            {"date": "2015-03-27 04:48:59", "firstName": "Todd", "lastName": "Packer", "phone": "8015556789", "email": "test3@example.com", "contactAttempts": "3"},
+            {"date": "2015-03-26 04:48:59", "firstName": "Sally", "lastName": "Smith", "phone": "8015551212", "email": "test2@example.com", "contactAttempts": "2"}
+        ];
+
+        return contacts;
+    }
+
+    $(function () {
+        $('#inboxTable').bootstrapTable({
+            data: jsonContactData()
+        });
+    });
 </script>

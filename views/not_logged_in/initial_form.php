@@ -158,9 +158,8 @@ if (isset($login))
 
             $('#buttonTanfNext').click(function ()
             {
-                console.log("TANF Passed!");
                 $("#divTanf").hide();
-                $("#divInital").show();
+                $("#divInital").fadeIn();
             });
 
             $('#formInitial').submit(function (e)
