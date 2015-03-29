@@ -4,12 +4,8 @@
 
 <div class="container-fluid" role="main">
     <div id="toolbar" class="btn-group">
-        <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-plus"></i>
-        </button>
-        <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-trash"></i>
-        </button>
+        <a a href="#" data-toggle="modal" rel="tooltip" data-target="#IncrementCountConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
+        <a a href="#" data-toggle="modal" rel="tooltip" data-target="#DeleteContactsConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
     </div>
     <table data-toggle="table"
            data-url="https://api.github.com/users/wenzhixin/repos"
@@ -32,10 +28,44 @@
                 <th class="col-xs-2" data-field="lastName" data-sortable="true">Last Name</th>
                 <th class="col-xs-2" data-field="phone" data-sortable="true">Phone</th>
                 <th class="col-xs-3" data-field="email" data-sortable="true">Email</th>
-                <th class="col-xs-1" data-field="contactAttempts" data-sortable="true">Attempts</th>
+                <th class="col-xs-1" data-field="contactAttempts" data-sortable="true">Contact Attempts</th>
             </tr>
         </thead>
     </table>
+</div>
+
+<div id="DeleteContactsConfirmModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content well">
+            <div class="modal-header">
+                <h4><span class="glyphicon glyphicon-trash"></span> Confirm Delete</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the selected contacts?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="IncrementCountConfirmModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content well">
+            <div class="modal-header">
+                <h4><span class="glyphicon glyphicon glyphicon-plus"></span> Confirm Increment</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to increment the selected contact attempt?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Increment</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -48,4 +78,7 @@
             page: 1
         };
     }
+    $(function () {
+        $('[rel="tooltip"]').tooltip()
+    })
 </script>
