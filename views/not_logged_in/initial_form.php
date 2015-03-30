@@ -6,7 +6,7 @@ if (isset($login))
     {
         foreach ($login->errors as $error)
         {
-            echo "<div class=\"container theme-showcase\">";
+            echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
             echo "</div>";
@@ -17,7 +17,7 @@ if (isset($login))
     {
         foreach ($login->messages as $message)
         {
-            echo "<div class=\"container theme-showcase\">";
+            echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
             echo "</div>";
@@ -29,14 +29,14 @@ if (isset($login))
 
 <body>
     <div id="divTanf" class="container theme-showcase">
+        <div class="alert alert-warning" role="alert">
+            <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
+        </div>
         <div class="panel panal-content panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
             </div>
             <div class="panel-body">
-                <div class="alert alert-warning" role="alert">
-                    <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
-                </div>
                 <form id="formTanf">
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
@@ -47,6 +47,7 @@ if (isset($login))
                             <input type="radio" value="no" /> No</p>
                     </ol>
                 </form>
+                <hr/>
                 <button id="buttonTanfNext" class="btn btn-primary pull-right">Next</button>
             </div>
         </div>
@@ -69,8 +70,10 @@ if (isset($login))
                             <input type="radio" name="q2" id="q2n" value="no" /> No
                         </p>
                     </ol>
+                    <hr/>
                     <input type="submit" value="Submit" class="btn btn-primary pull-right" />
                 </form>
+                <button id="buttonInitialBack" class="btn btn-primary">Back</button>
             </div>
         </div>
     </div>
@@ -90,7 +93,7 @@ if (isset($login))
                             <p>Phone: Call Cottages of Hope (801-393-4011) and ask for Paul the Expungement Specialist.</p>
                             <p>Email: Email Paul at <a href="mailto:pmorgan@cottagesofhope.org?Subject=Expungement">pmorgan@cottagesofhope.org</a> Please use “Expungement” as the subject</p>
                         </div>
-                        <form class="form-horizontal" id="contactForm" data-parsley-validate>
+                        <form method="post" class="form-horizontal" id="contactForm" data-parsley-validate>
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
@@ -161,6 +164,12 @@ if (isset($login))
                 $("#divTanf").hide();
                 $("#divInital").fadeIn();
             });
+            
+            $('#buttonInitialBack').click(function ()
+            {
+                $("#divInital").hide();
+                $("#divTanf").fadeIn();
+            });
 
             $('#formInitial').submit(function (e)
             {
@@ -171,6 +180,16 @@ if (isset($login))
                     $('#divContactModal').modal('show');
                 }
             });
+
+            window.setTimeout(function () {
+                $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+                
+                $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 5000);
         });
     </script>
 </body>

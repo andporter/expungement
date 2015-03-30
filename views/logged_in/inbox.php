@@ -3,18 +3,17 @@
 ?>
 
 <div class="container-fluid" role="main">
-    <div id="toolbar" class="btn-group">
-        <a href="#" data-toggle="modal" rel="tooltip" data-target="#IncrementCountConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
-        <a ahref="#" data-toggle="modal" rel="tooltip" data-target="#DeleteContactsConfirmModal" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+    <div id="inboxToolbar" class="btn-group">
+        <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
     </div>
     <table id="inboxTable"
-           data-query-params="queryParams"
            data-click-to-select="true"
            data-search="true"
            data-show-refresh="true"
            data-show-export="true"
            data-export-types="['csv', 'txt', 'excel']"
-           data-toolbar="#toolbar"
+           data-toolbar="#inboxToolbar"
            data-classes="table table-hover table-condensed"
            data-striped="true"
            data-sort-name="date"
@@ -43,8 +42,8 @@
                 <p>Are you sure you want to delete the selected contacts?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Delete</a>
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <a href="#" class="btn btn-danger btn-ok">Yes, Delete</a>
             </div>
         </div>
     </div>
@@ -60,32 +59,23 @@
                 <p>Are you sure you want to increment the selected contact attempt?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Increment</a>
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <a href="#" class="btn btn-danger btn-ok">Yes, Increment</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function queryParams() {
-        return {
-            type: 'owner',
-            sort: 'updated',
-            direction: 'desc',
-            per_page: 100,
-            page: 1
-        };
-    }
-    $(function () {
-        $('[rel="tooltip"]').tooltip()
-    })
+//    $(function () {
+//        $('[rel="tooltip"]').tooltip()
+//    })
 
     function jsonContactData() {
         var contacts = [
-            {"date": "2015-03-29 04:48:59", "firstName": "John", "lastName": "Doe", "phone": "8015551234", "email": "test@example.com", "contactAttempts": "0"},
-            {"date": "2015-03-27 04:48:59", "firstName": "Todd", "lastName": "Packer", "phone": "8015556789", "email": "test3@example.com", "contactAttempts": "3"},
-            {"date": "2015-03-26 04:48:59", "firstName": "Sally", "lastName": "Smith", "phone": "8015551212", "email": "test2@example.com", "contactAttempts": "2"}
+            {"date": "2015-03-29 04:48:59", "firstName": "John", "lastName": "Doe", "phone": "801-555-1234", "email": "test@example.com", "contactAttempts": "0"},
+            {"date": "2015-03-27 04:48:59", "firstName": "Todd", "lastName": "Packer", "phone": "801-555-6789", "email": "test3@example.com", "contactAttempts": "3"},
+            {"date": "2015-03-26 04:48:59", "firstName": "Sally", "lastName": "Smith", "phone": "801-555-1212", "email": "test2@example.com", "contactAttempts": "2"}
         ];
 
         return contacts;
