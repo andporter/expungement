@@ -91,6 +91,18 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="newPassword" class="col-sm-2 control-label">New Password:</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" id="newPassword" placeholder="" required data-parsley-required-message="Please enter the new password"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="verifyNewPassword" class="col-sm-2 control-label">Verify:</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" id="verifyNewPassword" placeholder="" required data-parsley-required-message="Please verify the new password"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" value="Save" class="btn btn-primary pull-right" />
                             </div>
