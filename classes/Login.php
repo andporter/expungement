@@ -106,6 +106,8 @@ class Login
     {
         // delete the session of the user
         $_SESSION = array();
+        // remove all session variables
+        session_unset(); 
         session_destroy();
         // return a little feeedback message
         $this->messages[] = "You have been logged out.";
