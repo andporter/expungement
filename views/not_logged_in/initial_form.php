@@ -192,40 +192,23 @@ if (isset($login)) {
 
         function sendDataToDatabase()
         {
-//            var rated = {"key": "key", "value": "value"};
-//
-//            $.ajax({
-//                type: "POST",
-//                data: {"rated": rated},
-//                url: "ajaxSubmit.php",
-//                success: function (data) {
-//                    alert(data);
-//                }
-//            });
-
             var tanfq1 = $('input[name=tanfq1]:checked', '#formTanf').val();
-            console.log(tanfq1);
             var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
-            console.log(tanfq2);
             var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
-            console.log(initialq1);
             var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
-            console.log(initialq2);
-
 
             var urlMethod = "ajaxSubmit.php";
             var jsonData = '{"tanfq1" : ' + tanfq1 +
-                    ',"tanfq2" : ' + tanfq2 +
-                    ',"initialq1" : ' + initialq1 +
-                    ',"initialq2" : ' + initialq2 +
-                    '}';
+                            ',"tanfq2" : ' + tanfq2 +
+                            ',"initialq1" : ' + initialq1 +
+                            ',"initialq2" : ' + initialq2 +
+                            '}';
             SendAjax(urlMethod, jsonData, nullFunction);
         }
 
         function nullFunction() {
         }
 
-        //Ajax
         function SendAjax(urlMethod, jsonData, returnFunction) {
             $.ajax({
                 type: "POST",
