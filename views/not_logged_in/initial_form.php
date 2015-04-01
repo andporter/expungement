@@ -40,11 +40,15 @@ if (isset($login))
                 <form id="formTanf">
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
-                        <p><input type="radio" value="yes" required/> Yes
-                            <input type="radio" value="no" /> No </p>
+                        <p>
+                            <input type="radio" name="tanfq1" value="1" required/> Yes
+                            <input type="radio" name="tanfq1" value="0" required/> No 
+                        </p>
                         <h4><li>Are you receiving any assistance from a Department of Workforce program, such as Medicaid, CHIP, Food Stamps, Refugee Cash Assistance, Family Employment Program, Temporary Assistance for Needy Families, or the WIC program?</li></h4>
-                        <p><input type="radio" value="yes" required/> Yes
-                            <input type="radio" value="no" /> No</p>
+                        <p>
+                            <input type="radio" name="tanfq2" value="1" required/> Yes
+                            <input type="radio" name="tanfq2" value="0" required/> No
+                        </p>
                     </ol>
                 </form>
                 <hr/>
@@ -59,15 +63,17 @@ if (isset($login))
                 <h3 class="panel-title">Initial Expungement Questionnaire</h3>
             </div>
             <div class="panel-body">
-                <form id="formInitial" data-parsley-validate>
+                <form id="formInitial">
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
-                        <p><input type="radio" name="q1" id="q1y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #1" /> Yes
-                            <input type="radio" name="q1" id="q1n" value="no" /> No
+                        <p>
+                            <input type="radio" name="initialq1" value="1" required /> Yes
+                            <input type="radio" name="initialq1" value="0" required /> No
                         </p>
                         <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?  </li></h4>
-                        <p><input type="radio" name="q2" id="q2y" value="yes" required data-parsley-check="[2, 2]" data-parsley-error-message="Here is why you must select no for #2" /> Yes
-                            <input type="radio" name="q2" id="q2n" value="no" /> No
+                        <p>
+                            <input type="radio" name="initialq2" value="1" required /> Yes
+                            <input type="radio" name="initialq2" value="0" required /> No
                         </p>
                     </ol>
                     <hr/>
@@ -164,7 +170,7 @@ if (isset($login))
                 $("#divTanf").hide();
                 $("#divInital").fadeIn();
             });
-            
+
             $('#buttonInitialBack').click(function ()
             {
                 $("#divInital").hide();
@@ -174,22 +180,62 @@ if (isset($login))
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
-                if ($(this).parsley().isValid())
-                {
-                    console.log("Inital Form Validation Passed!");
-                    $('#divContactModal').modal('show');
-                }
+                sendDataToDatabase();
+                $('#divContactModal').modal('show');
             });
 
             window.setTimeout(function () {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
-                
+
                 $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
             }, 5000);
         });
+
+        function sendDataToDatabase()
+        {
+            var tanfq1 = $('input[name=tanfq1]:checked', '#formTanf').val();
+            console.log(tanfq1);
+            var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
+            console.log(tanfq2);
+            var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
+            console.log(initialq1);
+            var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
+            console.log(initialq2);
+
+
+            var urlMethod = "ajaxSubmit.php";
+            var jsonData = '{tanfq1: ' + tanfq1 + 
+                            ',tanfq2: ' + tanfq2 + 
+                            ',initialq1: ' + initialq1 + 
+                            ',initialq2: ' + initialq2 +
+                            '}';
+            SendAjax(urlMethod, jsonData, nullFunction);
+        }
+
+        function nullFunction() {
+        }
+
+        //Ajax
+        function SendAjax(urlMethod, jsonData, returnFunction) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: urlMethod,
+                data: jsonData,
+                success: function (msg) {
+                    if (msg !== null) {
+                        returnFunction(msg);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
     </script>
 </body>
