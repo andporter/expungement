@@ -19,7 +19,7 @@ if (isset($_POST["data"])) {
         $initialq1 = $jsonData['initialq1'];
         $initialq2 = $jsonData['initialq2'];
 
-        require_once("config/db.php");
+        require("config/db.php");
         $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
         if ($db_connection->set_charset("utf8")) {

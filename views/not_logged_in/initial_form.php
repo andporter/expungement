@@ -20,6 +20,16 @@ if (isset($login)) {
         }
     }
 }
+
+$db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
+$result = $db_connection->query($sql); 
+$data = mysqli_fetch_assoc( $result );
+
+$COH_FirstName = $data['firstname'];
+$COH_LastName = $data['lastname'];
+$COH_Email = $data['email'];
+$COH_Phone = $data['phone'];
 ?>
 
 <body>
@@ -91,8 +101,8 @@ if (isset($login)) {
                         <div class="well">
                             <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
                             <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
-                            <p>Phone: Call Cottages of Hope (801-393-4011) and ask for Paul the Expungement Specialist.</p>
-                            <p>Email: Email Paul at <a href="mailto:pmorgan@cottagesofhope.org?Subject=Expungement">pmorgan@cottagesofhope.org</a> Please use “Expungement” as the subject</p>
+                            <p>Phone: Call Cottages of Hope (<?php echo $COH_Phone; ?>) and ask for <?php echo $COH_FirstName; ?> the Expungement Specialist.</p>
+                            <p>Email: Email <?php echo $COH_FirstName; ?> at <a href="mailto:<?php echo $COH_Email; ?>?Subject=Expungement"><?php echo $COH_Email; ?></a> Please use “Expungement” as the subject</p>
                         </div>
                         <form method="post" class="form-horizontal" id="contactForm" data-parsley-validate>
                             <div class="form-group">
@@ -199,10 +209,10 @@ if (isset($login)) {
 
             var urlMethod = "InitialFormAjaxSubmit.php";
             var jsonData = '{"tanfq1" : ' + tanfq1 +
-                            ',"tanfq2" : ' + tanfq2 +
-                            ',"initialq1" : ' + initialq1 +
-                            ',"initialq2" : ' + initialq2 +
-                            '}';
+                    ',"tanfq2" : ' + tanfq2 +
+                    ',"initialq1" : ' + initialq1 +
+                    ',"initialq2" : ' + initialq2 +
+                    '}';
             SendAjax(urlMethod, jsonData, nullFunction);
         }
 

@@ -28,10 +28,10 @@ DROP TABLE IF EXISTS CoHContact;
 CREATE TABLE CoHContact (
     id int(11) NOT NULL AUTO_INCREMENT,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    firstname varchar(30) NOT NULL,
-    lastname varchar(30) NOT NULL,
+    firstname varchar(50) NOT NULL,
+    lastname varchar(50) NOT NULL,
     email varchar(100) NOT NULL,
-    phone varchar(10) NOT NULL,
+    phone varchar(20) NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
