@@ -2,6 +2,7 @@ CREATE DATABASE IF NOT EXISTS expungement;
 
 USE expungement;
 
+DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
     user_id int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index',
     user_name varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s name, unique',
@@ -81,3 +82,6 @@ CREATE TABLE ExpungementFormStats (
     q17 bool NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO cohcontact (firstname, lastname, email, phone) VALUES ('Paul','Morgan','pmorgan@cottagesofhope.org','801-393-4011');
+INSERT INTO users (user_name, user_password_hash, user_email) VALUES ('admin','$2y$10$wgoNdq6ZAMcR29tNohnwpugEsN0PXMtrrSD.TjNZOX9c41y6kpIJO','admin@example.com');
