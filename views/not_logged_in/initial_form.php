@@ -175,7 +175,7 @@ if (isset($login)) {
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
-                sendDataToDatabase();
+                InitialFormAjaxSubmit();
                 $('#divContactModal').modal('show');
             });
 
@@ -190,14 +190,14 @@ if (isset($login)) {
             }, 5000);
         });
 
-        function sendDataToDatabase()
+        function InitialFormAjaxSubmit()
         {
             var tanfq1 = $('input[name=tanfq1]:checked', '#formTanf').val();
             var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
             var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
             var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
 
-            var urlMethod = "ajaxSubmit.php";
+            var urlMethod = "InitialFormAjaxSubmit.php";
             var jsonData = '{"tanfq1" : ' + tanfq1 +
                             ',"tanfq2" : ' + tanfq2 +
                             ',"initialq1" : ' + initialq1 +
@@ -220,10 +220,10 @@ if (isset($login)) {
                         returnFunction(msg);
                     }
                 },
-                error: function (xhr, status, error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    alert(err.Message);
-                }
+//                error: function (xhr, status, error) {
+//                    var err = eval("(" + xhr.responseText + ")");
+//                    alert(err);
+//                }
             });
         }
     </script>
