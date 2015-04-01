@@ -1,11 +1,17 @@
 <?php
 
-require_once("config/db.php");
-$db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-$jsonData = json_encode($_POST['jsonData']);
-
-
-$_SESSION['tanfq1'] = $jsonData->tanfq1;
-
-echo $_SESSION['tanfq1'];
+if (isset($_POST["data"])) {
+    $data = $_POST["data"];
+    $jsonData = json_decode($data, true); //returns null if not decoded
+    //Values can now be accessed like standard PHP array
+    if ($jsonData !== null) 
+    {
+        $tanfq1 = $jsonData['tanfq1'];
+        $tanfq2 = $jsonData['tanfq2'];
+        $initialq1 = $jsonData['initialq1'];
+        $initialq2 = $jsonData['initialq2'];
+        
+        require_once("config/db.php");
+        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    }
+}

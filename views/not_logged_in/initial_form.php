@@ -1,11 +1,8 @@
 <?php
 // show potential errors / feedback (from login object)
-if (isset($login))
-{
-    if ($login->errors)
-    {
-        foreach ($login->errors as $error)
-        {
+if (isset($login)) {
+    if ($login->errors) {
+        foreach ($login->errors as $error) {
             echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -13,10 +10,8 @@ if (isset($login))
             echo "</div>";
         }
     }
-    if ($login->messages)
-    {
-        foreach ($login->messages as $message)
-        {
+    if ($login->messages) {
+        foreach ($login->messages as $message) {
             echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -197,6 +192,17 @@ if (isset($login))
 
         function sendDataToDatabase()
         {
+//            var rated = {"key": "key", "value": "value"};
+//
+//            $.ajax({
+//                type: "POST",
+//                data: {"rated": rated},
+//                url: "ajaxSubmit.php",
+//                success: function (data) {
+//                    alert(data);
+//                }
+//            });
+
             var tanfq1 = $('input[name=tanfq1]:checked', '#formTanf').val();
             console.log(tanfq1);
             var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
@@ -208,11 +214,11 @@ if (isset($login))
 
 
             var urlMethod = "ajaxSubmit.php";
-            var jsonData = '{tanfq1: ' + tanfq1 + 
-                            ',tanfq2: ' + tanfq2 + 
-                            ',initialq1: ' + initialq1 + 
-                            ',initialq2: ' + initialq2 +
-                            '}';
+            var jsonData = '{"tanfq1" : ' + tanfq1 +
+                    ',"tanfq2" : ' + tanfq2 +
+                    ',"initialq1" : ' + initialq1 +
+                    ',"initialq2" : ' + initialq2 +
+                    '}';
             SendAjax(urlMethod, jsonData, nullFunction);
         }
 
@@ -223,9 +229,9 @@ if (isset($login))
         function SendAjax(urlMethod, jsonData, returnFunction) {
             $.ajax({
                 type: "POST",
-                contentType: "application/json; charset=utf-8",
+                data: {"data": jsonData},
+                dataType: "json",
                 url: urlMethod,
-                data: jsonData,
                 success: function (msg) {
                     if (msg !== null) {
                         returnFunction(msg);
