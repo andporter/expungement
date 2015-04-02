@@ -1,4 +1,7 @@
 <?php
+
+
+
 // show potential errors / feedback (from login object)
 if (isset($login))
 {
@@ -41,6 +44,8 @@ if (!$db_connection->connect_errno)
 }
 ?>
 
+
+
 <body>
     <div id="divTanf" class="container theme-showcase">
         <div class="alert alert-warning" role="alert">
@@ -51,16 +56,16 @@ if (!$db_connection->connect_errno)
                 <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
             </div>
             <div class="panel-body">
-                <form id="formTanf">
+                <form id="formTanf" method="get" action="initial_form.php">
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
                         <p>
-                            <input type="radio" name="tanfq1" value="1" required/> Yes
+                            <input type="radio" name="tanfq1" value="1"  required/> Yes
                             <input type="radio" name="tanfq1" value="0" required/> No 
                         </p>
                         <h4><li>Are you receiving any assistance from a Department of Workforce program, such as Medicaid, CHIP, Food Stamps, Refugee Cash Assistance, Family Employment Program, Temporary Assistance for Needy Families, or the WIC program?</li></h4>
                         <p>
-                            <input type="radio" name="tanfq2" value="1" required/> Yes
+                            <input type="radio" name="tanfq2" value="1"  required/> Yes
                             <input type="radio" name="tanfq2" value="0" required/> No
                         </p>
                     </ol>
@@ -77,17 +82,55 @@ if (!$db_connection->connect_errno)
                 <h3 class="panel-title">Initial Expungement Questionnaire</h3>
             </div>
             <div class="panel-body">
-                <form id="formInitial">
+                <form method="get" action="initial_form.php" id="formInitial" data-parsley-validate>
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
-                        <p>
-                            <input type="radio" name="initialq1" value="1" required /> Yes
-                            <input type="radio" name="initialq1" value="0" required /> No
+                        <p><input type="radio" name="Q1"    value="1" required  /> Yes
+                            <input type="radio" name="Q1"    value="0"  /> No
                         </p>
-                        <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?  </li></h4>
-                        <p>
-                            <input type="radio" name="initialq2" value="1" required /> Yes
-                            <input type="radio" name="initialq2" value="0" required /> No
+                        <h4><li> Do you owe any fines or restitution to the courts or victims as of today’s date?   </li></h4>
+                        <p><input type="radio" name="Q2"    value="1" required  /> Yes
+                            <input type="radio" name="Q2"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you been convicted of a felony in the last seven years?  </li></h4>
+                        <p><input type="radio" name="Q3"    value="1" required  /> Yes
+                            <input type="radio" name="Q3"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you been convicted of a Class A misdemeanor in the last five years?  </li></h4>
+                        <p><input type="radio" name="Q4"    value="1" required  /> Yes
+                            <input type="radio" name="Q4"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you been convicted of a Class B misdemeanor in the last four years?  </li></h4>
+                        <p><input type="radio" name="Q5"    value="1" required  /> Yes
+                            <input type="radio" name="Q5"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you been convicted of a Class C misdemeanor in the last three years?  </li></h4>
+                        <p><input type="radio" name="Q6"    value="1" required  /> Yes
+                            <input type="radio" name="Q6"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you ever been convicted of a 1st degree felony or capitol offense?  </li></h4>
+                        <p><input type="radio" name="Q7"    value="1" required  /> Yes
+                            <input type="radio" name="Q7"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you ever been convicted of a felony automobile homicide?  </li></h4>
+                        <p><input type="radio" name="Q8"    value="1" required  /> Yes
+                            <input type="radio" name="Q8"    value="0"  /> No
+                        </p>
+                        <h4><li> Are you or have you ever been a registered sex offender?   </li></h4>
+                        <p><input type="radio" name="Q9"    value="1" required  /> Yes
+                            <input type="radio" name="Q9"    value="0"  /> No
+                        </p>
+                        <h4><li> Have you ever been convicted of a felony DUI?   </li></h4>
+                        <p><input type="radio" name="Q10"    value="1" required  /> Yes
+                            <input type="radio" name="Q10"    value="0"  /> No
+                        </p>
+                        <h4><li>  Have you ever been convicted of a misdemeanor DUI in the last 10 years? </li></h4>
+                        <p><input type="radio" name="Q11"    value="1" required  /> Yes
+                            <input type="radio" name="Q11"    value="0"  /> No
+                        </p>
+                        <h4><li>  Have you ever been convicted of a violent felony? </li></h4>
+                        <p><input type="radio" name="Q12"    value="1" required  /> Yes
+                            <input type="radio" name="Q12"    value="0"  /> No
                         </p>
                     </ol>
                     <hr/>
@@ -97,7 +140,6 @@ if (!$db_connection->connect_errno)
             </div>
         </div>
     </div>
-
     <div id="divContactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
