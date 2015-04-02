@@ -85,52 +85,52 @@ if (!$db_connection->connect_errno)
                 <form method="get" action="initial_form.php" id="formInitial" data-parsley-validate>
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
-                        <p><input type="radio" name="Q1"    value="1" required  /> Yes
-                            <input type="radio" name="Q1"    value="0"  /> No
+                        <p><input type="radio" name="initialq1"    value="1" required  /> Yes
+                            <input type="radio" name="initialq1"    value="0"  /> No
                         </p>
                         <h4><li> Do you owe any fines or restitution to the courts or victims as of today’s date?   </li></h4>
-                        <p><input type="radio" name="Q2"    value="1" required  /> Yes
-                            <input type="radio" name="Q2"    value="0"  /> No
+                        <p><input type="radio" name="initialq2"    value="1" required  /> Yes
+                            <input type="radio" name="initialq2"    value="0"  /> No
                         </p>
                         <h4><li> Have you been convicted of a felony in the last seven years?  </li></h4>
-                        <p><input type="radio" name="Q3"    value="1" required  /> Yes
-                            <input type="radio" name="Q3"    value="0"  /> No
+                        <p><input type="radio" name="initialq3"    value="1" required  /> Yes
+                            <input type="radio" name="initialq3"    value="0"  /> No
                         </p>
                         <h4><li> Have you been convicted of a Class A misdemeanor in the last five years?  </li></h4>
-                        <p><input type="radio" name="Q4"    value="1" required  /> Yes
-                            <input type="radio" name="Q4"    value="0"  /> No
+                        <p><input type="radio" name="initialq4"    value="1" required  /> Yes
+                            <input type="radio" name="initialq4"    value="0"  /> No
                         </p>
                         <h4><li> Have you been convicted of a Class B misdemeanor in the last four years?  </li></h4>
-                        <p><input type="radio" name="Q5"    value="1" required  /> Yes
-                            <input type="radio" name="Q5"    value="0"  /> No
+                        <p><input type="radio" name="initialq5"    value="1" required  /> Yes
+                            <input type="radio" name="initialq5"    value="0"  /> No
                         </p>
                         <h4><li> Have you been convicted of a Class C misdemeanor in the last three years?  </li></h4>
-                        <p><input type="radio" name="Q6"    value="1" required  /> Yes
-                            <input type="radio" name="Q6"    value="0"  /> No
+                        <p><input type="radio" name="initialq6"    value="1" required  /> Yes
+                            <input type="radio" name="initialq6"    value="0"  /> No
                         </p>
                         <h4><li> Have you ever been convicted of a 1st degree felony or capitol offense?  </li></h4>
-                        <p><input type="radio" name="Q7"    value="1" required  /> Yes
-                            <input type="radio" name="Q7"    value="0"  /> No
+                        <p><input type="radio" name="initialq7"    value="1" required  /> Yes
+                            <input type="radio" name="initialq7"    value="0"  /> No
                         </p>
                         <h4><li> Have you ever been convicted of a felony automobile homicide?  </li></h4>
-                        <p><input type="radio" name="Q8"    value="1" required  /> Yes
-                            <input type="radio" name="Q8"    value="0"  /> No
+                        <p><input type="radio" name="initialq8"    value="1" required  /> Yes
+                            <input type="radio" name="initialq8"    value="0"  /> No
                         </p>
                         <h4><li> Are you or have you ever been a registered sex offender?   </li></h4>
-                        <p><input type="radio" name="Q9"    value="1" required  /> Yes
-                            <input type="radio" name="Q9"    value="0"  /> No
+                        <p><input type="radio" name="initialq9"    value="1" required  /> Yes
+                            <input type="radio" name="initialq9"    value="0"  /> No
                         </p>
                         <h4><li> Have you ever been convicted of a felony DUI?   </li></h4>
-                        <p><input type="radio" name="Q10"    value="1" required  /> Yes
-                            <input type="radio" name="Q10"    value="0"  /> No
+                        <p><input type="radio" name="initialq10"    value="1" required  /> Yes
+                            <input type="radio" name="initialq10"    value="0"  /> No
                         </p>
                         <h4><li>  Have you ever been convicted of a misdemeanor DUI in the last 10 years? </li></h4>
-                        <p><input type="radio" name="Q11"    value="1" required  /> Yes
-                            <input type="radio" name="Q11"    value="0"  /> No
+                        <p><input type="radio" name="initialq11"    value="1" required  /> Yes
+                            <input type="radio" name="initialq11"    value="0"  /> No
                         </p>
                         <h4><li>  Have you ever been convicted of a violent felony? </li></h4>
-                        <p><input type="radio" name="Q12"    value="1" required  /> Yes
-                            <input type="radio" name="Q12"    value="0"  /> No
+                        <p><input type="radio" name="initialq12"    value="1" required  /> Yes
+                            <input type="radio" name="initialq12"    value="0"  /> No
                         </p>
                     </ol>
                     <hr/>
@@ -257,14 +257,34 @@ if (!$db_connection->connect_errno)
             var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
             var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
             var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
+            var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();
+            var initialq4 = $('input[name=initialq4]:checked', '#formInitial').val();
+            var initialq5 = $('input[name=initialq5]:checked', '#formInitial').val();
+            var initialq6 = $('input[name=initialq6]:checked', '#formInitial').val();
+            var initialq7 = $('input[name=initialq7]:checked', '#formInitial').val();
+            var initialq8 = $('input[name=initialq8]:checked', '#formInitial').val();
+            var initialq9 = $('input[name=initialq9]:checked', '#formInitial').val();
+            var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
+            var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
+            var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
 
             var urlMethod = "ajax/InitialFormAjaxSubmit.php";
             var jsonData = '{"tanfq1" : ' + tanfq1 +
                     ',"tanfq2" : ' + tanfq2 +
                     ',"initialq1" : ' + initialq1 +
                     ',"initialq2" : ' + initialq2 +
+                    ',"initialq3" : ' + initialq3 +
+                    ',"initialq4" : ' + initialq4 +
+                    ',"initialq5" : ' + initialq5 +
+                    ',"initialq6" : ' + initialq6 +
+                    ',"initialq7" : ' + initialq7 +
+                    ',"initialq8" : ' + initialq8 +
+                    ',"initialq9" : ' + initialq9 +
+                    ',"initialq10" : ' + initialq10 +
+                    ',"initialq11" : ' + initialq11 +
+                    ',"initialq12" : ' + initialq12 +
                     '}';
-            SendAjax(urlMethod, jsonData, nullFunction);
+            SendAjax(urlMethod, jsonData, nullFunct1ion);
         }
 
         function nullFunction() {
