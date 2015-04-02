@@ -19,7 +19,7 @@ if (isset($_POST["data"])) {
         $initialq1 = $jsonData['initialq1'];
         $initialq2 = $jsonData['initialq2'];
 
-        require("config/db.php");
+        require("../config/db.php");
         $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
         if ($db_connection->set_charset("utf8")) {
@@ -33,9 +33,9 @@ if (isset($_POST["data"])) {
             $query_insert = $db_connection->query($sql);
 
             if ($query_insert) {
-                $this->messages[] = "Row Inserted";
+                $messages[] = "Row Inserted";
             } else {
-                $this->errors[] = "Could not insert row";
+                $errors[] = "Could not insert row";
             }
         }
     }
