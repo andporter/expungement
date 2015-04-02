@@ -26,10 +26,10 @@ $sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
 $result = $db_connection->query($sql); 
 $data = mysqli_fetch_assoc( $result );
 
-$COH_FirstName = $data['firstname'];
-$COH_LastName = $data['lastname'];
-$COH_Email = $data['email'];
-$COH_Phone = $data['phone'];
+$_SESSION['COH_FirstName'] = $data['firstname'];
+$_SESSION['COH_LastName'] = $data['lastname'];
+$_SESSION['COH_Email'] = $data['email'];
+$_SESSION['COH_Phone'] = $data['phone'];
 ?>
 
 <body>
@@ -101,8 +101,8 @@ $COH_Phone = $data['phone'];
                         <div class="well">
                             <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
                             <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
-                            <p>Phone: Call Cottages of Hope (<?php echo $COH_Phone; ?>) and ask for <?php echo $COH_FirstName; ?> the Expungement Specialist.</p>
-                            <p>Email: Email <?php echo $COH_FirstName; ?> at <a href="mailto:<?php echo $COH_Email; ?>?Subject=Expungement"><?php echo $COH_Email; ?></a> Please use “Expungement” as the subject</p>
+                            <p>Phone: Call Cottages of Hope (<?php echo $_SESSION['COH_Phone']; ?>) and ask for <?php $_SESSION['COH_FirstName']; ?> the Expungement Specialist.</p>
+                            <p>Email: Email <?php echo $_SESSION['COH_FirstName']; ?> at <a href="mailto:<?php echo $_SESSION['COH_Email']; ?>?Subject=Expungement"><?php echo $_SESSION['COH_Email']; ?></a> Please use “Expungement” as the subject</p>
                         </div>
                         <form method="post" class="form-horizontal" id="contactForm" data-parsley-validate>
                             <div class="form-group">

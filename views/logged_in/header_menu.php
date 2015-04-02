@@ -10,15 +10,6 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
     }
 }
 
-$db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-$sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
-$result = $db_connection->query($sql); 
-$data = mysqli_fetch_assoc( $result );
-
-$COH_FirstName = $data['firstname'];
-$COH_LastName = $data['lastname'];
-$COH_Email = $data['email'];
-$COH_Phone = $data['phone'];
 ?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -79,25 +70,25 @@ $COH_Phone = $data['phone'];
                         <div class="form-group">
                             <label for="COHfirstName" class="col-sm-2 control-label">COH First Name:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHfirstName" placeholder="COH First Name" value="<?php echo $COH_FirstName; ?>" required data-parsley-required-message="Please enter the COH First Name">
+                                <input type="text" class="form-control" id="COHfirstName" placeholder="COH First Name" value="<?php echo $_SESSION['COH_FirstName']; ?>" required data-parsley-required-message="Please enter the COH First Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHlastName" class="col-sm-2 control-label">COH Last Name:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHlastName" placeholder="COH Last Name" value="<?php echo $COH_LastName; ?>" required data-parsley-required-message="Please enter the COH Last Name">
+                                <input type="text" class="form-control" id="COHlastName" placeholder="COH Last Name" value="<?php echo $_SESSION['COH_LastName']; ?>" required data-parsley-required-message="Please enter the COH Last Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHemail" class="col-sm-2 control-label">COH Email:</label>
                             <div class="col-xs-4">
-                                <input type="email" class="form-control" id="COHemail" placeholder="COH Email" value="<?php echo $COH_Email; ?>" required data-parsley-required-message="Please enter the COH Email Address"/>
+                                <input type="email" class="form-control" id="COHemail" placeholder="COH Email" value="<?php echo $_SESSION['COH_Email']; ?>" required data-parsley-required-message="Please enter the COH Email Address"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHphone" class="col-sm-2 control-label">COH Phone:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" value="<?php echo $COH_Phone; ?>" required data-parsley-required-message="Please enter the COH Phone Number"/>
+                                <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" value="<?php echo $_SESSION['COH_Phone']; ?>" required data-parsley-required-message="Please enter the COH Phone Number"/>
                             </div>
                         </div>
                         <div class="form-group">
