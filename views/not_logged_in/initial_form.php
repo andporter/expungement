@@ -1,7 +1,4 @@
 <?php
-
-
-
 // show potential errors / feedback (from login object)
 if (isset($login))
 {
@@ -44,102 +41,104 @@ if (!$db_connection->connect_errno)
 }
 ?>
 
-
-
 <body>
-    <div id="divTanf" class="container theme-showcase">
-        <div class="alert alert-warning" role="alert">
-            <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
-        </div>
-        <div class="panel panal-content panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
+    <form id="formInitial" data-parsley-validate>
+        <div id="divTanf" class="container theme-showcase">
+            <div class="alert alert-warning" role="alert">
+                <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
             </div>
-            <div class="panel-body">
-                <form id="formTanf">
+            <div class="panel panal-content panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
+                </div>
+                <div class="panel-body">
+
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
                         <p>
-                            <input type="radio" name="tanfq1" value="1"  required/> Yes
-                            <input type="radio" name="tanfq1" value="0" required/> No 
+                            <input type="radio" name="tanfq1" value="1"  required /> Yes
+                            <input type="radio" name="tanfq1" value="0" /> No 
                         </p>
                         <h4><li>Are you receiving any assistance from a Department of Workforce program, such as Medicaid, CHIP, Food Stamps, Refugee Cash Assistance, Family Employment Program, Temporary Assistance for Needy Families, or the WIC program?</li></h4>
                         <p>
-                            <input type="radio" name="tanfq2" value="1"  required/> Yes
-                            <input type="radio" name="tanfq2" value="0" required/> No
+                            <input type="radio" name="tanfq2" value="1"  required /> Yes
+                            <input type="radio" name="tanfq2" value="0" /> No
                         </p>
                     </ol>
-                </form>
-                <hr/>
-                <button id="buttonTanfNext" class="btn btn-primary pull-right">Next</button>
+                    <!--</form>-->
+                    <!--<hr/>-->
+                    <!--<button id="buttonTanfNext" class="btn btn-primary pull-right">Next</button>-->
+                    <!--<input id="buttonTanfNext" type="submit" value="Next" class="btn btn-primary pull-right" />-->
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="divInital" class="container theme-showcase">
-        <div class="panel panal-content panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Initial Expungement Questionnaire</h3>
-            </div>
-            <div class="panel-body">
-                <form id="formInitial" data-parsley-validate>
+        <div id="divInital" class="container theme-showcase">
+            <div class="panel panal-content panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Initial Expungement Questionnaire</h3>
+                </div>
+                <div class="panel-body">
+                    <!--<form id="formInitial" data-parsley-validate>-->
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
-                        <p><input type="radio" name="initialq1"    value="1" required  /> Yes
-                            <input type="radio" name="initialq1"    value="0"  /> No
+                        <p><input type="radio" name="initialq1" value="1" required /> Yes
+                            <input type="radio" name="initialq1" value="0" /> No
                         </p>
-                        <h4><li> Do you owe any fines or restitution to the courts or victims as of today’s date?   </li></h4>
-                        <p><input type="radio" name="initialq2"    value="1" required  /> Yes
-                            <input type="radio" name="initialq2"    value="0"  /> No
+                        <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?</li></h4>
+                        <p><input type="radio" name="initialq2" value="1" required /> Yes
+                            <input type="radio" name="initialq2" value="0" /> No
                         </p>
-                        <h4><li> Have you been convicted of a felony in the last seven years?  </li></h4>
-                        <p><input type="radio" name="initialq3"    value="1" required  /> Yes
-                            <input type="radio" name="initialq3"    value="0"  /> No
+                        <h4><li>Have you been convicted of a felony in the last seven years?</li></h4>
+                        <p><input type="radio" name="initialq3" value="1" required /> Yes
+                            <input type="radio" name="initialq3" value="0" /> No
                         </p>
-                        <h4><li> Have you been convicted of a Class A misdemeanor in the last five years?  </li></h4>
-                        <p><input type="radio" name="initialq4"    value="1" required  /> Yes
-                            <input type="radio" name="initialq4"    value="0"  /> No
+                        <h4><li>Have you been convicted of a Class A misdemeanor in the last five years?</li></h4>
+                        <p><input type="radio" name="initialq4" value="1" required /> Yes
+                            <input type="radio" name="initialq4" value="0" /> No
                         </p>
-                        <h4><li> Have you been convicted of a Class B misdemeanor in the last four years?  </li></h4>
-                        <p><input type="radio" name="initialq5"    value="1" required  /> Yes
-                            <input type="radio" name="initialq5"    value="0"  /> No
+                        <h4><li>Have you been convicted of a Class B misdemeanor in the last four years?</li></h4>
+                        <p><input type="radio" name="initialq5" value="1" required /> Yes
+                            <input type="radio" name="initialq5" value="0" /> No
                         </p>
-                        <h4><li> Have you been convicted of a Class C misdemeanor in the last three years?  </li></h4>
-                        <p><input type="radio" name="initialq6"    value="1" required  /> Yes
-                            <input type="radio" name="initialq6"    value="0"  /> No
+                        <h4><li>Have you been convicted of a Class C misdemeanor in the last three years?</li></h4>
+                        <p><input type="radio" name="initialq6" value="1" required /> Yes
+                            <input type="radio" name="initialq6" value="0" /> No
                         </p>
-                        <h4><li> Have you ever been convicted of a 1st degree felony or capitol offense?  </li></h4>
-                        <p><input type="radio" name="initialq7"    value="1" required  /> Yes
-                            <input type="radio" name="initialq7"    value="0"  /> No
+                        <h4><li>Have you ever been convicted of a 1st degree felony or capitol offense?</li></h4>
+                        <p><input type="radio" name="initialq7" value="1" required /> Yes
+                            <input type="radio" name="initialq7" value="0" /> No
                         </p>
-                        <h4><li> Have you ever been convicted of a felony automobile homicide?  </li></h4>
-                        <p><input type="radio" name="initialq8"    value="1" required  /> Yes
-                            <input type="radio" name="initialq8"    value="0"  /> No
+                        <h4><li>Have you ever been convicted of a felony automobile homicide?</li></h4>
+                        <p><input type="radio" name="initialq8" value="1" required /> Yes
+                            <input type="radio" name="initialq8" value="0" /> No
                         </p>
-                        <h4><li> Are you or have you ever been a registered sex offender?   </li></h4>
-                        <p><input type="radio" name="initialq9"    value="1" required  /> Yes
-                            <input type="radio" name="initialq9"    value="0"  /> No
+                        <h4><li>Are you or have you ever been a registered sex offender?</li></h4>
+                        <p><input type="radio" name="initialq9" value="1" required /> Yes
+                            <input type="radio" name="initialq9" value="0" /> No
                         </p>
-                        <h4><li> Have you ever been convicted of a felony DUI?   </li></h4>
-                        <p><input type="radio" name="initialq10"    value="1" required  /> Yes
-                            <input type="radio" name="initialq10"    value="0"  /> No
+                        <h4><li>Have you ever been convicted of a felony DUI?</li></h4>
+                        <p><input type="radio" name="initialq10" value="1" required /> Yes
+                            <input type="radio" name="initialq10" value="0" /> No
                         </p>
-                        <h4><li>  Have you ever been convicted of a misdemeanor DUI in the last 10 years? </li></h4>
-                        <p><input type="radio" name="initialq11"    value="1" required  /> Yes
-                            <input type="radio" name="initialq11"    value="0"  /> No
+                        <h4><li> Have you ever been convicted of a misdemeanor DUI in the last 10 years? </li></h4>
+                        <p><input type="radio" name="initialq11" value="1" required /> Yes
+                            <input type="radio" name="initialq11" value="0" /> No
                         </p>
-                        <h4><li>  Have you ever been convicted of a violent felony? </li></h4>
-                        <p><input type="radio" name="initialq12"    value="1" required  /> Yes
-                            <input type="radio" name="initialq12"    value="0"  /> No
+                        <h4><li> Have you ever been convicted of a violent felony? </li></h4>
+                        <p><input type="radio" name="initialq12" value="1" required /> Yes
+                            <input type="radio" name="initialq12" value="0" /> No
                         </p>
                     </ol>
                     <hr/>
                     <input type="submit" value="Submit" class="btn btn-primary pull-right" />
-                </form>
-                <button id="buttonInitialBack" class="btn btn-primary">Back</button>
+                    <!--<button id="buttonInitialBack" class="btn btn-primary">Back</button>-->
+                </div>
             </div>
         </div>
-    </div>
+    </form>
+
+
     <div id="divContactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -155,7 +154,7 @@ if (!$db_connection->connect_errno)
                             <p>Phone: Call Cottages of Hope (<?php echo $_SESSION['COH_Phone']; ?>) and ask for <?php $_SESSION['COH_FirstName']; ?> the Expungement Specialist.</p>
                             <p>Email: Email <?php echo $_SESSION['COH_FirstName']; ?> at <a href="mailto:<?php echo $_SESSION['COH_Email']; ?>?Subject=Expungement"><?php echo $_SESSION['COH_Email']; ?></a> Please use “Expungement” as the subject</p>
                         </div>
-                        <form method="post" class="form-horizontal" id="contactForm" data-parsley-validate>
+                        <form class="form-horizontal" id="contactForm" data-parsley-validate>
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
@@ -221,17 +220,17 @@ if (!$db_connection->connect_errno)
                 return;
             });
 
-            $('#buttonTanfNext').click(function ()
-            {
-                $("#divTanf").hide();
-                $("#divInital").fadeIn();
-            });
-
-            $('#buttonInitialBack').click(function ()
-            {
-                $("#divInital").hide();
-                $("#divTanf").fadeIn();
-            });
+//            $('#buttonTanfNext').click(function ()
+//            {
+//                $("#divTanf").hide();
+//                $("#divInital").fadeIn();
+//            });
+//
+//            $('#buttonInitialBack').click(function ()
+//            {
+//                $("#divInital").hide();
+//                $("#divTanf").fadeIn();
+//            });
 
             $('#formInitial').submit(function (e)
             {
@@ -253,8 +252,8 @@ if (!$db_connection->connect_errno)
 
         function InitialFormAjaxSubmit()
         {
-            var tanfq1 = $('input[name=tanfq1]:checked', '#formTanf').val();
-            var tanfq2 = $('input[name=tanfq2]:checked', '#formTanf').val();
+            var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
+            var tanfq2 = $('input[name=tanfq2]:checked', '#formInitial').val();
             var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
             var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
             var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();

@@ -16,10 +16,10 @@ body {
 div.col-xs-4 {
     padding: 0;
 }
-
+/*
 #divInital {
     display:none;
-}
+}*/
 
 button.btn.btn-default, a.btn.btn-default {
     height: 34px;
