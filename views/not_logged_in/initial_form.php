@@ -1,8 +1,11 @@
 <?php
 // show potential errors / feedback (from login object)
-if (isset($login)) {
-    if ($login->errors) {
-        foreach ($login->errors as $error) {
+if (isset($login))
+{
+    if ($login->errors)
+    {
+        foreach ($login->errors as $error)
+        {
             echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -10,8 +13,10 @@ if (isset($login)) {
             echo "</div>";
         }
     }
-    if ($login->messages) {
-        foreach ($login->messages as $message) {
+    if ($login->messages)
+    {
+        foreach ($login->messages as $message)
+        {
             echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -22,14 +27,18 @@ if (isset($login)) {
 }
 
 $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-$sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
-$result = $db_connection->query($sql); 
-$data = mysqli_fetch_assoc( $result );
 
-$_SESSION['COH_FirstName'] = $data['firstname'];
-$_SESSION['COH_LastName'] = $data['lastname'];
-$_SESSION['COH_Email'] = $data['email'];
-$_SESSION['COH_Phone'] = $data['phone'];
+if (!$db_connection->connect_errno)
+{
+    $sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
+    $result = $db_connection->query($sql);
+    $data = mysqli_fetch_assoc($result);
+
+    $_SESSION['COH_FirstName'] = $data['firstname'];
+    $_SESSION['COH_LastName'] = $data['lastname'];
+    $_SESSION['COH_Email'] = $data['email'];
+    $_SESSION['COH_Phone'] = $data['phone'];
+}
 ?>
 
 <body>
@@ -207,7 +216,7 @@ $_SESSION['COH_Phone'] = $data['phone'];
             var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
             var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
 
-            var urlMethod = "InitialFormAjaxSubmit.php";
+            var urlMethod = "ajax/InitialFormAjaxSubmit.php";
             var jsonData = '{"tanfq1" : ' + tanfq1 +
                     ',"tanfq2" : ' + tanfq2 +
                     ',"initialq1" : ' + initialq1 +
