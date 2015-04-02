@@ -158,32 +158,32 @@ if (!$db_connection->connect_errno)
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name">
+                                    <input type="text" class="form-control" name="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name">
+                                    <input type="text" class="form-control" name="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">Email:</label>
                                 <div class="col-xs-4">
-                                    <input type="email" class="form-control" id="email" placeholder="Email" data-parsley-group="email"/>
+                                    <input type="email" class="form-control" name="email" placeholder="Email" data-parsley-group="email"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="col-sm-2 control-label">Phone:</label>
                                 <div class="col-xs-4" id="phone">
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" id="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="number" class="form-control" name="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" id="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="number" class="form-control" name="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" id="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
+                                        <input type="number" class="form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
                                     </div>
                                 </div>
                             </div>
@@ -238,6 +238,13 @@ if (!$db_connection->connect_errno)
                 InitialFormAjaxSubmit();
                 $('#divContactModal').modal('show');
             });
+            
+            $('#contactForm').submit(function (e)
+            {
+                e.preventDefault();
+                InitialContactFormAjaxSubmit();
+                $('#divContactModal').modal('hide');
+            });
 
             window.setTimeout(function () {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
@@ -249,7 +256,7 @@ if (!$db_connection->connect_errno)
                 });
             }, 5000);
         });
-
+     
         function InitialFormAjaxSubmit()
         {
             var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
@@ -282,6 +289,25 @@ if (!$db_connection->connect_errno)
                     ',"initialq10" : ' + initialq10 +
                     ',"initialq11" : ' + initialq11 +
                     ',"initialq12" : ' + initialq12 +
+                    '}';
+            SendAjax(urlMethod, jsonData, nullFunction);
+        }
+        
+        function InitialContactFormAjaxSubmit()
+        {
+            var ic_FirstName = $('input[name=firstName]').val();
+            var ic_LastName = $('input[name=lastName]').val();
+            var ic_Email = $('input[name=email]').val();
+            var ic_PhoneAreaCode = $('input[name=phoneAreaCode]').val();
+            var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
+            var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
+            var ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
+
+            var urlMethod = "ajax/ContactFormAjaxSubmit.php";
+            var jsonData = '{"ic_FirstName" : ' + ic_FirstName +
+                    ',"ic_LastName" : ' + ic_LastName +
+                    ',"ic_Email" : ' + ic_Email +
+                    ',"ic_Phone" : ' + ic_Phone +
                     '}';
             SendAjax(urlMethod, jsonData, nullFunction);
         }
