@@ -56,7 +56,7 @@ if (!$db_connection->connect_errno)
                 <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
             </div>
             <div class="panel-body">
-                <form id="formTanf" method="get" action="initial_form.php">
+                <form id="formTanf">
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
                         <p>
@@ -82,7 +82,7 @@ if (!$db_connection->connect_errno)
                 <h3 class="panel-title">Initial Expungement Questionnaire</h3>
             </div>
             <div class="panel-body">
-                <form method="get" action="initial_form.php" id="formInitial" data-parsley-validate>
+                <form id="formInitial" data-parsley-validate>
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
                         <p><input type="radio" name="initialq1"    value="1" required  /> Yes
@@ -284,7 +284,7 @@ if (!$db_connection->connect_errno)
                     ',"initialq11" : ' + initialq11 +
                     ',"initialq12" : ' + initialq12 +
                     '}';
-            SendAjax(urlMethod, jsonData, nullFunct1ion);
+            SendAjax(urlMethod, jsonData, nullFunction);
         }
 
         function nullFunction() {
