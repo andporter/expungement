@@ -24,3 +24,8 @@ div.col-xs-4 {
 button.btn.btn-default, a.btn.btn-default {
     height: 34px;
 }
+
+label.btn.btn-default.active{
+    color: white;
+    background-color: #337ab7;
+}
