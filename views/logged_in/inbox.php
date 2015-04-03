@@ -1,5 +1,33 @@
-<!-- if you need user information, just put them into the $_SESSION variable and output them here -->
 <?php
+
+function getInboxContactsJson()
+{
+    $InboxContacts = array();
+
+    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if (!$db_connection->connect_errno)
+    {
+        $sql = "SELECT * FROM InboxContacts";
+        $result = $db_connection->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $InboxContacts[] = $row;
+            }
+        }
+        else
+        {
+            echo "0 results";
+        }
+
+        $db_connection->close();
+    }
+    
+    return json_encode($InboxContacts);
+}
 ?>
 
 <div class="container-fluid" role="main">
@@ -10,9 +38,8 @@
     <table id="inboxTable"
            data-click-to-select="true"
            data-search="true"
-           data-show-refresh="true"
            data-show-export="true"
-           data-export-types="['csv', 'txt', 'excel']"
+           data-export-types="['csv', 'excel']"
            data-toolbar="#inboxToolbar"
            data-classes="table table-hover table-condensed"
            data-striped="true"
@@ -22,11 +49,11 @@
             <tr>
                 <th data-field="state" data-checkbox="true"></th>
                 <th class="col-xs-2" data-field="date" data-sortable="true">Date</th>
-                <th class="col-xs-2" data-field="firstName" data-sortable="true">First Name</th>
-                <th class="col-xs-2" data-field="lastName" data-sortable="true">Last Name</th>
+                <th class="col-xs-2" data-field="firstname" data-sortable="true">First Name</th>
+                <th class="col-xs-2" data-field="lastname" data-sortable="true">Last Name</th>
                 <th class="col-xs-2" data-field="phone" data-sortable="true">Phone</th>
                 <th class="col-xs-3" data-field="email" data-sortable="true">Email</th>
-                <th class="col-xs-1" data-field="contactAttempts" data-sortable="true">Contact Attempts</th>
+                <th class="col-xs-1" data-field="contactattempts" data-sortable="true">Contact Attempts</th>
             </tr>
         </thead>
     </table>
@@ -71,19 +98,10 @@
 //        $('[rel="tooltip"]').tooltip()
 //    })
 
-    function jsonContactData() {
-        var contacts = [
-            {"date": "2015-03-29 04:48:59", "firstName": "John", "lastName": "Doe", "phone": "801-555-1234", "email": "test@example.com", "contactAttempts": "0"},
-            {"date": "2015-03-27 04:48:59", "firstName": "Todd", "lastName": "Packer", "phone": "801-555-6789", "email": "test3@example.com", "contactAttempts": "3"},
-            {"date": "2015-03-26 04:48:59", "firstName": "Sally", "lastName": "Smith", "phone": "801-555-1212", "email": "test2@example.com", "contactAttempts": "2"}
-        ];
-
-        return contacts;
-    }
 
     $(function () {
         $('#inboxTable').bootstrapTable({
-            data: jsonContactData()
+            data: <?php echo getInboxContactsJson(); ?>
         });
     });
 </script>
