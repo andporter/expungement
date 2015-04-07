@@ -70,7 +70,7 @@
         $('#login_input_username').focus();
     });
     
-    $('#secondFormLoginModal').on('shown.bs.modal', function () {
+    $('#expungementFormLoginModal').on('shown.bs.modal', function () {
         $('#login_input_username').focus();
     });
 </script>

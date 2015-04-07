@@ -25,7 +25,7 @@ function getInboxContactsJson()
 
         $db_connection->close();
     }
-    
+
     return json_encode($InboxContacts);
 }
 ?>
@@ -44,7 +44,8 @@ function getInboxContactsJson()
            data-classes="table table-hover table-condensed"
            data-striped="true"
            data-sort-name="date"
-           data-sort-order="desc">
+           data-sort-order="desc"
+           data-sortable="true">
         <thead>
             <tr>
                 <th data-field="state" data-checkbox="true"></th>
@@ -70,7 +71,7 @@ function getInboxContactsJson()
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
-                <a href="#" class="btn btn-danger btn-ok">Yes, Delete</a>
+                <a href="#" class="btn btn-danger btn-ok" id="deleteConfirmButton">Yes, Delete</a>
             </div>
         </div>
     </div>
@@ -87,7 +88,7 @@ function getInboxContactsJson()
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
-                <a href="#" class="btn btn-danger btn-ok">Yes, Increment</a>
+                <a href="#" class="btn btn-danger btn-ok" id="incrementConfirmButton">Yes, Increment</a>
             </div>
         </div>
     </div>
@@ -100,8 +101,29 @@ function getInboxContactsJson()
 
 
     $(function () {
-        $('#inboxTable').bootstrapTable({
-            data: <?php echo getInboxContactsJson(); ?>
-        });
+        getInboxContactsAjaxSubmit();
     });
+
+    $('#deleteConfirmButton').click(function () {
+        alert('Delete Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
+    });
+
+    $('#incrementConfirmButton').click(function () {
+        alert('Increment Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
+    });
+
+    function getInboxContactsAjaxSubmit()
+    {
+        var urlMethod = "api/api.php?method=adminGetInboxContacts&format=json";
+        var jsonData = '{}';
+        SendAjax(urlMethod, jsonData, success_getInboxContactsAjaxSubmit);
+    }
+
+    function success_getInboxContactsAjaxSubmit(returnData)
+    {
+        $('#inboxTable').bootstrapTable({
+            data: returnData.data
+        });
+    }
+
 </script>

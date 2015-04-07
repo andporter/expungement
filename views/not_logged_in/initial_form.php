@@ -225,8 +225,6 @@ if (!$db_connection->connect_errno)
 
     <script type="text/javascript">
 
-        var alreadyUploadedInitialFormThisSession = false;
-
         $(document).ready(function () {
             $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) {
 
@@ -283,6 +281,8 @@ if (!$db_connection->connect_errno)
             }, 5000);
         });
 
+        var alreadyUploadedInitialFormThisSession = false;
+        
         function InitialFormAjaxSubmit()
         {
             if (alreadyUploadedInitialFormThisSession === false)
@@ -302,7 +302,7 @@ if (!$db_connection->connect_errno)
                 var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
                 var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
 
-                var urlMethod = "ajax/InitialFormAjaxSubmit.php";
+                var urlMethod = "api/api.php?method=initialForm&format=json";
                 var jsonData = '{"tanfq1" : ' + tanfq1 +
                         ',"tanfq2" : ' + tanfq2 +
                         ',"initialq1" : ' + initialq1 +
@@ -318,9 +318,17 @@ if (!$db_connection->connect_errno)
                         ',"initialq11" : ' + initialq11 +
                         ',"initialq12" : ' + initialq12 +
                         '}';
-                SendAjax(urlMethod, jsonData, nullFunction);
-                alreadyUploadedInitialFormThisSession = true;
+                SendAjax(urlMethod, jsonData, success_InitialFormAjaxSubmit);
             }
+            else
+            {
+                console.log("Initial Form Already Uploaded for this session");
+            }
+        }
+
+        function success_InitialFormAjaxSubmit(returnData)
+        {
+            alreadyUploadedInitialFormThisSession = true;
         }
 
         function InitialContactFormAjaxSubmit()
@@ -338,34 +346,13 @@ if (!$db_connection->connect_errno)
                 ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
             }
 
-            var urlMethod = "ajax/ContactFormAjaxSubmit.php";
+            var urlMethod = "api/api.php?method=contactForm&format=json";
             var jsonData = '{"ic_FirstName" : "' + ic_FirstName +
                     '","ic_LastName" : "' + ic_LastName +
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
-            SendAjax(urlMethod, jsonData, nullFunction);
-        }
-
-        function nullFunction() {
-        }
-
-        function SendAjax(urlMethod, jsonData, returnFunction) {
-            $.ajax({
-                type: "POST",
-                data: {"data": jsonData},
-                dataType: "json",
-                url: urlMethod,
-                success: function (msg) {
-                    if (msg !== null) {
-                        returnFunction(msg);
-                    }
-                },
-//                error: function (xhr, status, error) {
-//                    var err = eval("(" + xhr.responseText + ")");
-//                    alert(err);
-//                }
-            });
+            SendAjax(urlMethod, jsonData, "none");
         }
     </script>
 </body>
