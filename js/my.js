@@ -6,8 +6,7 @@ function SendAjax(urlMethod, inData, returnFunction) {
         url: urlMethod,
         success: function (returnData)
         {
-            console.log("Ajax Success!");
-            console.log(returnData);
+            console.log("Ajax Success! URL: " + urlMethod);
 
             if (returnData !== null && returnFunction !== "none")
             {
@@ -16,7 +15,7 @@ function SendAjax(urlMethod, inData, returnFunction) {
         },
         error: function (xhr, status, error)
         {
-            console.log("Ajax Error!");
+            console.log("Ajax Error! URL: " + urlMethod);
             console.log(xhr);
             console.log(status);
             console.log(error);

@@ -1,33 +1,5 @@
 <?php
 
-function getInboxContactsJson()
-{
-    $InboxContacts = array();
-
-    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-    if (!$db_connection->connect_errno)
-    {
-        $sql = "SELECT * FROM InboxContacts";
-        $result = $db_connection->query($sql);
-
-        if ($result->num_rows > 0)
-        {
-            while ($row = $result->fetch_assoc())
-            {
-                $InboxContacts[] = $row;
-            }
-        }
-        else
-        {
-            echo "0 results";
-        }
-
-        $db_connection->close();
-    }
-
-    return json_encode($InboxContacts);
-}
 ?>
 
 <div class="container-fluid" role="main">
