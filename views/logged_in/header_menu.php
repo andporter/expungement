@@ -1,16 +1,4 @@
-<?php
-
-function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
-{
-    $current_file_name = $_SERVER['REQUEST_URI'];
-
-    if ($current_file_name == $requestUri || $current_file_name == $requestUri2)
-    {
-        echo 'class="active"';
-    }
-}
-
-?>
+<?php ?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid" id="navfluid">
@@ -21,18 +9,18 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Cottages of Hope</a>
+            <a class="navbar-brand" href="/index.php?inbox">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
-                <li <?php echoActiveClassIfRequestMatches("/index.php?inbox", "/index.php") ?>><a href="index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
-                <li <?php echoActiveClassIfRequestMatches("/index.php?reports", "/index.php?reports") ?>><a href="index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
+                <li><a href="/index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
+                <li><a href="/index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo ucwords($_SESSION['user_name']); ?><span class="caret"></span>
                         <ul class="dropdown-menu">
-                            <li><a href="#editAccountModal" id="editAccount" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit Account</a></li>
+                            <li><a onclick="showEditAccountModal()" href="" id="editAccount" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit Account</a></li>
                             <li><a href="#adminLogoutConfirmModal" id="logout" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> 
                         </ul>
                 </li>
@@ -51,7 +39,7 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
                 <p>Are you sure you want to logout?</p>
             </div>
             <div class="modal-footer">
-                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Logout</a>
+                <a href="/index.php?logout" class="btn btn-danger btn-ok">Yes, Logout</a>
             </div>
         </div>
     </div>
@@ -70,25 +58,25 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
                         <div class="form-group">
                             <label for="COHfirstName" class="col-sm-2 control-label">COH First Name:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHfirstName" placeholder="COH First Name" value="<?php echo $_SESSION['COH_FirstName']; ?>" required data-parsley-required-message="Please enter the COH First Name">
+                                <input type="text" class="form-control" id="COHfirstName" placeholder="COH First Name" required data-parsley-required-message="Please enter the COH First Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHlastName" class="col-sm-2 control-label">COH Last Name:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHlastName" placeholder="COH Last Name" value="<?php echo $_SESSION['COH_LastName']; ?>" required data-parsley-required-message="Please enter the COH Last Name">
+                                <input type="text" class="form-control" id="COHlastName" placeholder="COH Last Name" required data-parsley-required-message="Please enter the COH Last Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHemail" class="col-sm-2 control-label">COH Email:</label>
                             <div class="col-xs-4">
-                                <input type="email" class="form-control" id="COHemail" placeholder="COH Email" value="<?php echo $_SESSION['COH_Email']; ?>" required data-parsley-required-message="Please enter the COH Email Address"/>
+                                <input type="email" class="form-control" id="COHemail" placeholder="COH Email" required data-parsley-required-message="Please enter the COH Email Address"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="COHphone" class="col-sm-2 control-label">COH Phone:</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" value="<?php echo $_SESSION['COH_Phone']; ?>" required data-parsley-required-message="Please enter the COH Phone Number"/>
+                                <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" required data-parsley-required-message="Please enter the COH Phone Number"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -114,3 +102,29 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('a[href="' + this.location.pathname + this.location.search + '"]').parent().addClass('active');
+    });
+
+    function showEditAccountModal()
+    {
+        AjaxSubmit_GetCOHContact();
+        $('#editAccountModal').modal('show');
+    }
+
+    function AjaxSubmit_GetCOHContact()
+    {
+        var postJSONData = '{}';
+        SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact);
+    }
+
+    function AjaxSuccess_GetCOHContact(returnJSONData)
+    {
+        $('#COHfirstName').val(returnJSONData.data[0].firstname);
+        $('#COHlastName').val(returnJSONData.data[0].lastname);
+        $('#COHemail').val(returnJSONData.data[0].email);
+        $('#COHphone').val(returnJSONData.data[0].phone);
+    }
+</script>

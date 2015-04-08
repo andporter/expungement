@@ -4,7 +4,7 @@
   Input: $_GET['method'] = []
 
   Output: A JSON formatted HTTP response
- 
+
   Original Script: http://markroland.com/blog/restful-php-api/
  */
 
@@ -246,6 +246,41 @@ switch ($_GET['method'])
 
             $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
+        break;
+
+    case "getCOHContact":
+        {
+            $COHContact = array();
+
+            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+            if (!$db_connection->connect_errno)
+            {
+                $sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
+                $result = $db_connection->query($sql);
+
+                if ($result->num_rows > 0)
+                {
+                    while ($row = $result->fetch_assoc())
+                    {
+                        $COHContact[] = $row;
+                    }
+                }
+
+                $db_connection->close();
+
+                $response['code'] = 1;
+                $response['data'] = $COHContact;
+            }
+            else //connection errors
+            {
+                $response['code'] = 0;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+        }
+
+        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+
         break;
 
     case "newMethod":

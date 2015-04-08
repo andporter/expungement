@@ -25,20 +25,6 @@ if (isset($login))
         }
     }
 }
-
-$db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-if (!$db_connection->connect_errno)
-{
-    $sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
-    $result = $db_connection->query($sql);
-    $data = mysqli_fetch_assoc($result);
-
-    $_SESSION['COH_FirstName'] = $data['firstname'];
-    $_SESSION['COH_LastName'] = $data['lastname'];
-    $_SESSION['COH_Email'] = $data['email'];
-    $_SESSION['COH_Phone'] = $data['phone'];
-}
 ?>
 
 <body>
@@ -174,10 +160,10 @@ if (!$db_connection->connect_errno)
                         <div class="well">
                             <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
                             <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
-                            <p>Phone: Call Cottages of Hope (<?php echo $_SESSION['COH_Phone']; ?>) and ask for <?php $_SESSION['COH_FirstName']; ?> the Expungement Specialist.</p>
-                            <p>Email: Email <?php echo $_SESSION['COH_FirstName']; ?> at <a href="mailto:<?php echo $_SESSION['COH_Email']; ?>?Subject=Expungement"><?php echo $_SESSION['COH_Email']; ?></a> Please use “Expungement” as the subject</p>
+                            <p>Phone: Call Cottages of Hope (<span id="spanCOH_Phone"></span>) and ask for <span id="spanCOH_FirstName"></span> the Expungement Specialist.</p>
+                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
                         </div>
-                        <form class="form-horizontal" id="contactForm" data-parsley-validate>
+                        <form class="form-horizontal" id="formContact" data-parsley-validate>
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
@@ -226,11 +212,11 @@ if (!$db_connection->connect_errno)
     <script type="text/javascript">
 
         $(function () {
-            $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) 
+            $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
                 // if one of these blocks is not failing do not prevent submission
                 // we use here group validation with option force (validate even non required fields)
-                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true)) 
+                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
                 {
                     $('.invalid-form-error-message').html('');
                     return;
@@ -260,11 +246,12 @@ if (!$db_connection->connect_errno)
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
+                AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
                 $('#divContactModal').modal('show');
             });
 
-            $('#contactForm').submit(function (e)
+            $('#formContact').submit(function (e)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialContactForm();
@@ -283,7 +270,7 @@ if (!$db_connection->connect_errno)
         });
 
         var alreadyUploadedInitialFormThisSession = false;
-        
+
         function AjaxSubmit_InitialForm()
         {
             if (alreadyUploadedInitialFormThisSession === false)
@@ -353,5 +340,20 @@ if (!$db_connection->connect_errno)
                     '"}';
             SendAjax("api/api.php?method=contactForm", postJSONData, "none");
         }
+
+        function AjaxSubmit_GetCOHContact()
+        {
+            var postJSONData = '{}';
+            SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact);
+        }
+
+        function AjaxSuccess_GetCOHContact(returnJSONData)
+        {
+            $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
+            $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
+            $('#spanCOH_Email').text(returnJSONData.data[0].email);
+            $('#aCOH_Email').attr("href","mailto:"+returnJSONData.data[0].email+"?Subject=Expungement");
+        }
+
     </script>
 </body>
