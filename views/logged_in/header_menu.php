@@ -108,9 +108,18 @@
         $('a[href="' + this.location.pathname + this.location.search + '"]').parent().addClass('active');
     });
 
+    var alreadyReceivedCOHContactThisSession = false;
     function showEditAccountModal()
     {
-        AjaxSubmit_GetCOHContact();
+        if (alreadyReceivedCOHContactThisSession === false)
+        {
+            AjaxSubmit_GetCOHContact();
+        }
+        else
+        {
+            console.log("COH Contact already received for this session");
+        }
+        
         $('#editAccountModal').modal('show');
     }
 
@@ -126,5 +135,7 @@
         $('#COHlastName').val(returnJSONData.data[0].lastname);
         $('#COHemail').val(returnJSONData.data[0].email);
         $('#COHphone').val(returnJSONData.data[0].phone);
+        
+        alreadyReceivedCOHContactThisSession = true;
     }
 </script>

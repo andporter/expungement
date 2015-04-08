@@ -282,12 +282,6 @@ switch ($_GET['method'])
         $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
 
         break;
-
-    case "newMethod":
-        {
-            
-        }
-        break;
 }
 
 // --- Step 4: Deliver Response

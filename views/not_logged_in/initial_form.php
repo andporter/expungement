@@ -31,30 +31,26 @@ if (isset($login))
     <form id="formInitial" data-parsley-validate>
         <div id="divTanf" class="container theme-showcase">
             <div class="alert alert-warning" role="alert">
-                <strong>Note: </strong>Completion of these questions will help us determine how we might be able to assist you with expunging your criminal record.
+                <strong>Note: </strong>In order for Cottages of Hope to potentially assist you with the expungement process please answer all of the following questions.
             </div>
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">TANF (Temporary Assistance for Needy Families)</h3>
+                    <h3 class="panel-title">General Information</h3>
                 </div>
                 <div class="panel-body">
                     <ol>
                         <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="tanfq1" value="1" required data-parsley-errors-container="#tq1-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="tanfq1" value="0" required data-parsley-errors-container="#tq1-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="tanfq1" value="1" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="tanfq1" value="0" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="tq1-invalid-form-error-message"></div>
 
                         <h4><li>Are you receiving any assistance from a Department of Workforce program, such as Medicaid, CHIP, Food Stamps, Refugee Cash Assistance, Family Employment Program, Temporary Assistance for Needy Families, or the WIC program?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="tanfq2" value="1" required data-parsley-errors-container="#tq2-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="tanfq2" value="0" required data-parsley-errors-container="#tq2-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="tanfq2" value="1" required data-parsley-errors-container="#tq2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="tanfq2" value="0" required data-parsley-errors-container="#tq2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="tq2-invalid-form-error-message"></div>
                     </ol>
-                    <!--</form>-->
-                    <!--<hr/>-->
-                    <!--<button id="buttonTanfNext" class="btn btn-primary pull-right">Next</button>-->
-                    <!--<input id="buttonTanfNext" type="submit" value="Next" class="btn btn-primary pull-right" />-->
                 </div>
             </div>
         </div>
@@ -65,83 +61,81 @@ if (isset($login))
                     <h3 class="panel-title">Initial Expungement Questionnaire</h3>
                 </div>
                 <div class="panel-body">
-                    <!--<form id="formInitial" data-parsley-validate>-->
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q1-invalid-form-error-message"></div>
 
                         <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q2-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a felony in the last seven years?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq3" value="1" required data-parsley-errors-container="#q3-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq3" value="0" required data-parsley-errors-container="#q3-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq3" value="1" required data-parsley-errors-container="#q3-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq3" value="0" required data-parsley-errors-container="#q3-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q3-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a Class A misdemeanor in the last five years?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq4" value="1" required data-parsley-errors-container="#q4-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq4" value="0" required data-parsley-errors-container="#q4-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq4" value="1" required data-parsley-errors-container="#q4-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq4" value="0" required data-parsley-errors-container="#q4-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q4-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a Class B misdemeanor in the last four years?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq5" value="1" required data-parsley-errors-container="#q5-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq5" value="0" required data-parsley-errors-container="#q5-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq5" value="1" required data-parsley-errors-container="#q5-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq5" value="0" required data-parsley-errors-container="#q5-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q5-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a Class C misdemeanor in the last three years?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq6" value="1" required data-parsley-errors-container="#q6-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq6" value="0" required data-parsley-errors-container="#q6-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq6" value="1" required data-parsley-errors-container="#q6-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq6" value="0" required data-parsley-errors-container="#q6-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q6-invalid-form-error-message"></div>
 
                         <h4><li>Have you ever been convicted of a 1st degree felony or capitol offense?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq7" value="1" required data-parsley-errors-container="#q7-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq7" value="0" required data-parsley-errors-container="#q7-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq7" value="1" required data-parsley-errors-container="#q7-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq7" value="0" required data-parsley-errors-container="#q7-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q7-invalid-form-error-message"></div>
 
                         <h4><li>Have you ever been convicted of a felony automobile homicide?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq8" value="1" required data-parsley-errors-container="#q8-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq8" value="0" required data-parsley-errors-container="#q8-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq8" value="1" required data-parsley-errors-container="#q8-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq8" value="0" required data-parsley-errors-container="#q8-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q8-invalid-form-error-message"></div>
 
                         <h4><li>Are you or have you ever been a registered sex offender?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq9" value="1" required data-parsley-errors-container="#q9-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq9" value="0" required data-parsley-errors-container="#q9-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq9" value="1" required data-parsley-errors-container="#q9-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq9" value="0" required data-parsley-errors-container="#q9-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q9-invalid-form-error-message"></div>
 
                         <h4><li>Have you ever been convicted of a felony DUI?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq10" value="1" required data-parsley-errors-container="#q10-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq10" value="0" required data-parsley-errors-container="#q10-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq10" value="1" required data-parsley-errors-container="#q10-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq10" value="0" required data-parsley-errors-container="#q10-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q10-invalid-form-error-message"></div>
 
                         <h4><li> Have you ever been convicted of a misdemeanor DUI in the last 10 years? </li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq11" value="1" required data-parsley-errors-container="#q11-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq11" value="0" required data-parsley-errors-container="#q11-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq11" value="1" required data-parsley-errors-container="#q11-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq11" value="0" required data-parsley-errors-container="#q11-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q11-invalid-form-error-message"></div>
 
                         <h4><li> Have you ever been convicted of a violent felony? </li></h4>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default"><input type="radio" name="initialq12" value="1" required data-parsley-errors-container="#q12-invalid-form-error-message"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq12" value="0" required data-parsley-errors-container="#q12-invalid-form-error-message"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq12" value="1" required data-parsley-errors-container="#q12-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq12" value="0" required data-parsley-errors-container="#q12-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q12-invalid-form-error-message"></div>
                     </ol>
                     <hr/>
                     <input type="submit" value="Submit" class="btn btn-primary pull-right" />
-                    <!--<button id="buttonInitialBack" class="btn btn-primary">Back</button>-->
                 </div>
             </div>
         </div>
@@ -230,18 +224,6 @@ if (isset($login))
                         .addClass("parsley-required");
                 return;
             });
-
-//            $('#buttonTanfNext').click(function ()
-//            {
-//                $("#divTanf").hide();
-//                $("#divInital").fadeIn();
-//            });
-//
-//            $('#buttonInitialBack').click(function ()
-//            {
-//                $("#divInital").hide();
-//                $("#divTanf").fadeIn();
-//            });
 
             $('#formInitial').submit(function (e)
             {
