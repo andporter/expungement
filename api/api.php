@@ -256,7 +256,7 @@ switch ($_GET['method'])
 
             if (!$db_connection->connect_errno)
             {
-                $sql = "SELECT firstname, lastname, email, phone FROM cohcontact LIMIT 1;";
+                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
                 $result = $db_connection->query($sql);
 
                 if ($result->num_rows > 0)

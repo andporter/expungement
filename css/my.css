@@ -16,10 +16,6 @@ body {
 div.col-xs-4 {
     padding: 0;
 }
-/*
-#divInital {
-    display:none;
-}*/
 
 button.btn.btn-default, a.btn.btn-default {
     height: 34px;
@@ -28,4 +24,9 @@ button.btn.btn-default, a.btn.btn-default {
 label.btn.btn-default.active{
     color: white;
     background-color: #337ab7;
+}
+
+li.parsley-required {
+    color: red;
+    font-weight: bold;
 }
