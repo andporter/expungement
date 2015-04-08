@@ -1,16 +1,16 @@
-function SendAjax(urlMethod, inData, returnFunction) {
+function SendAjax(urlMethod, postJSONData, returnFunction) {
     $.ajax({
         type: "POST",
-        data: {"data": inData},
+        data: {"data": postJSONData},
         dataType: "json",
         url: urlMethod,
-        success: function (returnData)
+        success: function (returnJSONData)
         {
             console.log("Ajax Success! URL: " + urlMethod);
 
-            if (returnData !== null && returnFunction !== "none")
+            if (returnJSONData !== null && returnFunction !== "none")
             {
-                returnFunction(returnData);
+                returnFunction(returnJSONData);
             }
         },
         error: function (xhr, status, error)

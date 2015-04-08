@@ -105,7 +105,7 @@ function echoActiveClassIfRequestMatches($requestUri, $requestUri2)
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <input type="submit" value="Save" class="btn btn-primary pull-right" />
+                                <input type="submit" value="Save" class="btn btn-success pull-right" />
                             </div>
                         </div>
                     </form>

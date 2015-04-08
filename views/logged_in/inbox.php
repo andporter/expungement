@@ -14,6 +14,11 @@
            data-export-types="['csv', 'excel']"
            data-toolbar="#inboxToolbar"
            data-classes="table table-hover table-condensed"
+           data-pagination="true"
+           data-page-size="20"
+           data-height="810"
+           data-maintain-selected="true"
+           data-show-footer="true"
            data-striped="true"
            data-sort-name="date"
            data-sort-order="desc"
@@ -60,42 +65,36 @@
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
-                <a href="#" class="btn btn-danger btn-ok" id="incrementConfirmButton">Yes, Increment</a>
+                <a href="#" class="btn btn-success btn-ok" id="incrementConfirmButton">Yes, Increment</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-//    $(function () {
-//        $('[rel="tooltip"]').tooltip()
-//    })
-
-
     $(function () {
-        getInboxContactsAjaxSubmit();
+        //$('[rel="tooltip"]').tooltip();
+        AjaxSubmit_getInboxContacts();
     });
 
-    $('#deleteConfirmButton').click(function () {
+    $('#deleteConfirmButton').click(function () 
+    {
         alert('Delete Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
     });
 
-    $('#incrementConfirmButton').click(function () {
+    $('#incrementConfirmButton').click(function () 
+    {
         alert('Increment Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
     });
 
-    function getInboxContactsAjaxSubmit()
+    function AjaxSubmit_getInboxContacts()
     {
-        var urlMethod = "api/api.php?method=adminGetInboxContacts&format=json";
-        var jsonData = '{}';
-        SendAjax(urlMethod, jsonData, success_getInboxContactsAjaxSubmit);
+        var postJSONData = '{}';
+        SendAjax("api/api.php?method=adminGetInboxContacts", postJSONData, AjaxSuccess_getInboxContacts);
     }
 
-    function success_getInboxContactsAjaxSubmit(returnData)
+    function AjaxSuccess_getInboxContacts(returnJSONData)
     {
-        $('#inboxTable').bootstrapTable({
-            data: returnData.data
-        });
+        $('#inboxTable').bootstrapTable({data: returnJSONData.data});
     }
-
 </script>

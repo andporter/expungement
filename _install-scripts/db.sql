@@ -83,5 +83,5 @@ CREATE TABLE ExpungementFormStats (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO cohcontact (firstname, lastname, email, phone) VALUES ('Paul','Morgan','pmorgan@cottagesofhope.org','801-393-4011');
+INSERT INTO CoHContact (firstname, lastname, email, phone) VALUES ('Paul','Morgan','pmorgan@cottagesofhope.org','801-393-4011');
 INSERT INTO users (user_name, user_password_hash, user_email) VALUES ('admin','$2y$10$wgoNdq6ZAMcR29tNohnwpugEsN0PXMtrrSD.TjNZOX9c41y6kpIJO','admin@example.com');

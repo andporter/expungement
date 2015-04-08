@@ -1,26 +1,42 @@
 <?php
 
 /*
-  Input:
-  $_GET['format'] = [ json | html | xml ]
-  $_GET['method'] = []
+  Input: $_GET['method'] = []
 
-  Output: A formatted HTTP response
+  Output: A JSON formatted HTTP response
+ 
+  Original Script: http://markroland.com/blog/restful-php-api/
  */
-
-// --- Step 1: Initialize variables and functions
 
 require_once("../classes/Login.php");
 require_once("../config/db.php");
 $login = new Login();
 
+// Define whether an HTTPS connection is required
+$HTTPS_required = FALSE;
+
+// Set default HTTP response
+$response['code'] = 0;
+$response['status'] = 404;
+$response['data'] = NULL;
+
+// Define API response codes and their related HTTP response
+$api_response_code = array(
+    0 => array('HTTP Response' => 400, 'Message' => 'Unknown Error'),
+    1 => array('HTTP Response' => 200, 'Message' => 'Success'),
+    2 => array('HTTP Response' => 403, 'Message' => 'HTTPS Required'),
+    3 => array('HTTP Response' => 401, 'Message' => 'Authentication Required'),
+    4 => array('HTTP Response' => 401, 'Message' => 'Authentication Failed'),
+    5 => array('HTTP Response' => 404, 'Message' => 'Invalid Request'),
+    6 => array('HTTP Response' => 400, 'Message' => 'Invalid Response Format')
+);
+
 /**
  * Deliver HTTP Response
- * @param string $format The desired HTTP response content type: [json, html, xml]
  * @param string $api_response The desired HTTP response data
- * @return void
+ * @return void (will echo json)
  * */
-function deliver_response($format, $api_response)
+function deliver_response($api_response)
 {
     // Define HTTP responses
     $http_response_code = array(
@@ -34,73 +50,20 @@ function deliver_response($format, $api_response)
     // Set HTTP Response
     header('HTTP/1.1 ' . $api_response['status'] . ' ' . $http_response_code[$api_response['status']]);
 
-    // Process different content types
-    if (strcasecmp($format, 'json') == 0)
-    {
+    // Set HTTP Response Content Type
+    header('Content-Type: application/json; charset=utf-8');
 
-        // Set HTTP Response Content Type
-        header('Content-Type: application/json; charset=utf-8');
+    // Format data into a JSON response
+    $json_response = json_encode($api_response);
 
-        // Format data into a JSON response
-        $json_response = json_encode($api_response);
-
-        // Deliver formatted data
-        echo $json_response;
-    }
-    elseif (strcasecmp($format, 'xml') == 0)
-    {
-
-        // Set HTTP Response Content Type
-        header('Content-Type: application/xml; charset=utf-8');
-
-        // Format data into an XML response (This is only good at handling string data, not arrays)
-        $xml_response = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
-                '<response>' . "\n" .
-                "\t" . '<code>' . $api_response['code'] . '</code>' . "\n" .
-                "\t" . '<data>' . $api_response['data'] . '</data>' . "\n" .
-                '</response>';
-
-        // Deliver formatted data
-        echo $xml_response;
-    }
-    else
-    {
-
-        // Set HTTP Response Content Type (This is only good at handling string data, not arrays)
-        header('Content-Type: text/html; charset=utf-8');
-
-        // Deliver formatted data
-        echo $api_response['data'];
-    }
+    // Deliver formatted data
+    echo $json_response;
 
     // End script process
     exit;
 }
 
-// Define whether an HTTPS connection is required
-$HTTPS_required = FALSE;
-
-// Define whether user authentication is required
-$authentication_required = FALSE;
-
-// Define API response codes and their related HTTP response
-$api_response_code = array(
-    0 => array('HTTP Response' => 400, 'Message' => 'Unknown Error'),
-    1 => array('HTTP Response' => 200, 'Message' => 'Success'),
-    2 => array('HTTP Response' => 403, 'Message' => 'HTTPS Required'),
-    3 => array('HTTP Response' => 401, 'Message' => 'Authentication Required'),
-    4 => array('HTTP Response' => 401, 'Message' => 'Authentication Failed'),
-    5 => array('HTTP Response' => 404, 'Message' => 'Invalid Request'),
-    6 => array('HTTP Response' => 400, 'Message' => 'Invalid Response Format')
-);
-
-// Set default HTTP response of 'ok'
-$response['code'] = 0;
-$response['status'] = 404;
-$response['data'] = NULL;
-
-// --- Step 2: Authorization
-// Optionally require connections to be made via HTTPS
+// --- Step 2: Optionally require connections to be made via HTTPS
 if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
 {
     $response['code'] = 2;
@@ -110,34 +73,6 @@ if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
     // Return Response to browser. This will exit the script.
     deliver_response($_GET['format'], $response);
 }
-
-// Optionally require user authentication (we are not using this because we have another login checker)
-if ($authentication_required)
-{
-
-    if (empty($_POST['username']) || empty($_POST['password']))
-    {
-        $response['code'] = 3;
-        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-        $response['data'] = $api_response_code[$response['code']]['Message'];
-
-        // Return Response to browser
-        deliver_response($_GET['format'], $response);
-    }
-
-    // Return an error response if user fails authentication. This is a very simplistic example
-    // that should be modified for security in a production environment
-    elseif ($_POST['username'] != 'foo' && $_POST['password'] != 'bar')
-    {
-        $response['code'] = 4;
-        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-        $response['data'] = $api_response_code[$response['code']]['Message'];
-
-        // Return Response to browser
-        deliver_response($_GET['format'], $response);
-    }
-}
-
 
 // --- Step 3: Process Request
 switch ($_GET['method'])
@@ -204,7 +139,7 @@ switch ($_GET['method'])
 
                         $response['code'] = 1;
                     }
-                    else //conneciton errors
+                    else //connection errors
                     {
                         $response['code'] = 0;
                     }
@@ -251,7 +186,7 @@ switch ($_GET['method'])
 
                         $response['code'] = 1;
                     }
-                    else //conneciton errors
+                    else //connection errors
                     {
                         $response['code'] = 0;
                     }
@@ -297,6 +232,11 @@ switch ($_GET['method'])
                     $response['code'] = 1;
                     $response['data'] = $InboxContacts;
                 }
+                else //connection errors
+                {
+                    $response['code'] = 0;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                }
             }
             else //user not logged in
             {
@@ -316,6 +256,4 @@ switch ($_GET['method'])
 }
 
 // --- Step 4: Deliver Response
-// Return Response to browser
-deliver_response($_GET['format'], $response);
-?>
+deliver_response($response);

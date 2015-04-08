@@ -225,12 +225,13 @@ if (!$db_connection->connect_errno)
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) {
-
+        $(function () {
+            $('#contactForm').parsley().subscribe('parsley:form:validate', function (formInstance) 
+            {
                 // if one of these blocks is not failing do not prevent submission
                 // we use here group validation with option force (validate even non required fields)
-                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true)) {
+                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true)) 
+                {
                     $('.invalid-form-error-message').html('');
                     return;
                 }
@@ -259,14 +260,14 @@ if (!$db_connection->connect_errno)
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
-                InitialFormAjaxSubmit();
+                AjaxSubmit_InitialForm();
                 $('#divContactModal').modal('show');
             });
 
             $('#contactForm').submit(function (e)
             {
                 e.preventDefault();
-                InitialContactFormAjaxSubmit();
+                AjaxSubmit_InitialContactForm();
                 $('#divContactModal').modal('hide');
             });
 
@@ -283,7 +284,7 @@ if (!$db_connection->connect_errno)
 
         var alreadyUploadedInitialFormThisSession = false;
         
-        function InitialFormAjaxSubmit()
+        function AjaxSubmit_InitialForm()
         {
             if (alreadyUploadedInitialFormThisSession === false)
             {
@@ -302,8 +303,7 @@ if (!$db_connection->connect_errno)
                 var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
                 var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
 
-                var urlMethod = "api/api.php?method=initialForm&format=json";
-                var jsonData = '{"tanfq1" : ' + tanfq1 +
+                var postJSONData = '{"tanfq1" : ' + tanfq1 +
                         ',"tanfq2" : ' + tanfq2 +
                         ',"initialq1" : ' + initialq1 +
                         ',"initialq2" : ' + initialq2 +
@@ -318,7 +318,7 @@ if (!$db_connection->connect_errno)
                         ',"initialq11" : ' + initialq11 +
                         ',"initialq12" : ' + initialq12 +
                         '}';
-                SendAjax(urlMethod, jsonData, success_InitialFormAjaxSubmit);
+                SendAjax("api/api.php?method=initialForm", postJSONData, AjaxSuccess_InitialForm);
             }
             else
             {
@@ -326,12 +326,12 @@ if (!$db_connection->connect_errno)
             }
         }
 
-        function success_InitialFormAjaxSubmit(returnData)
+        function AjaxSuccess_InitialForm(returnJSONData)
         {
             alreadyUploadedInitialFormThisSession = true;
         }
 
-        function InitialContactFormAjaxSubmit()
+        function AjaxSubmit_InitialContactForm()
         {
             var ic_FirstName = $('input[name=firstName]').val();
             var ic_LastName = $('input[name=lastName]').val();
@@ -346,13 +346,12 @@ if (!$db_connection->connect_errno)
                 ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
             }
 
-            var urlMethod = "api/api.php?method=contactForm&format=json";
-            var jsonData = '{"ic_FirstName" : "' + ic_FirstName +
+            var postJSONData = '{"ic_FirstName" : "' + ic_FirstName +
                     '","ic_LastName" : "' + ic_LastName +
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
-            SendAjax(urlMethod, jsonData, "none");
+            SendAjax("api/api.php?method=contactForm", postJSONData, "none");
         }
     </script>
 </body>
