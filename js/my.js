@@ -1,9 +1,10 @@
-function SendAjax(urlMethod, postJSONData, returnFunction) {
+function SendAjax(urlMethod, postJSONData, returnFunction, asyncTorF) {
     $.ajax({
         type: "POST",
         data: {"data": postJSONData},
         dataType: "json",
         url: urlMethod,
+        async: asyncTorF,
         success: function (returnJSONData)
         {
             console.log("Ajax Success! URL: " + urlMethod);

@@ -79,18 +79,31 @@
 
     $('#deleteConfirmButton').click(function () 
     {
-        alert('Delete Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
+        var jsonInboxContacts = $('#inboxTable').bootstrapTable('getSelections');
+        var postData = new Array();
+        
+        jsonInboxContacts.forEach(function(obj) { 
+            postData.push(obj.id);
+        });
+        
+        var postJSONData = JSON.stringify(postData);
+        console.log(postJSONData);
+        
+        SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, AjaxSuccess_getInboxContacts, true);
+        
+        $('#DeleteContactsConfirmModal').modal('hide');
+        AjaxSubmit_getInboxContacts();
     });
 
     $('#incrementConfirmButton').click(function () 
     {
-        alert('Increment Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
+        console.log('Increment Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
     });
 
     function AjaxSubmit_getInboxContacts()
     {
         var postJSONData = '{}';
-        SendAjax("api/api.php?method=adminGetInboxContacts", postJSONData, AjaxSuccess_getInboxContacts);
+        SendAjax("api/api.php?method=adminGetInboxContacts", postJSONData, AjaxSuccess_getInboxContacts, true);
     }
 
     function AjaxSuccess_getInboxContacts(returnJSONData)

@@ -287,7 +287,7 @@ if (isset($login))
                         ',"initialq11" : ' + initialq11 +
                         ',"initialq12" : ' + initialq12 +
                         '}';
-                SendAjax("api/api.php?method=initialForm", postJSONData, AjaxSuccess_InitialForm);
+                SendAjax("api/api.php?method=initialForm", postJSONData, AjaxSuccess_InitialForm, true);
             }
             else
             {
@@ -320,13 +320,13 @@ if (isset($login))
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
-            SendAjax("api/api.php?method=contactForm", postJSONData, "none");
+            SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
         }
 
         function AjaxSubmit_GetCOHContact()
         {
             var postJSONData = '{}';
-            SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact);
+            SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
         }
 
         function AjaxSuccess_GetCOHContact(returnJSONData)

@@ -134,7 +134,6 @@ switch ($_GET['method'])
                         $initialq12 = $jsonData['initialq12'];
                         $sql->execute();
 
-                        $sql->close();
                         $db_connection->close();
 
                         $response['code'] = 1;
@@ -181,7 +180,6 @@ switch ($_GET['method'])
                         $ic_Phone = $jsonData['ic_Phone'];
                         $sql->execute();
 
-                        $sql->close();
                         $db_connection->close();
 
                         $response['code'] = 1;
@@ -281,6 +279,61 @@ switch ($_GET['method'])
 
         $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
 
+        break;
+
+    case "adminDeleteInboxContact":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            foreach ($jsonData as $id)
+                            {
+                                $sql = $db_connection->prepare("DELETE FROM InboxContacts WHERE id = ?");
+                                $sql->bind_param("i", $jsonData[$id]);
+                                $sql->execute();
+                            }
+                            
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                            $response['data'] = 'Connection Error';
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                        $response['data'] = 'JsonEmpty';
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                    $response['data'] = 'No Post Data';
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+                $response['data'] = 'Not logged in';
+            }
+
+            //$response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
         break;
 }
 

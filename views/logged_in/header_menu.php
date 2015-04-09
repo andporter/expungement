@@ -126,7 +126,7 @@
     function AjaxSubmit_GetCOHContact()
     {
         var postJSONData = '{}';
-        SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact);
+        SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
     }
 
     function AjaxSuccess_GetCOHContact(returnJSONData)

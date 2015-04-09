@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span> 
             </button>
-            <a class="navbar-brand" href="/">Cottages of Hope</a>
+            <a class="navbar-brand" href="/index.php">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
@@ -30,7 +30,7 @@
 <div id="adminLoginModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content well">
-            <form method="post" action="/" data-parsley-validate>
+            <form method="post" action="/index.php" data-parsley-validate>
                 <div class="modal-header">
                     <h4><span class="glyphicon glyphicon-log-in"></span> Admin Login</h4>
                 </div>
@@ -49,7 +49,7 @@
 <div id="expungementFormLoginModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content well">
-            <form method="post" action="/" data-parsley-validate>
+            <form method="post" action="/index.php" data-parsley-validate>
                 <div class="modal-header">
                     <h4><span class="glyphicon glyphicon-list-alt"></span> Expungment Form Login</h4>
                 </div>
