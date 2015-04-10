@@ -20,20 +20,35 @@ require_once("classes/Login.php");
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 $login = new Login();
 
-require("views/globalCSS.php");
-require("views/globalJS.php");
+require_once("views/globalCSS.php");
+require_once("views/globalJS.php");
 
 if ($login->isUserLoggedIn() == true)  //the user is logged in.
 {
-    require("views/logged_in/header_menu.php");
+    switch (key($_GET))
+    {
+        case "reports":
+            {
+                require("views/logged_in/header_menu.php");
+                require("views/logged_in/reports.php");
+            }
+            break;
 
-    if (isset($_GET["reports"]))
-    {
-        require("views/logged_in/reports.php");
-    }
-    else //inbox is default view
-    {
-        require("views/logged_in/inbox.php");
+        case "expungementForm":
+            {
+                //show the expungement page and then log out
+                require("views/logged_in/expungement_form.php");
+                $login->doLogout();
+            }
+            break;
+        
+        //inbox is the default
+        case "inbox":
+        default:
+            {
+                require("views/logged_in/header_menu.php");
+                require("views/logged_in/inbox.php");
+            }
     }
 }
 else //the user is not logged in.

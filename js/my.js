@@ -16,10 +16,10 @@ function SendAjax(urlMethod, postJSONData, returnFunction, asyncTorF) {
         },
         error: function (xhr, status, error)
         {
-            console.log("Ajax Error! URL: " + urlMethod);
-            console.log(xhr);
-            console.log(status);
-            console.log(error);
+            console.error("Ajax Error! URL: " + urlMethod);
+            console.error(xhr);
+            console.error(status);
+            console.error(error);
         }
     });
 }

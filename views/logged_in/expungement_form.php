@@ -1,37 +1,8 @@
-<?php
-if (isset($login)) // show potential errors / feedback (from login object)
-{
-    if ($login->errors)
-    {
-        foreach ($login->errors as $error)
-        {
-            echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
-            echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
-            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
-            echo "</div>";
-            echo "</div>";
-        }
-    }
-    if ($login->messages)
-    {
-        foreach ($login->messages as $message)
-        {
-            echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
-            echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
-            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
-            echo "</div>";
-            echo "</div>";
-        }
-    }
-}
-?>
+<?php ?>
 
 <body>
     <form id="formInitial" data-parsley-validate>
         <div id="divTanf" class="container theme-showcase">
-            <div class="alert alert-warning" role="alert">
-                <strong>Note: </strong>In order for Cottages of Hope to potentially assist you with the expungement process please answer all of the following questions.
-            </div>
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">General Information</h3>
@@ -57,7 +28,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
         <div id="divInital" class="container theme-showcase">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Initial Expungement Questionnaire</h3>
+                    <h3 class="panel-title">Expungement Questionnaire</h3>
                 </div>
                 <div class="panel-body">
                     <ol>
@@ -154,7 +125,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
                             <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
                             <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
                             <p>Phone: Call Cottages of Hope (<span id="spanCOH_Phone"></span>) and ask for <span id="spanCOH_FirstName"></span> the Expungement Specialist.</p>
-                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
+                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use "Expungement" as the subject</p>
                         </div>
                         <form class="form-horizontal" id="formContact" data-parsley-validate>
                             <div class="form-group">
@@ -203,7 +174,6 @@ if (isset($login)) // show potential errors / feedback (from login object)
     </div>
 
     <script type="text/javascript">
-
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -239,7 +209,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 $('#divContactModal').modal('hide');
             });
 
-            window.setTimeout(function () {
+            window.setTimeout(function () 
+            {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
@@ -333,8 +304,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
             $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
             $('#spanCOH_Email').text(returnJSONData.data[0].email);
-            $('#aCOH_Email').attr("href","mailto:"+returnJSONData.data[0].email+"?Subject=Expungement");
+            $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
         }
-
     </script>
 </body>

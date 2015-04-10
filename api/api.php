@@ -71,7 +71,7 @@ if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
     $response['data'] = $api_response_code[$response['code']]['Message'];
 
     // Return Response to browser. This will exit the script.
-    deliver_response($_GET['format'], $response);
+    deliver_response($response);
 }
 
 // --- Step 3: Process Request

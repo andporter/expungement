@@ -106,6 +106,7 @@
 <script>
     $(document).ready(function () {
         $('a[href="' + this.location.pathname + this.location.search + '"]').parent().addClass('active');
+        console.log("<?php echo 'PHP SessionID: ' . session_id()?>");
     });
 
     var alreadyReceivedCOHContactThisSession = false;
