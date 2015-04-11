@@ -1,6 +1,4 @@
-<?php
-
-?>
+<?php ?>
 
 <div class="container-fluid" role="main">
     <div id="inboxToolbar" class="btn-group">
@@ -44,10 +42,10 @@
                 <h4><span class="glyphicon glyphicon-trash"></span> Confirm Delete</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the selected contacts?</p>
+                <p>Delete the selected contacts?</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <a href="#" class="btn btn-danger btn-ok" id="deleteConfirmButton">Yes, Delete</a>
             </div>
         </div>
@@ -61,10 +59,10 @@
                 <h4><span class="glyphicon glyphicon glyphicon-plus"></span> Confirm Increment</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to increment the selected contact attempt?</p>
+                <p>Increment the selected contact attempts?</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <a href="#" class="btn btn-success btn-ok" id="incrementConfirmButton">Yes, Increment</a>
             </div>
         </div>
@@ -77,39 +75,37 @@
         AjaxSubmit_getInboxContacts();
     });
 
-    $('#deleteConfirmButton').click(function () 
+    $('#deleteConfirmButton').click(function ()
     {
-        var jsonInboxContacts = $('#inboxTable').bootstrapTable('getSelections');
-        var postData = new Array();
-        
-        jsonInboxContacts.forEach(function(obj) { 
-            postData.push(obj.id);
-        });
-        
-        var postJSONData = JSON.stringify(postData);
-        
+        var postJSONData = getSelectedRowIDs();
+
         SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
-        
-        $('#DeleteContactsConfirmModal').modal('hide');
+
         AjaxSubmit_getInboxContacts();
+        $('#DeleteContactsConfirmModal').modal('hide');
     });
 
-    $('#incrementConfirmButton').click(function () 
+    $('#incrementConfirmButton').click(function ()
+    {
+        var postJSONData = getSelectedRowIDs();
+
+        SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
+
+        AjaxSubmit_getInboxContacts();
+        $('#IncrementCountConfirmModal').modal('hide');
+    });
+
+    function getSelectedRowIDs()
     {
         var jsonInboxContacts = $('#inboxTable').bootstrapTable('getSelections');
         var postData = new Array();
-        
-        jsonInboxContacts.forEach(function(obj) { 
+
+        jsonInboxContacts.forEach(function (obj) {
             postData.push(obj.id);
         });
-        
-        var postJSONData = JSON.stringify(postData);
-        
-        SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
-        
-        $('#IncrementCountConfirmModal').modal('hide');
-        AjaxSubmit_getInboxContacts();
-    });
+
+        return JSON.stringify(postData);
+    }
 
     function AjaxSubmit_getInboxContacts()
     {
@@ -122,5 +118,5 @@
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
         $('#inboxTable').bootstrapTable('load', returnJSONData.data);
     }
-    
+
 </script>

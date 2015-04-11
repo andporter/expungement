@@ -29,7 +29,7 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
     {
         case "reports":
             {
-                require("views/logged_in/header_menu.php");
+                require("views/logged_in/admin_header_menu.php");
                 require("views/logged_in/reports.php");
             }
             break;
@@ -46,7 +46,7 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
         case "inbox":
         default:
             {
-                require("views/logged_in/header_menu.php");
+                require("views/logged_in/admin_header_menu.php");
                 require("views/logged_in/inbox.php");
             }
     }

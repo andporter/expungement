@@ -30,3 +30,7 @@ li.parsley-required {
     color: red;
     font-weight: bold;
 }
+
+div#reports{
+    display: none;
+}

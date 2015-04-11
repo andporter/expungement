@@ -103,10 +103,21 @@
     </div>
 </div>
 
+<div id="progressBarModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content well">
+            <h4><span class="glyphicon glyphicon-hourglass"></span> Loading...</h4>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $('a[href="' + this.location.pathname + this.location.search + '"]').parent().addClass('active');
-        console.log("<?php echo 'PHP SessionID: ' . session_id()?>");
+        //console.log("<?php echo 'PHP SessionID: ' . session_id()?>");
     });
 
     var alreadyReceivedCOHContactThisSession = false;

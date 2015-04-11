@@ -20,7 +20,7 @@ $response['code'] = 0;
 $response['status'] = 404;
 $response['data'] = NULL;
 
-// Define API response codes and their related HTTP response
+// Define API response codes AND their related HTTP response
 $api_response_code = array(
     0 => array('HTTP Response' => 400, 'Message' => 'Unknown Error'),
     1 => array('HTTP Response' => 200, 'Message' => 'Success'),
@@ -204,6 +204,41 @@ switch ($_GET['method'])
         }
         break;
 
+    case "getCOHContact":
+        {
+            $COHContact = array();
+
+            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+            if (!$db_connection->connect_errno)
+            {
+                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
+                $result = $db_connection->query($sql);
+
+                if ($result->num_rows > 0)
+                {
+                    while ($row = $result->fetch_assoc())
+                    {
+                        $COHContact[] = $row;
+                    }
+                }
+
+                $db_connection->close();
+
+                $response['code'] = 1;
+                $response['data'] = $COHContact;
+            }
+            else //connection errors
+            {
+                $response['code'] = 0;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+        }
+
+        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+
+        break;
+
     case "adminGetInboxContacts":
         {
             if ($login->isUserLoggedIn() == true) //requires login
@@ -244,41 +279,6 @@ switch ($_GET['method'])
 
             $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
-        break;
-
-    case "getCOHContact":
-        {
-            $COHContact = array();
-
-            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-            if (!$db_connection->connect_errno)
-            {
-                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
-                $result = $db_connection->query($sql);
-
-                if ($result->num_rows > 0)
-                {
-                    while ($row = $result->fetch_assoc())
-                    {
-                        $COHContact[] = $row;
-                    }
-                }
-
-                $db_connection->close();
-
-                $response['code'] = 1;
-                $response['data'] = $COHContact;
-            }
-            else //connection errors
-            {
-                $response['code'] = 0;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
-            }
-        }
-
-        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-
         break;
 
     case "adminDeleteInboxContact":
@@ -381,6 +381,71 @@ switch ($_GET['method'])
             }
 
             $response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminReportGetInitialFormAttemptedSuccess":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 2)*100) as percent");
+                            $sql->bind_param("ssssssss", $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate);
+
+                            $fromDate = $jsonData['fromDate'];
+                            $toDate = $jsonData['toDate'];
+                            $sql->execute();                        
+
+                            $result = $sql->get_result();
+
+                            if ($result->num_rows > 0)
+                            {
+                                while ($row = $result->fetch_assoc())
+                                {
+                                    $AttemptedSuccess[] = $row;
+                                }
+                            }
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                            $response['data'] = $AttemptedSuccess;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                            $response['data'] = $api_response_code[$response['code']]['Message'];
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                        $response['data'] = $api_response_code[$response['code']]['Message'];
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+
             $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
