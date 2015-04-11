@@ -31,6 +31,7 @@ li.parsley-required {
     font-weight: bold;
 }
 
-div#reports{
+div#reports,
+div#inboxContacts{
     display: none;
 }

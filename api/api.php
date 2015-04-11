@@ -206,8 +206,6 @@ switch ($_GET['method'])
 
     case "getCOHContact":
         {
-            $COHContact = array();
-
             $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
             if (!$db_connection->connect_errno)
@@ -217,6 +215,8 @@ switch ($_GET['method'])
 
                 if ($result->num_rows > 0)
                 {
+                    $COHContact = array();
+                    
                     while ($row = $result->fetch_assoc())
                     {
                         $COHContact[] = $row;
@@ -243,8 +243,6 @@ switch ($_GET['method'])
         {
             if ($login->isUserLoggedIn() == true) //requires login
             {
-                $InboxContacts = array();
-
                 $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
                 if (!$db_connection->connect_errno)
@@ -254,6 +252,8 @@ switch ($_GET['method'])
 
                     if ($result->num_rows > 0)
                     {
+                        $InboxContacts = array();
+                        
                         while ($row = $result->fetch_assoc())
                         {
                             $InboxContacts[] = $row;
@@ -400,17 +400,19 @@ switch ($_GET['method'])
 
                         if (!$db_connection->connect_errno)
                         {
-                            $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 2)*100) as percent");
+                            $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 1)*100) as percent");
                             $sql->bind_param("ssssssss", $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate);
 
                             $fromDate = $jsonData['fromDate'];
                             $toDate = $jsonData['toDate'];
-                            $sql->execute();                        
+                            $sql->execute();
 
                             $result = $sql->get_result();
 
                             if ($result->num_rows > 0)
                             {
+                                $AttemptedSuccess = array();
+                                
                                 while ($row = $result->fetch_assoc())
                                 {
                                     $AttemptedSuccess[] = $row;
@@ -446,6 +448,59 @@ switch ($_GET['method'])
                 $response['data'] = $api_response_code[$response['code']]['Message'];
             }
 
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminUpdateCOHContact":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE ID = 1");
+                            $sql->bind_param("ssss", $newCOHfirstName, $newCOHlastName, $newCOHemail, $newCOHphone);
+
+                            $newCOHfirstName = $jsonData['newCOHfirstName'];
+                            $newCOHlastName = $jsonData['newCOHlastName'];
+                            $newCOHemail = $jsonData['newCOHemail'];
+                            $newCOHphone = $jsonData['newCOHphone'];
+                            $sql->execute();
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+            }
+
+            $response['data'] = $api_response_code[$response['code']]['Message'];
             $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;

@@ -229,14 +229,12 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
-                $('#divContactModal').modal('show');
             });
 
             $('#formContact').submit(function (e)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialContactForm();
-                $('#divContactModal').modal('hide');
             });
 
             window.setTimeout(function () {
@@ -286,19 +284,17 @@ if (isset($login)) // show potential errors / feedback (from login object)
                         ',"initialq11" : ' + initialq11 +
                         ',"initialq12" : ' + initialq12 +
                         '}';
-                SendAjax("api/api.php?method=initialForm", postJSONData, AjaxSuccess_InitialForm, true);
+                SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
+                alreadyUploadedInitialFormThisSession = true;
             }
             else
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
+            
+            $('#divContactModal').modal('show');
         }
-
-        function AjaxSuccess_InitialForm(returnJSONData)
-        {
-            alreadyUploadedInitialFormThisSession = true;
-        }
-
+        
         function AjaxSubmit_InitialContactForm()
         {
             var ic_FirstName = $('input[name=firstName]').val();
@@ -320,6 +316,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
             SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
+            
+            $('#divContactModal').modal('hide');
         }
 
         function AjaxSubmit_GetCOHContact()
@@ -333,7 +331,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
             $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
             $('#spanCOH_Email').text(returnJSONData.data[0].email);
-            $('#aCOH_Email').attr("href","mailto:"+returnJSONData.data[0].email+"?Subject=Expungement");
+            $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
         }
 
     </script>

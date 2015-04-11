@@ -1,6 +1,6 @@
 <?php ?>
 
-<div class="container-fluid" role="main">
+<div id="inboxContacts" class="container-fluid" role="main">
     <div id="inboxToolbar" class="btn-group">
         <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
@@ -72,6 +72,7 @@
 <script>
     $(function () {
         //$('[rel="tooltip"]').tooltip();
+        $('#progressBarModal').modal('show');
         AjaxSubmit_getInboxContacts();
     });
 
@@ -117,6 +118,11 @@
     {
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
         $('#inboxTable').bootstrapTable('load', returnJSONData.data);
+        
+        setTimeout(function () {
+            $('#inboxContacts').fadeIn();
+            $('#progressBarModal').modal('hide');
+        }, 1000);
     }
 
 </script>

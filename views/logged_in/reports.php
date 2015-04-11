@@ -62,23 +62,23 @@ date_default_timezone_set('America/Denver');
         $('#runreport').click(function ()
         {
             $('#progressBarModal').modal('show');
-            AjaxSubmit_ReportGetInitialFormAttemptedSuccess();
+            AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
         });
 
 
     });
 
-    function AjaxSubmit_ReportGetInitialFormAttemptedSuccess()
+    function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
     {
         var fromDate = ($("#fromdatepicker").val() + ' ' + '00:00:00');
         var toDate = ($("#todatepicker").val() + ' ' + '23:59:59');
         var postJSONData = '{"fromDate" : "' + fromDate +
                         '","toDate" : "' + toDate +
                         '"}';;
-        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess", postJSONData, AjaxSuccess_ReportGetInitialFormAttemptedSuccess, true);
+        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
     }
 
-    function AjaxSuccess_ReportGetInitialFormAttemptedSuccess(returnJSONData)
+    function AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess(returnJSONData)
     {
         $('#attemptedSuccess').bootstrapTable({data: returnJSONData.data});
         $('#attemptedSuccess').bootstrapTable('load', returnJSONData.data);
