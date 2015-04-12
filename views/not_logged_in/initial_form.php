@@ -27,6 +27,10 @@ if (isset($login))
 }
 ?>
 
+
+<link href="bootstrap-modal-carousel.css" rel="stylesheet" />
+<script src="bootstrap-modal-carousel.js"/></script>
+
 <body>
     <form id="formInitial" data-parsley-validate>
         <div id="divTanf" class="container theme-showcase">
@@ -202,6 +206,115 @@ if (isset($login))
             </div>
         </div>
     </div>
+    
+    
+
+    <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="#myCarousel" data-slide-to="4"></li>
+            <li data-target="#myCarousel" data-slide-to="5"></li>
+            <li data-target="#myCarousel" data-slide-to="6"></li>
+            <li data-target="#myCarousel" data-slide-to="7"></li>
+            <li data-target="#myCarousel" data-slide-to="8"></li>
+            <li data-target="#myCarousel" data-slide-to="9"></li>
+            <li data-target="#myCarousel" data-slide-to="10"></li>
+            <li data-target="#myCarousel" data-slide-to="11"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img data-src="images/1.jpg text:First slide" alt="First slide">
+                <div class="carousel-caption">
+                    <h3>Question 1</h3>
+                </div>
+            </div>
+            <div>
+                <img src="images/2.jpg text:Second slide" alt="Second slide">
+                <div class="carousel-caption">
+                    <h3>Question 2</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/3.jpg text:Third Slide" alt="Third slide">
+                <div class="carousel-caption">
+                    <h3>Question 3</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/4.jpg text:Fourth Slide" alt="Fourth slide">
+                <div class="carousel-caption">
+                    <h3>Question 4</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/5.jpg text:Fifth Slide" alt="Fifth Slide">
+                <div class="carousel-caption">
+                    <h3>Question 5</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/6.jpg text:Sixth Slide" alt="Sixth Slide">
+                <div class="carousel-caption">
+                    <h3>Question 6</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/7.jpg text:Seventh Slide" alt="Seventh Slide">
+                <div class="carousel-caption">
+                    <h3>Question 7</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/8.jpg text:Eight Slide" alt="Eight Slide">
+                <div class="carousel-caption">
+                    <h3>Question 8</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/9.jpg text:Ninth Slide" alt="Ninth Slide">
+                <div class="carousel-caption">
+                    <h3>Question 9</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/10.jpg text:Tenth Slide" alt="Tenth Slide">
+                <div class="carousel-caption">
+                    <h3>Question 10</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/11.jpg text:Eleventh Slide" alt="Eleventh Slide">
+                <div class="carousel-caption">
+                    <h3>Question 11</h3>
+                </div>
+            </div>
+            <div>
+                <img data-src="images/12.jpg text:Twelfth Slide" alt="Twelfth Slide">
+                <div class="carousel-caption">
+                    <h3>Question 12</h3>
+                </div>
+            </div>    
+            
+            
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+
+    
+    
 
     <script type="text/javascript">
 
@@ -230,7 +343,12 @@ if (isset($login))
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
-                $('#divContactModal').modal('show');
+                for(int i = 0; i < 12; i++)
+                {
+                    if(document.getElementsByClassName("intial")[i].value)  $('#myCarousel').modal('show)');
+                }    
+                else $('#divContactModal').modal('show');
+ 
             });
 
             $('#formContact').submit(function (e)
