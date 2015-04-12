@@ -158,6 +158,62 @@ switch ($_GET['method'])
         }
         break;
 
+    case "expungementForm":
+        {
+            if (isset($_POST["data"]))
+            {
+                $data = $_POST["data"];
+                $jsonData = json_decode($data, true);
+
+                if ($jsonData !== null)
+                {
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    if (!$db_connection->connect_errno)
+                    {
+                        $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        $sql->bind_param("iiiiiiiiiiiiii", $tanfq1, $tanfq2, $expungementq1, $expungementq2, $expungementq3, $expungementq4, $expungementq5, $expungementq6, $expungementq7, $expungementq8, $expungementq9, $expungementq10, $expungementq11, $expungementq12);
+
+                        $tanfq1 = $jsonData['tanfq1'];
+                        $tanfq2 = $jsonData['tanfq2'];
+                        $expungementq1 = $jsonData['expungementq1'];
+                        $expungementq2 = $jsonData['expungementq2'];
+                        $expungementq3 = $jsonData['expungementq3'];
+                        $expungementq4 = $jsonData['expungementq4'];
+                        $expungementq5 = $jsonData['expungementq5'];
+                        $expungementq6 = $jsonData['expungementq6'];
+                        $expungementq7 = $jsonData['expungementq7'];
+                        $expungementq8 = $jsonData['expungementq8'];
+                        $expungementq9 = $jsonData['expungementq9'];
+                        $expungementq10 = $jsonData['expungementq10'];
+                        $expungementq11 = $jsonData['expungementq11'];
+                        $expungementq12 = $jsonData['expungementq12'];
+                        $sql->execute();
+
+                        $db_connection->close();
+
+                        $response['code'] = 1;
+                    }
+                    else //connection errors
+                    {
+                        $response['code'] = 0;
+                    }
+                }
+                else //jsonData is empty
+                {
+                    $response['code'] = 5;
+                }
+            }
+            else //no post data
+            {
+                $response['code'] = 5;
+            }
+
+            $response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
     case "contactForm":
         {
             if (isset($_POST["data"]))
@@ -216,7 +272,7 @@ switch ($_GET['method'])
                 if ($result->num_rows > 0)
                 {
                     $COHContact = array();
-                    
+
                     while ($row = $result->fetch_assoc())
                     {
                         $COHContact[] = $row;
@@ -253,7 +309,7 @@ switch ($_GET['method'])
                     if ($result->num_rows > 0)
                     {
                         $InboxContacts = array();
-                        
+
                         while ($row = $result->fetch_assoc())
                         {
                             $InboxContacts[] = $row;
@@ -412,7 +468,74 @@ switch ($_GET['method'])
                             if ($result->num_rows > 0)
                             {
                                 $AttemptedSuccess = array();
-                                
+
+                                while ($row = $result->fetch_assoc())
+                                {
+                                    $AttemptedSuccess[] = $row;
+                                }
+                            }
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                            $response['data'] = $AttemptedSuccess;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                            $response['data'] = $api_response_code[$response['code']]['Message'];
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                        $response['data'] = $api_response_code[$response['code']]['Message'];
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminReportGetInitialFormFrequentlyMissed":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN ? AND ?;");
+                            $sql->bind_param("ss", $fromDate, $toDate);
+
+                            $fromDate = $jsonData['fromDate'];
+                            $toDate = $jsonData['toDate'];
+                            $sql->execute();
+
+                            $result = $sql->get_result();
+
+                            if ($result->num_rows > 0)
+                            {
+                                $AttemptedSuccess = array();
+
                                 while ($row = $result->fetch_assoc())
                                 {
                                     $AttemptedSuccess[] = $row;
