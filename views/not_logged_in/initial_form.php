@@ -206,11 +206,13 @@ if (isset($login)) // show potential errors / feedback (from login object)
         </div>
     </div>
     
-    
-
-
-    <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" aria-hidden="true">
-        <!-- Indicators -->
+    <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
+        
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="panel-content panel-success">
+        
+        <!-- Indicators  -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -225,6 +227,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             <li data-target="#myCarousel" data-slide-to="10"></li>
             <li data-target="#myCarousel" data-slide-to="11"></li>
         </ol>
+       
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
@@ -233,85 +236,49 @@ if (isset($login)) // show potential errors / feedback (from login object)
             for(int j = 1; j < 13; j++)
             //    if(Document.getElementById("q"+j) = 1)
             //    {
-            $('body').append('<div>  <img data-src="images/" + j + ".jpg"> <div class="carousel-caption">  <h3>Question j.toString()</h3> </div> </div>'');
+            $('body').append('<div>  <img src="images/" + j + ".jpg"> <div class="carousel-caption">  <h3>Question j.toString()</h3> </div> </div>'');
             //    }
             </script>
             -->
             
             
-            <div>
-                <img data-src="images/1.jpg" alt="First slide" class="active">
-                <div class="carousel-caption">
-                    <h3>Question 1</h3>
-                </div>
+            <div class="item active">
+                <img src="images/1.jpg" alt="First slide" class="active">
             </div>            
-            <div>
-                <img data-src="images/2.jpg" alt="Second slide">
-                <div class="carousel-caption">
-                    <h3>Question 2</h3>
-                </div>
+            <div class="item">
+                <img src="images/2.jpg" alt="Second slide">
             </div>
-            <div>
-                <img data-src="images/3.jpg" alt="Third slide">
-                <div class="carousel-caption">
-                    <h3>Question 3</h3>
-                </div>
+            <div class="item">
+                <img src="images/3.jpg" alt="Third slide">
             </div>
-            <div>
-                <img data-src="images/4.jpg" alt="Fourth slide">
-                <div class="carousel-caption">
-                    <h3>Question 4</h3>
-                </div>
+            <div  class="item">
+                <img src="images/4.jpg" alt="Fourth slide">
             </div>
-            <div>
-                <img data-src="images/5.jpg" alt="Fifth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 5</h3>
-                </div>
+            <div  class="item">
+                <img src="images/5.jpg" alt="Fifth Slide">
             </div>
-            <div>
-                <img data-src="images/6.jpg" alt="Sixth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 6</h3>
-                </div>
+            <div  class="item">
+                <img src="images/6.jpg" alt="Sixth Slide">
             </div>
-            <div>
-                <img data-src="images/7.jpg" alt="Seventh Slide">
-                <div class="carousel-caption">
-                    <h3>Question 7</h3>
-                </div>
+            <div  class="item">
+                <img src="images/7.jpg" alt="Seventh Slide">
             </div>
-            <div>
-                <img data-src="images/8.jpg" alt="Eight Slide">
-                <div class="carousel-caption">
-                    <h3>Question 8</h3>
-                </div>
+            <div  class="item">
+                <img src="images/8.jpg" alt="Eight Slide">
             </div>
-            <div>
-                <img data-src="images/9.jpg" alt="Ninth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 9</h3>
-                </div>
+            <div  class="item">
+                <img src="images/9.jpg" alt="Ninth Slide">
             </div>
-            <div>
-                <img data-src="images/10.jpg" alt="Tenth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 10</h3>
-                </div>
+            <div  class="item">
+                <img src="images/10.jpg" alt="Tenth Slide">
             </div>
-            <div>
-                <img data-src="images/11.jpg" alt="Eleventh Slide">
-                <div class="carousel-caption">
-                    <h3>Question 11</h3>
-                </div>
+            <div  class="item">
+                <img src="images/11.jpg" alt="Eleventh Slide">
             </div>
-            <div>
-                <img data-src="images/12.jpg" alt="Twelfth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 12</h3>
-                </div>
+            <div  class="item">
+                <img src="images/12.jpg" alt="Twelfth Slide">
             </div>    
-            -->
+
             
         </div>
 
@@ -322,6 +289,10 @@ if (isset($login)) // show potential errors / feedback (from login object)
         <a class="right carousel-control" href="#myCarousel" data-slide="next">
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
+        
+         </div>
+         </div>
+         </div>
     </div>
 
     
