@@ -1,8 +1,6 @@
-<?php
+<?php ?>
 
-?>
-
-<div class="container-fluid" role="main">
+<div id="inboxContacts" class="container-fluid" role="main">
     <div id="inboxToolbar" class="btn-group">
         <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
@@ -44,10 +42,10 @@
                 <h4><span class="glyphicon glyphicon-trash"></span> Confirm Delete</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the selected contacts?</p>
+                <p>Delete the selected contacts?</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <a href="#" class="btn btn-danger btn-ok" id="deleteConfirmButton">Yes, Delete</a>
             </div>
         </div>
@@ -61,10 +59,10 @@
                 <h4><span class="glyphicon glyphicon glyphicon-plus"></span> Confirm Increment</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to increment the selected contact attempt?</p>
+                <p>Increment the selected contact attempts?</p>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <a href="#" class="btn btn-success btn-ok" id="incrementConfirmButton">Yes, Increment</a>
             </div>
         </div>
@@ -74,31 +72,41 @@
 <script>
     $(function () {
         //$('[rel="tooltip"]').tooltip();
+        $('#progressBarModal').modal('show');
         AjaxSubmit_getInboxContacts();
     });
 
-    $('#deleteConfirmButton').click(function () 
+    $('#deleteConfirmButton').click(function ()
+    {
+        var postJSONData = getSelectedRowIDs();
+
+        SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
+
+        AjaxSubmit_getInboxContacts();
+        $('#DeleteContactsConfirmModal').modal('hide');
+    });
+
+    $('#incrementConfirmButton').click(function ()
+    {
+        var postJSONData = getSelectedRowIDs();
+
+        SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
+
+        AjaxSubmit_getInboxContacts();
+        $('#IncrementCountConfirmModal').modal('hide');
+    });
+
+    function getSelectedRowIDs()
     {
         var jsonInboxContacts = $('#inboxTable').bootstrapTable('getSelections');
         var postData = new Array();
-        
-        jsonInboxContacts.forEach(function(obj) { 
+
+        jsonInboxContacts.forEach(function (obj) {
             postData.push(obj.id);
         });
-        
-        var postJSONData = JSON.stringify(postData);
-        console.log(postJSONData);
-        
-        SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, AjaxSuccess_getInboxContacts, true);
-        
-        $('#DeleteContactsConfirmModal').modal('hide');
-        AjaxSubmit_getInboxContacts();
-    });
 
-    $('#incrementConfirmButton').click(function () 
-    {
-        console.log('Increment Selected values: ' + JSON.stringify($('#inboxTable').bootstrapTable('getSelections')));
-    });
+        return JSON.stringify(postData);
+    }
 
     function AjaxSubmit_getInboxContacts()
     {
@@ -109,5 +117,12 @@
     function AjaxSuccess_getInboxContacts(returnJSONData)
     {
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
+        $('#inboxTable').bootstrapTable('load', returnJSONData.data);
+        
+        setTimeout(function () {
+            $('#inboxContacts').fadeIn();
+            $('#progressBarModal').modal('hide');
+        }, 1000);
     }
+
 </script>

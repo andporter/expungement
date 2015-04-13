@@ -30,3 +30,8 @@ li.parsley-required {
     color: red;
     font-weight: bold;
 }
+
+div#reports,
+div#inboxContacts{
+    display: none;
+}

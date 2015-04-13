@@ -20,7 +20,7 @@ $response['code'] = 0;
 $response['status'] = 404;
 $response['data'] = NULL;
 
-// Define API response codes and their related HTTP response
+// Define API response codes AND their related HTTP response
 $api_response_code = array(
     0 => array('HTTP Response' => 400, 'Message' => 'Unknown Error'),
     1 => array('HTTP Response' => 200, 'Message' => 'Success'),
@@ -71,7 +71,7 @@ if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
     $response['data'] = $api_response_code[$response['code']]['Message'];
 
     // Return Response to browser. This will exit the script.
-    deliver_response($_GET['format'], $response);
+    deliver_response($response);
 }
 
 // --- Step 3: Process Request
@@ -158,6 +158,62 @@ switch ($_GET['method'])
         }
         break;
 
+    case "expungementForm":
+        {
+            if (isset($_POST["data"]))
+            {
+                $data = $_POST["data"];
+                $jsonData = json_decode($data, true);
+
+                if ($jsonData !== null)
+                {
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    if (!$db_connection->connect_errno)
+                    {
+                        $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        $sql->bind_param("iiiiiiiiiiiiii", $tanfq1, $tanfq2, $expungementq1, $expungementq2, $expungementq3, $expungementq4, $expungementq5, $expungementq6, $expungementq7, $expungementq8, $expungementq9, $expungementq10, $expungementq11, $expungementq12);
+
+                        $tanfq1 = $jsonData['tanfq1'];
+                        $tanfq2 = $jsonData['tanfq2'];
+                        $expungementq1 = $jsonData['expungementq1'];
+                        $expungementq2 = $jsonData['expungementq2'];
+                        $expungementq3 = $jsonData['expungementq3'];
+                        $expungementq4 = $jsonData['expungementq4'];
+                        $expungementq5 = $jsonData['expungementq5'];
+                        $expungementq6 = $jsonData['expungementq6'];
+                        $expungementq7 = $jsonData['expungementq7'];
+                        $expungementq8 = $jsonData['expungementq8'];
+                        $expungementq9 = $jsonData['expungementq9'];
+                        $expungementq10 = $jsonData['expungementq10'];
+                        $expungementq11 = $jsonData['expungementq11'];
+                        $expungementq12 = $jsonData['expungementq12'];
+                        $sql->execute();
+
+                        $db_connection->close();
+
+                        $response['code'] = 1;
+                    }
+                    else //connection errors
+                    {
+                        $response['code'] = 0;
+                    }
+                }
+                else //jsonData is empty
+                {
+                    $response['code'] = 5;
+                }
+            }
+            else //no post data
+            {
+                $response['code'] = 5;
+            }
+
+            $response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
     case "contactForm":
         {
             if (isset($_POST["data"]))
@@ -204,12 +260,45 @@ switch ($_GET['method'])
         }
         break;
 
+    case "getCOHContact":
+        {
+            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+            if (!$db_connection->connect_errno)
+            {
+                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
+                $result = $db_connection->query($sql);
+
+                if ($result->num_rows > 0)
+                {
+                    $COHContact = array();
+
+                    while ($row = $result->fetch_assoc())
+                    {
+                        $COHContact[] = $row;
+                    }
+                }
+
+                $db_connection->close();
+
+                $response['code'] = 1;
+                $response['data'] = $COHContact;
+            }
+            else //connection errors
+            {
+                $response['code'] = 0;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+        }
+
+        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+
+        break;
+
     case "adminGetInboxContacts":
         {
             if ($login->isUserLoggedIn() == true) //requires login
             {
-                $InboxContacts = array();
-
                 $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
                 if (!$db_connection->connect_errno)
@@ -219,6 +308,8 @@ switch ($_GET['method'])
 
                     if ($result->num_rows > 0)
                     {
+                        $InboxContacts = array();
+
                         while ($row = $result->fetch_assoc())
                         {
                             $InboxContacts[] = $row;
@@ -246,41 +337,6 @@ switch ($_GET['method'])
         }
         break;
 
-    case "getCOHContact":
-        {
-            $COHContact = array();
-
-            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-            if (!$db_connection->connect_errno)
-            {
-                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
-                $result = $db_connection->query($sql);
-
-                if ($result->num_rows > 0)
-                {
-                    while ($row = $result->fetch_assoc())
-                    {
-                        $COHContact[] = $row;
-                    }
-                }
-
-                $db_connection->close();
-
-                $response['code'] = 1;
-                $response['data'] = $COHContact;
-            }
-            else //connection errors
-            {
-                $response['code'] = 0;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
-            }
-        }
-
-        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-
-        break;
-
     case "adminDeleteInboxContact":
         {
             if ($login->isUserLoggedIn() == true) //requires login
@@ -296,13 +352,14 @@ switch ($_GET['method'])
 
                         if (!$db_connection->connect_errno)
                         {
+                            $sql = $db_connection->prepare("DELETE FROM InboxContacts WHERE id = ?");
+
                             foreach ($jsonData as $id)
                             {
-                                $sql = $db_connection->prepare("DELETE FROM InboxContacts WHERE id = ?");
-                                $sql->bind_param("i", $jsonData[$id]);
+                                $sql->bind_param("s", $id);
                                 $sql->execute();
                             }
-                            
+
                             $db_connection->close();
 
                             $response['code'] = 1;
@@ -310,28 +367,263 @@ switch ($_GET['method'])
                         else //connection errors
                         {
                             $response['code'] = 0;
-                            $response['data'] = 'Connection Error';
                         }
                     }
                     else //jsonData is empty
                     {
                         $response['code'] = 5;
-                        $response['data'] = 'JsonEmpty';
                     }
                 }
                 else //no post data
                 {
                     $response['code'] = 5;
-                    $response['data'] = 'No Post Data';
                 }
             }
             else //user not logged in
             {
                 $response['code'] = 3;
-                $response['data'] = 'Not logged in';
             }
 
-            //$response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminIncrementInboxContactAttempt":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("UPDATE InboxContacts SET contactattempts = (contactattempts + 1) WHERE id = ?");
+
+                            foreach ($jsonData as $id)
+                            {
+                                $sql->bind_param("s", $id);
+                                $sql->execute();
+                            }
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+            }
+
+            $response['data'] = $api_response_code[$response['code']]['Message'];
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminReportGetInitialFormAttemptedSuccess":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 1)*100) as percent");
+                            $sql->bind_param("ssssssss", $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate);
+
+                            $fromDate = $jsonData['fromDate'];
+                            $toDate = $jsonData['toDate'];
+                            $sql->execute();
+
+                            $result = $sql->get_result();
+
+                            if ($result->num_rows > 0)
+                            {
+                                $AttemptedSuccess = array();
+
+                                while ($row = $result->fetch_assoc())
+                                {
+                                    $AttemptedSuccess[] = $row;
+                                }
+                            }
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                            $response['data'] = $AttemptedSuccess;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                            $response['data'] = $api_response_code[$response['code']]['Message'];
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                        $response['data'] = $api_response_code[$response['code']]['Message'];
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminReportGetInitialFormFrequentlyMissed":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN ? AND ?;");
+                            $sql->bind_param("ss", $fromDate, $toDate);
+
+                            $fromDate = $jsonData['fromDate'];
+                            $toDate = $jsonData['toDate'];
+                            $sql->execute();
+
+                            $result = $sql->get_result();
+
+                            if ($result->num_rows > 0)
+                            {
+                                $AttemptedSuccess = array();
+
+                                while ($row = $result->fetch_assoc())
+                                {
+                                    $AttemptedSuccess[] = $row;
+                                }
+                            }
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                            $response['data'] = $AttemptedSuccess;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                            $response['data'] = $api_response_code[$response['code']]['Message'];
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                        $response['data'] = $api_response_code[$response['code']]['Message'];
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+            }
+
+            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+        }
+        break;
+
+    case "adminUpdateCOHContact":
+        {
+            if ($login->isUserLoggedIn() == true) //requires login
+            {
+                if (isset($_POST["data"]))
+                {
+                    $data = $_POST["data"];
+                    $jsonData = json_decode($data, true);
+
+                    if ($jsonData !== null)
+                    {
+                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                        if (!$db_connection->connect_errno)
+                        {
+                            $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE ID = 1");
+                            $sql->bind_param("ssss", $newCOHfirstName, $newCOHlastName, $newCOHemail, $newCOHphone);
+
+                            $newCOHfirstName = $jsonData['newCOHfirstName'];
+                            $newCOHlastName = $jsonData['newCOHlastName'];
+                            $newCOHemail = $jsonData['newCOHemail'];
+                            $newCOHphone = $jsonData['newCOHphone'];
+                            $sql->execute();
+
+                            $db_connection->close();
+
+                            $response['code'] = 1;
+                        }
+                        else //connection errors
+                        {
+                            $response['code'] = 0;
+                        }
+                    }
+                    else //jsonData is empty
+                    {
+                        $response['code'] = 5;
+                    }
+                }
+                else //no post data
+                {
+                    $response['code'] = 5;
+                }
+            }
+            else //user not logged in
+            {
+                $response['code'] = 3;
+            }
+
+            $response['data'] = $api_response_code[$response['code']]['Message'];
             $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;

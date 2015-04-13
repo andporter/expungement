@@ -30,13 +30,13 @@
 <div id="adminLoginModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content well">
-            <form method="post" action="/index.php" data-parsley-validate>
+            <form method="post" action="/index.php?inbox" data-parsley-validate>
                 <div class="modal-header">
                     <h4><span class="glyphicon glyphicon-log-in"></span> Admin Login</h4>
                 </div>
                 <div class="modal-body">
-                    <p><input id="login_input_username" class="login_input form-control" type="text" name="user_name" placeholder=" Username" required minlength="2" data-parsley-required-message="Please enter your username"/></p>
-                    <p><input id="login_input_password" class="login_input form-control" type="password" name="user_password" placeholder=" Password" autocomplete="off" required minlength="2" data-parsley-required-message="Please enter your password" /></p>
+                    <p><input id="admin_login_input_username" class="login_input form-control" type="text" name="user_name" placeholder=" Username" required minlength="2" data-parsley-required-message="Please enter your username"/></p>
+                    <p><input id="admin_login_input_password" class="login_input form-control" type="password" name="user_password" placeholder=" Password" autocomplete="off" required minlength="2" data-parsley-required-message="Please enter your password" /></p>
                 </div>
                 <div class="modal-footer">
                     <input type="submit" name="login" value="Login" class="btn btn-success btn-ok">                 
@@ -49,7 +49,7 @@
 <div id="expungementFormLoginModal" class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content well">
-            <form method="post" action="/index.php" data-parsley-validate>
+            <form method="post" action="/index.php?expungementForm" data-parsley-validate>
                 <div class="modal-header">
                     <h4><span class="glyphicon glyphicon-list-alt"></span> Expungment Form Login</h4>
                 </div>
@@ -58,7 +58,7 @@
                     <p><input id="login_input_password" class="login_input form-control" type="password" name="user_password" placeholder=" Password" autocomplete="off" required minlength="2" data-parsley-required-message="Please enter your password" /></p>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" name="expungementForm" value="Show Form" class="btn btn-primary btn-ok">                 
+                    <input type="submit" name="login" value="Show Form" class="btn btn-success btn-ok">                 
                 </div>
             </form>
         </div>
@@ -67,7 +67,7 @@
 
 <script type="text/javascript">
     $('#adminLoginModal').on('shown.bs.modal', function () {
-        $('#login_input_username').focus();
+        $('#admin_login_input_username').focus();
     });
     
     $('#expungementFormLoginModal').on('shown.bs.modal', function () {

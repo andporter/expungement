@@ -1,41 +1,8 @@
-<?php
-if (isset($login)) // show potential errors / feedback (from login object)
-{
-    if ($login->errors)
-    {
-        foreach ($login->errors as $error)
-        {
-            echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
-            echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
-            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
-            echo "</div>";
-            echo "</div>";
-        }
-    }
-    if ($login->messages)
-    {
-        foreach ($login->messages as $message)
-        {
-            echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
-            echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
-            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
-            echo "</div>";
-            echo "</div>";
-        }
-    }
-}
-?>
-
-
-<link href="bootstrap-modal-carousel.css" rel="stylesheet" />
-<script src="bootstrap-modal-carousel.js"/></script>
+<?php ?>
 
 <body>
     <form id="formInitial" data-parsley-validate>
         <div id="divTanf" class="container theme-showcase">
-            <div class="alert alert-warning" role="alert">
-                <strong>Note: </strong>In order for Cottages of Hope to potentially assist you with the expungement process please answer all of the following questions.
-            </div>
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">General Information</h3>
@@ -61,7 +28,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
         <div id="divInital" class="container theme-showcase">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Initial Expungement Questionnaire</h3>
+                    <h3 class="panel-title">Expungement Questionnaire</h3>
                 </div>
                 <div class="panel-body">
                     <ol>
@@ -158,7 +125,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
                             <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
                             <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
                             <p>Phone: Call Cottages of Hope (<span id="spanCOH_Phone"></span>) and ask for <span id="spanCOH_FirstName"></span> the Expungement Specialist.</p>
-                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
+                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use "Expungement" as the subject</p>
                         </div>
                         <form class="form-horizontal" id="formContact" data-parsley-validate>
                             <div class="form-group">
@@ -205,118 +172,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
             </div>
         </div>
     </div>
-    
-    
-
-    <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-            <li data-target="#myCarousel" data-slide-to="4"></li>
-            <li data-target="#myCarousel" data-slide-to="5"></li>
-            <li data-target="#myCarousel" data-slide-to="6"></li>
-            <li data-target="#myCarousel" data-slide-to="7"></li>
-            <li data-target="#myCarousel" data-slide-to="8"></li>
-            <li data-target="#myCarousel" data-slide-to="9"></li>
-            <li data-target="#myCarousel" data-slide-to="10"></li>
-            <li data-target="#myCarousel" data-slide-to="11"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img data-src="images/1.jpg text:First slide" alt="First slide">
-                <div class="carousel-caption">
-                    <h3>Question 1</h3>
-                </div>
-            </div>
-            <div>
-                <img src="images/2.jpg text:Second slide" alt="Second slide">
-                <div class="carousel-caption">
-                    <h3>Question 2</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/3.jpg text:Third Slide" alt="Third slide">
-                <div class="carousel-caption">
-                    <h3>Question 3</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/4.jpg text:Fourth Slide" alt="Fourth slide">
-                <div class="carousel-caption">
-                    <h3>Question 4</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/5.jpg text:Fifth Slide" alt="Fifth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 5</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/6.jpg text:Sixth Slide" alt="Sixth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 6</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/7.jpg text:Seventh Slide" alt="Seventh Slide">
-                <div class="carousel-caption">
-                    <h3>Question 7</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/8.jpg text:Eight Slide" alt="Eight Slide">
-                <div class="carousel-caption">
-                    <h3>Question 8</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/9.jpg text:Ninth Slide" alt="Ninth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 9</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/10.jpg text:Tenth Slide" alt="Tenth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 10</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/11.jpg text:Eleventh Slide" alt="Eleventh Slide">
-                <div class="carousel-caption">
-                    <h3>Question 11</h3>
-                </div>
-            </div>
-            <div>
-                <img data-src="images/12.jpg text:Twelfth Slide" alt="Twelfth Slide">
-                <div class="carousel-caption">
-                    <h3>Question 12</h3>
-                </div>
-            </div>    
-            
-            
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-    </div>
-
-    
-    
 
     <script type="text/javascript">
-
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -342,21 +199,18 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
-                for(int i = 0; i < 12; i++)
-                {
-                    if(document.getElementsByClassName("intial")[i].value)  $('#myCarousel').modal('show)');
-                }    
-                else $('#divContactModal').modal('show');
- 
+                $('#divContactModal').modal('show');
             });
 
             $('#formContact').submit(function (e)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialContactForm();
+                $('#divContactModal').modal('hide');
             });
 
-            window.setTimeout(function () {
+            window.setTimeout(function () 
+            {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
@@ -403,17 +257,19 @@ if (isset($login)) // show potential errors / feedback (from login object)
                         ',"initialq11" : ' + initialq11 +
                         ',"initialq12" : ' + initialq12 +
                         '}';
-                SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
-                alreadyUploadedInitialFormThisSession = true;
+                SendAjax("api/api.php?method=initialForm", postJSONData, AjaxSuccess_InitialForm, true);
             }
             else
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
-            
-            $('#divContactModal').modal('show');
         }
-        
+
+        function AjaxSuccess_InitialForm(returnJSONData)
+        {
+            alreadyUploadedInitialFormThisSession = true;
+        }
+
         function AjaxSubmit_InitialContactForm()
         {
             var ic_FirstName = $('input[name=firstName]').val();
@@ -435,8 +291,6 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
             SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
-            
-            $('#divContactModal').modal('hide');
         }
 
         function AjaxSubmit_GetCOHContact()
@@ -452,6 +306,5 @@ if (isset($login)) // show potential errors / feedback (from login object)
             $('#spanCOH_Email').text(returnJSONData.data[0].email);
             $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
         }
-
     </script>
 </body>
