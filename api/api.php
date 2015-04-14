@@ -7,6 +7,7 @@
 
   Original Script: http://markroland.com/blog/restful-php-api/
  */
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 require_once("../classes/Login.php");
 require_once("../config/db.php");
@@ -118,14 +119,12 @@ switch ($_GET['method'])
                 $db_connection->close();
                 $response['code'] = 1;
                 $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -148,14 +147,12 @@ switch ($_GET['method'])
 
                 $response['code'] = 1;
                 $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -178,14 +175,12 @@ switch ($_GET['method'])
 
                 $response['code'] = 1;
                 $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -217,14 +212,12 @@ switch ($_GET['method'])
 
                 $response['code'] = 1;
                 $response['data'] = $ResultsToReturn;
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -258,20 +251,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -299,20 +291,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -340,20 +331,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -387,20 +377,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -434,20 +423,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
@@ -472,20 +460,19 @@ switch ($_GET['method'])
 
                     $response['code'] = 1;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
                     $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
             catch (Exception $e)
             {
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
-            }
-            finally
-            {
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
