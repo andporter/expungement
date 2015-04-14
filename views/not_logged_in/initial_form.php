@@ -26,10 +26,6 @@ if (isset($login)) // show potential errors / feedback (from login object)
 }
 ?>
 
-
-
-
-
 <body>
     <form id="formInitial" data-parsley-validate>
         <div id="divTanf" class="container theme-showcase">
