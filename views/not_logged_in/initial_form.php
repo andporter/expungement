@@ -67,14 +67,14 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
                         <div class="btn-group" data-toggle="buttons" id="q1">
-                            <label class="btn btn-default"><input type="radio" name="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
+                            <label class="btn btn-default"><input type="radio" id="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" id="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q1-invalid-form-error-message"></div>
 
                         <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?</li></h4>
                         <div class="btn-group" data-toggle="buttons" id="q2">
-                            <label class="btn btn-default"><input type="radio" name="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" name="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
+                            <label class="btn btn-default"><input type="radio" id="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" id="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q2-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a felony in the last seven years?</li></h4>
@@ -205,7 +205,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             </div>
         </div>
     </div>
-    
+    <div id="carousel" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
         
         <div class="modal-dialog modal-lg">
@@ -230,7 +230,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
        
 
         <!-- Wrapper for slides -->
-        <div class="carousel-inner">
+        <div class="carousel-inner" id="wrongQs">
             <!--
             <script type="text/javascript"> 
             for(int j = 1; j < 13; j++)
@@ -278,7 +278,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             <div  class="item">
                 <img src="images/12.jpg" alt="Twelfth Slide">
             </div>    
-
+            
             
         </div>
 
@@ -294,12 +294,13 @@ if (isset($login)) // show potential errors / feedback (from login object)
          </div>
          </div>
     </div>
-
+    </div>
     
 
 
     <script type="text/javascript">
         var count = 0;
+        var wrong;
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -325,14 +326,15 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
+                /*
                 for(var i = 0; i < 12; i++)
                 {
-                    count + paresInt(document.getElementById("q" + 1).value);
+                    wrong = parseInt(document.getElementById("initialq" +i).value);
+                    count + wrong;
                 }   
-                //if(count == 0) 
-                $('#myCarousel').modal('show'); 
-                //else 
-                $('#divContactModal').modal('show');
+                //if(parseInt(count) != 0) $('#myCarousel').modal('show'); 
+                */
+                $('#carousel').modal('show');
                 //$('#divContactModal').modal('show');
             });
 
@@ -397,7 +399,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 console.log("Initial Form Already Uploaded for this session");
             }
             
-            $('#divContactModal').modal('show');
+            //$('#divContactModal').modal('show');
         }
         
         function AjaxSubmit_InitialContactForm()
