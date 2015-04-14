@@ -79,18 +79,18 @@
                                 <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" required data-parsley-required-message="Please enter the COH Phone Number"/>
                             </div>
                         </div>
-<!--                        <div class="form-group">
-                            <label for="newPassword" class="col-sm-2 control-label">New Password:</label>
-                            <div class="col-xs-4">
-                                <input type="text" class="form-control" id="newPassword" placeholder="" required data-parsley-required-message="Please enter the new password"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="verifyNewPassword" class="col-sm-2 control-label">Verify:</label>
-                            <div class="col-xs-4">
-                                <input type="text" class="form-control" id="verifyNewPassword" placeholder="" required data-parsley-required-message="Please verify the new password"/>
-                            </div>
-                        </div>-->
+                        <!--                        <div class="form-group">
+                                                    <label for="newPassword" class="col-sm-2 control-label">New Password:</label>
+                                                    <div class="col-xs-4">
+                                                        <input type="text" class="form-control" id="newPassword" placeholder="" required data-parsley-required-message="Please enter the new password"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="verifyNewPassword" class="col-sm-2 control-label">Verify:</label>
+                                                    <div class="col-xs-4">
+                                                        <input type="text" class="form-control" id="verifyNewPassword" placeholder="" required data-parsley-required-message="Please verify the new password"/>
+                                                    </div>
+                                                </div>-->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" value="Save" class="btn btn-success pull-right" />
@@ -125,18 +125,9 @@
         AjaxSubmit_AdminUpdateCOHContact();
     });
 
-    var alreadyReceivedCOHContactThisSession = false;
     function showEditAccountModal()
     {
-        if (alreadyReceivedCOHContactThisSession === false)
-        {
-            AjaxSubmit_GetCOHContact();
-        }
-        else
-        {
-            console.log("COH Contact already received for this session");
-        }
-
+        AjaxSubmit_GetCOHContact();
         $('#editAccountModal').modal('show');
     }
 
@@ -152,25 +143,23 @@
         $('#COHlastName').val(returnJSONData.data[0].lastname);
         $('#COHemail').val(returnJSONData.data[0].email);
         $('#COHphone').val(returnJSONData.data[0].phone);
-
-        alreadyReceivedCOHContactThisSession = true;
     }
 
     function AjaxSubmit_AdminUpdateCOHContact()
-    {   
+    {
         var newCOHfirstName = ($('#COHfirstName').val());
         var newCOHlastName = ($('#COHlastName').val());
         var newCOHemail = ($('#COHemail').val());
         var newCOHphone = ($('#COHphone').val());
-        
+
         var postJSONData = '{"newCOHfirstName" : "' + newCOHfirstName +
-                        '","newCOHlastName" : "' + newCOHlastName +
-                        '","newCOHemail" : "' + newCOHemail +
-                        '","newCOHphone" : "' + newCOHphone +
-                        '"}';;
-        
+                '","newCOHlastName" : "' + newCOHlastName +
+                '","newCOHemail" : "' + newCOHemail +
+                '","newCOHphone" : "' + newCOHphone +
+                '"}';
+
         SendAjax("api/api.php?method=adminUpdateCOHContact", postJSONData, "none", true);
-        
+
         $('#editAccountModal').modal('hide');
     }
 </script>

@@ -70,6 +70,8 @@ date_default_timezone_set('America/Denver');
 
 <script>
     $(function () {
+        runReports();
+        
         $("#fromdatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -86,8 +88,6 @@ date_default_timezone_set('America/Denver');
         {
             runReports();
         });
-
-        runReports();
     });
 
     function runReports()

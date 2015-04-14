@@ -205,97 +205,97 @@ if (isset($login)) // show potential errors / feedback (from login object)
             </div>
         </div>
     </div>
-    
+
     <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
-        
+
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="panel-content panel-success">
-        
-        <!-- Indicators  -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-            <li data-target="#myCarousel" data-slide-to="4"></li>
-            <li data-target="#myCarousel" data-slide-to="5"></li>
-            <li data-target="#myCarousel" data-slide-to="6"></li>
-            <li data-target="#myCarousel" data-slide-to="7"></li>
-            <li data-target="#myCarousel" data-slide-to="8"></li>
-            <li data-target="#myCarousel" data-slide-to="9"></li>
-            <li data-target="#myCarousel" data-slide-to="10"></li>
-            <li data-target="#myCarousel" data-slide-to="11"></li>
-        </ol>
-       
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <!--
-            <script type="text/javascript"> 
-            for(int j = 1; j < 13; j++)
-            //    if(Document.getElementById("q"+j) = 1)
-            //    {
-            $('body').append('<div>  <img src="images/" + j + ".jpg"> <div class="carousel-caption">  <h3>Question j.toString()</h3> </div> </div>'');
-            //    }
-            </script>
-            -->
-            
-            
-            <div class="item active">
-                <img src="images/1.jpg" alt="First slide" class="active">
-            </div>            
-            <div class="item">
-                <img src="images/2.jpg" alt="Second slide">
-            </div>
-            <div class="item">
-                <img src="images/3.jpg" alt="Third slide">
-            </div>
-            <div  class="item">
-                <img src="images/4.jpg" alt="Fourth slide">
-            </div>
-            <div  class="item">
-                <img src="images/5.jpg" alt="Fifth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/6.jpg" alt="Sixth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/7.jpg" alt="Seventh Slide">
-            </div>
-            <div  class="item">
-                <img src="images/8.jpg" alt="Eight Slide">
-            </div>
-            <div  class="item">
-                <img src="images/9.jpg" alt="Ninth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/10.jpg" alt="Tenth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/11.jpg" alt="Eleventh Slide">
-            </div>
-            <div  class="item">
-                <img src="images/12.jpg" alt="Twelfth Slide">
-            </div>    
+                    <!-- Indicators  -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                        <li data-target="#myCarousel" data-slide-to="4"></li>
+                        <li data-target="#myCarousel" data-slide-to="5"></li>
+                        <li data-target="#myCarousel" data-slide-to="6"></li>
+                        <li data-target="#myCarousel" data-slide-to="7"></li>
+                        <li data-target="#myCarousel" data-slide-to="8"></li>
+                        <li data-target="#myCarousel" data-slide-to="9"></li>
+                        <li data-target="#myCarousel" data-slide-to="10"></li>
+                        <li data-target="#myCarousel" data-slide-to="11"></li>
+                    </ol>
 
-            
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <!--
+                        <script type="text/javascript"> 
+                        for(int j = 1; j < 13; j++)
+                        //    if(Document.getElementById("q"+j) = 1)
+                        //    {
+                        $('body').append('<div>  <img src="images/" + j + ".jpg"> <div class="carousel-caption">  <h3>Question j.toString()</h3> </div> </div>'');
+                        //    }
+                        </script>
+                        -->
+
+
+                        <div class="item active">
+                            <img src="images/1.jpg" alt="First slide" class="active">
+                        </div>            
+                        <div class="item">
+                            <img src="images/2.jpg" alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img src="images/3.jpg" alt="Third slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/4.jpg" alt="Fourth slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/5.jpg" alt="Fifth Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/6.jpg" alt="Sixth Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/7.jpg" alt="Seventh Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/8.jpg" alt="Eight Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/9.jpg" alt="Ninth Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/10.jpg" alt="Tenth Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/11.jpg" alt="Eleventh Slide">
+                        </div>
+                        <div  class="item">
+                            <img src="images/12.jpg" alt="Twelfth Slide">
+                        </div>    
+
+
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+
+                </div>
+            </div>
         </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-        
-         </div>
-         </div>
-         </div>
     </div>
 
-    
+
 
 
     <script type="text/javascript">
@@ -325,12 +325,12 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
-                for(var i = 0; i < 12; i++)
+                for (var i = 0; i < 12; i++)
                 {
-                    count + paresInt(document.getElementById("q" + 1).value);
-                }   
+                    count + parseInt(document.getElementById("q" + 1).value);
+                }
                 //if(count == 0) 
-                $('#myCarousel').modal('show'); 
+                $('#myCarousel').modal('show');
                 //else 
                 $('#divContactModal').modal('show');
                 //$('#divContactModal').modal('show');
@@ -340,6 +340,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialContactForm();
+                $('#divContactModal').modal('hide');
             });
 
             window.setTimeout(function () {
@@ -396,10 +397,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
-            
-            $('#divContactModal').modal('show');
         }
-        
+
         function AjaxSubmit_InitialContactForm()
         {
             var ic_FirstName = $('input[name=firstName]').val();
@@ -420,9 +419,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
+
             SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
-            
-            $('#divContactModal').modal('hide');
         }
 
         function AjaxSubmit_GetCOHContact()
