@@ -1,10 +1,7 @@
 <?php
-if (isset($login)) // show potential errors / feedback (from login object)
-{
-    if ($login->errors)
-    {
-        foreach ($login->errors as $error)
-        {
+if (isset($login)) { // show potential errors / feedback (from login object)
+    if ($login->errors) {
+        foreach ($login->errors as $error) {
             echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -12,10 +9,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
             echo "</div>";
         }
     }
-    if ($login->messages)
-    {
-        foreach ($login->messages as $message)
-        {
+    if ($login->messages) {
+        foreach ($login->messages as $message) {
             echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -67,14 +62,14 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     <ol>
                         <h4><li>Do you have any criminal charges pending in court?</li></h4>
                         <div class="btn-group" data-toggle="buttons" id="q1">
-                            <label class="btn btn-default"><input type="radio" id="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" id="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq1" value="1" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq1" value="0" required data-parsley-errors-container="#q1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q1-invalid-form-error-message"></div>
 
                         <h4><li>Do you owe any fines or restitution to the courts or victims as of today’s date?</li></h4>
                         <div class="btn-group" data-toggle="buttons" id="q2">
-                            <label class="btn btn-default"><input type="radio" id="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
-                            <label class="btn btn-default"><input type="radio" id="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq2" value="1" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
+                            <label class="btn btn-default"><input type="radio" name="initialq2" value="0" required data-parsley-errors-container="#q2-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
                         </div><div id="q2-invalid-form-error-message"></div>
 
                         <h4><li>Have you been convicted of a felony in the last seven years?</li></h4>
@@ -205,73 +200,98 @@ if (isset($login)) // show potential errors / feedback (from login object)
             </div>
         </div>
     </div>
+
+
     <div id="carousel" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
+        <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
 
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="panel-content panel-success">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="panel-content panel-success">
+                        <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                        <!-- Indicators  -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                            <li data-target="#myCarousel" data-slide-to="3"></li>
+                            <li data-target="#myCarousel" data-slide-to="4"></li>
+                            <li data-target="#myCarousel" data-slide-to="5"></li>
+                            <li data-target="#myCarousel" data-slide-to="6"></li>
+                            <li data-target="#myCarousel" data-slide-to="7"></li>
+                            <li data-target="#myCarousel" data-slide-to="8"></li>
+                            <li data-target="#myCarousel" data-slide-to="9"></li>
+                            <li data-target="#myCarousel" data-slide-to="10"></li>
+                            <li data-target="#myCarousel" data-slide-to="11"></li>
+                        </ol>
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" id="wrongQs">
-            <!--
-            <script type="text/javascript"> 
-            for(int j = 1; j < 13; j++)
-            //    if(Document.getElementById("q"+j) = 1)
-            //    {
-            $('body').append('<div>  <img src="images/" + j + ".jpg"> <div class="carousel-caption">  <h3>Question j.toString()</h3> </div> </div>'');
-            //    }
-            </script>
-            -->
-            
-            
-            <div class="item active">
-                <img src="images/1.jpg" alt="First slide" class="active">
-            </div>            
-            <div class="item">
-                <img src="images/2.jpg" alt="Second slide">
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" id="wrongQs">
+
+                            
+                            <!--
+                            <div class="item active">
+                                <img src="images/1.jpg" alt="First slide" class="active">
+                            </div>            
+                            <div class="item">
+                                <img src="images/2.jpg" alt="Second slide">
+                            </div>
+                            <div class="item">
+                                <img src="images/3.jpg" alt="Third slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/4.jpg" alt="Fourth slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/5.jpg" alt="Fifth Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/6.jpg" alt="Sixth Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/7.jpg" alt="Seventh Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/8.jpg" alt="Eight Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/9.jpg" alt="Ninth Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/10.jpg" alt="Tenth Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/11.jpg" alt="Eleventh Slide">
+                            </div>
+                            <div  class="item">
+                                <img src="images/12.jpg" alt="Twelfth Slide">
+                            </div>    
+                            -->
+
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
             </div>
-            <div class="item">
-                <img src="images/3.jpg" alt="Third slide">
-            </div>
-            <div  class="item">
-                <img src="images/4.jpg" alt="Fourth slide">
-            </div>
-            <div  class="item">
-                <img src="images/5.jpg" alt="Fifth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/6.jpg" alt="Sixth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/7.jpg" alt="Seventh Slide">
-            </div>
-            <div  class="item">
-                <img src="images/8.jpg" alt="Eight Slide">
-            </div>
-            <div  class="item">
-                <img src="images/9.jpg" alt="Ninth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/10.jpg" alt="Tenth Slide">
-            </div>
-            <div  class="item">
-                <img src="images/11.jpg" alt="Eleventh Slide">
-            </div>
-            <div  class="item">
-                <img src="images/12.jpg" alt="Twelfth Slide">
-            </div>    
-            
-            
         </div>
     </div>
-    </div>
-    
+
 
 
     <script type="text/javascript">
-        var count = 0;
-        var wrong;
+
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -297,14 +317,27 @@ if (isset($login)) // show potential errors / feedback (from login object)
                 e.preventDefault();
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
-                /*
-                for(var i = 0; i < 12; i++)
-                {
-                    wrong = parseInt(document.getElementById("initialq" +i).value);
-                    count + wrong;
-                }   
-                //if(parseInt(count) != 0) $('#myCarousel').modal('show'); 
-                */
+                
+                
+                var count = "0";
+                 for(var i = 0; i < 12; i++)
+                 {
+                 if($('input[name=initialq' + i +' ]:checked', '#formInitial').val() === "1")
+                 {
+                    if(count == "0") 
+                    {    
+                        $('#wrongQs').append('<div class="item active"> <img src="images/' + i +'.jpg" alt="First slide" class="active"> </div>  >');
+                        count + "1";
+                    }
+                    else
+                    {
+                        $('#wrongQs').append('<div class="item"> <img src="images/' + i +'.jpg" alt="First slide" class="active"> </div>  >');
+                    }
+                    
+                 }
+                 }   
+                 //if(parseInt(count) != 0) $('#myCarousel').modal('show'); 
+                 
                 $('#carousel').modal('show');
                 //$('#divContactModal').modal('show');
             });
@@ -370,7 +403,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
-            
+
             //$('#divContactModal').modal('show');
         }
 
