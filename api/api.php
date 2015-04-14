@@ -8,6 +8,7 @@
   Original Script: http://markroland.com/blog/restful-php-api/
  */
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 require_once("../classes/Login.php");
 require_once("../config/db.php");
 $login = new Login();
@@ -104,527 +105,376 @@ switch ($_GET['method'])
 
     case "initialForm":
         {
-            if (isset($_POST["data"]))
+            try
             {
-                $data = $_POST["data"];
-                $jsonData = json_decode($data, true);
+                $jsonData = json_decode($_POST["data"], true);
 
-                if ($jsonData !== null)
-                {
-                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                    if (!$db_connection->connect_errno)
-                    {
-                        $sql = $db_connection->prepare("INSERT INTO InitialFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                        $sql->bind_param("iiiiiiiiiiiiii", $tanfq1, $tanfq2, $initialq1, $initialq2, $initialq3, $initialq4, $initialq5, $initialq6, $initialq7, $initialq8, $initialq9, $initialq10, $initialq11, $initialq12);
+                $sql = $db_connection->prepare("INSERT INTO InitialFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sql->bind_param("iiiiiiiiiiiiii", $jsonData['tanfq1'], $jsonData['tanfq2'], $jsonData['initialq1'], $jsonData['initialq2'], $jsonData['initialq3'], $jsonData['initialq4'], $jsonData['initialq5'], $jsonData['initialq6'], $jsonData['initialq7'], $jsonData['initialq8'], $jsonData['initialq9'], $jsonData['initialq10'], $jsonData['initialq11'], $jsonData['initialq12']);
 
-                        $tanfq1 = $jsonData['tanfq1'];
-                        $tanfq2 = $jsonData['tanfq2'];
-                        $initialq1 = $jsonData['initialq1'];
-                        $initialq2 = $jsonData['initialq2'];
-                        $initialq3 = $jsonData['initialq3'];
-                        $initialq4 = $jsonData['initialq4'];
-                        $initialq5 = $jsonData['initialq5'];
-                        $initialq6 = $jsonData['initialq6'];
-                        $initialq7 = $jsonData['initialq7'];
-                        $initialq8 = $jsonData['initialq8'];
-                        $initialq9 = $jsonData['initialq9'];
-                        $initialq10 = $jsonData['initialq10'];
-                        $initialq11 = $jsonData['initialq11'];
-                        $initialq12 = $jsonData['initialq12'];
-                        $sql->execute();
+                $sql->execute();
 
-                        $db_connection->close();
-
-                        $response['code'] = 1;
-                    }
-                    else //connection errors
-                    {
-                        $response['code'] = 0;
-                    }
-                }
-                else //jsonData is empty
-                {
-                    $response['code'] = 5;
-                }
+                $db_connection->close();
+                $response['code'] = 1;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-            else //no post data
+            catch (Exception $e)
             {
-                $response['code'] = 5;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "expungementForm":
         {
-            if (isset($_POST["data"]))
+            try
             {
-                $data = $_POST["data"];
-                $jsonData = json_decode($data, true);
+                $jsonData = json_decode($_POST["data"], true);
 
-                if ($jsonData !== null)
-                {
-                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                    if (!$db_connection->connect_errno)
-                    {
-                        $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                        $sql->bind_param("iiiiiiiiiiiiii", $tanfq1, $tanfq2, $expungementq1, $expungementq2, $expungementq3, $expungementq4, $expungementq5, $expungementq6, $expungementq7, $expungementq8, $expungementq9, $expungementq10, $expungementq11, $expungementq12);
+                $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $sql->bind_param("iiiiiiiiiiiiii", $jsonData['tanfq1'], $jsonData['tanfq2'], $jsonData['initialq1'], $jsonData['initialq2'], $jsonData['initialq3'], $jsonData['initialq4'], $jsonData['initialq5'], $jsonData['initialq6'], $jsonData['initialq7'], $jsonData['initialq8'], $jsonData['initialq9'], $jsonData['initialq10'], $jsonData['initialq11'], $jsonData['initialq12']);
 
-                        $tanfq1 = $jsonData['tanfq1'];
-                        $tanfq2 = $jsonData['tanfq2'];
-                        $expungementq1 = $jsonData['expungementq1'];
-                        $expungementq2 = $jsonData['expungementq2'];
-                        $expungementq3 = $jsonData['expungementq3'];
-                        $expungementq4 = $jsonData['expungementq4'];
-                        $expungementq5 = $jsonData['expungementq5'];
-                        $expungementq6 = $jsonData['expungementq6'];
-                        $expungementq7 = $jsonData['expungementq7'];
-                        $expungementq8 = $jsonData['expungementq8'];
-                        $expungementq9 = $jsonData['expungementq9'];
-                        $expungementq10 = $jsonData['expungementq10'];
-                        $expungementq11 = $jsonData['expungementq11'];
-                        $expungementq12 = $jsonData['expungementq12'];
-                        $sql->execute();
+                $sql->execute();
 
-                        $db_connection->close();
+                $db_connection->close();
 
-                        $response['code'] = 1;
-                    }
-                    else //connection errors
-                    {
-                        $response['code'] = 0;
-                    }
-                }
-                else //jsonData is empty
-                {
-                    $response['code'] = 5;
-                }
+                $response['code'] = 1;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-            else //no post data
+            catch (Exception $e)
             {
-                $response['code'] = 5;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "contactForm":
         {
-            if (isset($_POST["data"]))
+            try
             {
-                $data = $_POST["data"];
-                $jsonData = json_decode($data, true);
+                $jsonData = json_decode($_POST["data"], true);
 
-                if ($jsonData !== null)
-                {
-                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                    if (!$db_connection->connect_errno)
-                    {
-                        $sql = $db_connection->prepare("INSERT INTO InboxContacts (firstname, lastname, email, phone) VALUES (?,?,?,?)");
-                        $sql->bind_param("ssss", $ic_FirstName, $ic_LastName, $ic_Email, $ic_Phone);
+                $sql = $db_connection->prepare("INSERT INTO InboxContacts (firstname, lastname, email, phone) VALUES (?,?,?,?)");
+                $sql->bind_param("ssss", $jsonData['ic_FirstName'], $jsonData['ic_LastName'], $jsonData['ic_Email'], $jsonData['ic_Phone']);
 
-                        $ic_FirstName = $jsonData['ic_FirstName'];
-                        $ic_LastName = $jsonData['ic_LastName'];
-                        $ic_Email = $jsonData['ic_Email'];
-                        $ic_Phone = $jsonData['ic_Phone'];
-                        $sql->execute();
+                $sql->execute();
 
-                        $db_connection->close();
+                $db_connection->close();
 
-                        $response['code'] = 1;
-                    }
-                    else //connection errors
-                    {
-                        $response['code'] = 0;
-                    }
-                }
-                else //jsonData is empty
-                {
-                    $response['code'] = 5;
-                }
+                $response['code'] = 1;
+                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-            else //no post data
+            catch (Exception $e)
             {
-                $response['code'] = 5;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "getCOHContact":
         {
-            $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-            if (!$db_connection->connect_errno)
+            try
             {
-                $sql = "SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;";
-                $result = $db_connection->query($sql);
+                $jsonData = json_decode($_POST["data"], true);
 
-                if ($result->num_rows > 0)
+                $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                $sql = $db_connection->prepare("SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;");
+                $sql->bind_param();
+
+                $sql->execute();
+
+                $result = $sql->get_result();
+
+                $ResultsToReturn = array();
+
+                while ($row = $result->fetch_assoc())
                 {
-                    $COHContact = array();
-
-                    while ($row = $result->fetch_assoc())
-                    {
-                        $COHContact[] = $row;
-                    }
+                    $ResultsToReturn[] = $row;
                 }
 
                 $db_connection->close();
 
                 $response['code'] = 1;
-                $response['data'] = $COHContact;
+                $response['data'] = $ResultsToReturn;
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-            else //connection errors
+            catch (Exception $e)
             {
                 $response['code'] = 0;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
         }
-
-        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
-
         break;
 
     case "adminGetInboxContacts":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                if (!$db_connection->connect_errno)
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $sql = "SELECT * FROM InboxContacts";
-                    $result = $db_connection->query($sql);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($result->num_rows > 0)
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("SELECT * FROM InboxContacts;");
+                    $sql->bind_param();
+
+                    $sql->execute();
+
+                    $result = $sql->get_result();
+
+                    $ResultsToReturn = array();
+
+                    while ($row = $result->fetch_assoc())
                     {
-                        $InboxContacts = array();
-
-                        while ($row = $result->fetch_assoc())
-                        {
-                            $InboxContacts[] = $row;
-                        }
+                        $ResultsToReturn[] = $row;
                     }
 
                     $db_connection->close();
 
                     $response['code'] = 1;
-                    $response['data'] = $InboxContacts;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //connection errors
+                else //not logged in
                 {
-                    $response['code'] = 0;
+                    $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "adminDeleteInboxContact":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                if (isset($_POST["data"]))
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $data = $_POST["data"];
-                    $jsonData = json_decode($data, true);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($jsonData !== null)
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("DELETE FROM InboxContacts WHERE id = ?");
+
+                    foreach ($jsonData as $id)
                     {
-                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                        if (!$db_connection->connect_errno)
-                        {
-                            $sql = $db_connection->prepare("DELETE FROM InboxContacts WHERE id = ?");
-
-                            foreach ($jsonData as $id)
-                            {
-                                $sql->bind_param("s", $id);
-                                $sql->execute();
-                            }
-
-                            $db_connection->close();
-
-                            $response['code'] = 1;
-                        }
-                        else //connection errors
-                        {
-                            $response['code'] = 0;
-                        }
+                        $sql->bind_param("s", $id);
+                        $sql->execute();
                     }
-                    else //jsonData is empty
-                    {
-                        $response['code'] = 5;
-                    }
+
+                    $db_connection->close();
+
+                    $response['code'] = 1;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //no post data
+                else //not logged in
                 {
-                    $response['code'] = 5;
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "adminIncrementInboxContactAttempt":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                if (isset($_POST["data"]))
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $data = $_POST["data"];
-                    $jsonData = json_decode($data, true);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($jsonData !== null)
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("UPDATE InboxContacts SET contactattempts = (contactattempts + 1) WHERE id = ?");
+
+                    foreach ($jsonData as $id)
                     {
-                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                        if (!$db_connection->connect_errno)
-                        {
-                            $sql = $db_connection->prepare("UPDATE InboxContacts SET contactattempts = (contactattempts + 1) WHERE id = ?");
-
-                            foreach ($jsonData as $id)
-                            {
-                                $sql->bind_param("s", $id);
-                                $sql->execute();
-                            }
-
-                            $db_connection->close();
-
-                            $response['code'] = 1;
-                        }
-                        else //connection errors
-                        {
-                            $response['code'] = 0;
-                        }
+                        $sql->bind_param("s", $id);
+                        $sql->execute();
                     }
-                    else //jsonData is empty
-                    {
-                        $response['code'] = 5;
-                    }
+
+                    $db_connection->close();
+
+                    $response['code'] = 1;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //no post data
+                else //not logged in
                 {
-                    $response['code'] = 5;
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "adminReportGetInitialFormAttemptedSuccess":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                if (isset($_POST["data"]))
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $data = $_POST["data"];
-                    $jsonData = json_decode($data, true);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($jsonData !== null)
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 1)*100) as percent");
+                    $sql->bind_param("ssssssss", $jsonData['fromDate'], $jsonData['toDate'], $jsonData['fromDate'], $jsonData['toDate'], $jsonData['fromDate'], $jsonData['toDate'], $jsonData['fromDate'], $jsonData['toDate']);
+
+                    $sql->execute();
+
+                    $result = $sql->get_result();
+
+                    $ResultsToReturn = array();
+
+                    while ($row = $result->fetch_assoc())
                     {
-                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                        if (!$db_connection->connect_errno)
-                        {
-                            $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ? AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN ? AND ?), 1)*100) as percent");
-                            $sql->bind_param("ssssssss", $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate, $fromDate, $toDate);
-
-                            $fromDate = $jsonData['fromDate'];
-                            $toDate = $jsonData['toDate'];
-                            $sql->execute();
-
-                            $result = $sql->get_result();
-
-                            if ($result->num_rows > 0)
-                            {
-                                $AttemptedSuccess = array();
-
-                                while ($row = $result->fetch_assoc())
-                                {
-                                    $AttemptedSuccess[] = $row;
-                                }
-                            }
-
-                            $db_connection->close();
-
-                            $response['code'] = 1;
-                            $response['data'] = $AttemptedSuccess;
-                        }
-                        else //connection errors
-                        {
-                            $response['code'] = 0;
-                            $response['data'] = $api_response_code[$response['code']]['Message'];
-                        }
+                        $ResultsToReturn[] = $row;
                     }
-                    else //jsonData is empty
-                    {
-                        $response['code'] = 5;
-                        $response['data'] = $api_response_code[$response['code']]['Message'];
-                    }
+
+                    $db_connection->close();
+
+                    $response['code'] = 1;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //no post data
+                else //not logged in
                 {
-                    $response['code'] = 5;
+                    $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "adminReportGetInitialFormFrequentlyMissed":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                if (isset($_POST["data"]))
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $data = $_POST["data"];
-                    $jsonData = json_decode($data, true);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($jsonData !== null)
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN ? AND ?;");
+                    $sql->bind_param("ss", $jsonData['fromDate'], $jsonData['toDate']);
+
+                    $sql->execute();
+
+                    $result = $sql->get_result();
+
+                    $ResultsToReturn = array();
+
+                    while ($row = $result->fetch_assoc())
                     {
-                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-                        if (!$db_connection->connect_errno)
-                        {
-                            $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN ? AND ?;");
-                            $sql->bind_param("ss", $fromDate, $toDate);
-
-                            $fromDate = $jsonData['fromDate'];
-                            $toDate = $jsonData['toDate'];
-                            $sql->execute();
-
-                            $result = $sql->get_result();
-
-                            if ($result->num_rows > 0)
-                            {
-                                $AttemptedSuccess = array();
-
-                                while ($row = $result->fetch_assoc())
-                                {
-                                    $AttemptedSuccess[] = $row;
-                                }
-                            }
-
-                            $db_connection->close();
-
-                            $response['code'] = 1;
-                            $response['data'] = $AttemptedSuccess;
-                        }
-                        else //connection errors
-                        {
-                            $response['code'] = 0;
-                            $response['data'] = $api_response_code[$response['code']]['Message'];
-                        }
+                        $ResultsToReturn[] = $row;
                     }
-                    else //jsonData is empty
-                    {
-                        $response['code'] = 5;
-                        $response['data'] = $api_response_code[$response['code']]['Message'];
-                    }
+
+                    $db_connection->close();
+
+                    $response['code'] = 1;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //no post data
+                else //not logged in
                 {
-                    $response['code'] = 5;
+                    $response['code'] = 3;
                     $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
-                $response['data'] = $api_response_code[$response['code']]['Message'];
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 
     case "adminUpdateCOHContact":
         {
-            if ($login->isUserLoggedIn() == true) //requires login
+            try
             {
-                if (isset($_POST["data"]))
+                if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $data = $_POST["data"];
-                    $jsonData = json_decode($data, true);
+                    $jsonData = json_decode($_POST["data"], true);
 
-                    if ($jsonData !== null)
-                    {
-                        $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                        if (!$db_connection->connect_errno)
-                        {
-                            $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE ID = 1");
-                            $sql->bind_param("ssss", $newCOHfirstName, $newCOHlastName, $newCOHemail, $newCOHphone);
+                    $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE ID = 1");
+                    $sql->bind_param("ssss", $jsonData['newCOHfirstName'], $jsonData['newCOHlastName'], $jsonData['newCOHemail'], $jsonData['newCOHphone']);
 
-                            $newCOHfirstName = $jsonData['newCOHfirstName'];
-                            $newCOHlastName = $jsonData['newCOHlastName'];
-                            $newCOHemail = $jsonData['newCOHemail'];
-                            $newCOHphone = $jsonData['newCOHphone'];
-                            $sql->execute();
+                    $sql->execute();
 
-                            $db_connection->close();
+                    $db_connection->close();
 
-                            $response['code'] = 1;
-                        }
-                        else //connection errors
-                        {
-                            $response['code'] = 0;
-                        }
-                    }
-                    else //jsonData is empty
-                    {
-                        $response['code'] = 5;
-                    }
+                    $response['code'] = 1;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
-                else //no post data
+                else //not logged in
                 {
-                    $response['code'] = 5;
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
             }
-            else //user not logged in
+            catch (Exception $e)
             {
-                $response['code'] = 3;
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
             }
-
-            $response['data'] = $api_response_code[$response['code']]['Message'];
-            $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
         }
         break;
 }

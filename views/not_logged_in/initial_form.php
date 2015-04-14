@@ -207,27 +207,10 @@ if (isset($login)) // show potential errors / feedback (from login object)
     </div>
     <div id="carousel" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
-        
+
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="panel-content panel-success">
-        
-        <!-- Indicators  -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-            <li data-target="#myCarousel" data-slide-to="4"></li>
-            <li data-target="#myCarousel" data-slide-to="5"></li>
-            <li data-target="#myCarousel" data-slide-to="6"></li>
-            <li data-target="#myCarousel" data-slide-to="7"></li>
-            <li data-target="#myCarousel" data-slide-to="8"></li>
-            <li data-target="#myCarousel" data-slide-to="9"></li>
-            <li data-target="#myCarousel" data-slide-to="10"></li>
-            <li data-target="#myCarousel" data-slide-to="11"></li>
-        </ol>
-       
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" id="wrongQs">
@@ -281,18 +264,6 @@ if (isset($login)) // show potential errors / feedback (from login object)
             
             
         </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-        
-         </div>
-         </div>
-         </div>
     </div>
     </div>
     
@@ -342,6 +313,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialContactForm();
+                $('#divContactModal').modal('hide');
             });
 
             window.setTimeout(function () {
@@ -401,7 +373,7 @@ if (isset($login)) // show potential errors / feedback (from login object)
             
             //$('#divContactModal').modal('show');
         }
-        
+
         function AjaxSubmit_InitialContactForm()
         {
             var ic_FirstName = $('input[name=firstName]').val();
@@ -422,9 +394,8 @@ if (isset($login)) // show potential errors / feedback (from login object)
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
+
             SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
-            
-            $('#divContactModal').modal('hide');
         }
 
         function AjaxSubmit_GetCOHContact()

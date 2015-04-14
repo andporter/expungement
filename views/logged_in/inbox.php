@@ -78,22 +78,22 @@
 
     $('#deleteConfirmButton').click(function ()
     {
+        $('#DeleteContactsConfirmModal').modal('hide');
         var postJSONData = getSelectedRowIDs();
 
         SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
 
         AjaxSubmit_getInboxContacts();
-        $('#DeleteContactsConfirmModal').modal('hide');
     });
 
     $('#incrementConfirmButton').click(function ()
     {
+        $('#IncrementCountConfirmModal').modal('hide');
         var postJSONData = getSelectedRowIDs();
 
         SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
 
-        AjaxSubmit_getInboxContacts();
-        $('#IncrementCountConfirmModal').modal('hide');
+        AjaxSubmit_getInboxContacts(); 
     });
 
     function getSelectedRowIDs()
