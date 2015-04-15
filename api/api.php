@@ -117,6 +117,7 @@ switch ($_GET['method'])
                 $sql->execute();
 
                 $db_connection->close();
+
                 $response['code'] = 1;
                 $response['data'] = $api_response_code[$response['code']]['Message'];
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
@@ -194,8 +195,8 @@ switch ($_GET['method'])
 
                 $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                $sql = $db_connection->prepare("SELECT firstname, lastname, email, phone FROM CoHContact LIMIT 1;");
-                $sql->bind_param();
+                $sql = $db_connection->prepare("SELECT firstname, lastname, email, phone FROM CoHContact WHERE id = 1 LIMIT 1;");
+                //$sql->bind_param();
 
                 $sql->execute();
 
@@ -234,7 +235,7 @@ switch ($_GET['method'])
                     $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
                     $sql = $db_connection->prepare("SELECT * FROM InboxContacts;");
-                    $sql->bind_param();
+                    //$sql->bind_param();
 
                     $sql->execute();
 
@@ -283,7 +284,7 @@ switch ($_GET['method'])
 
                     foreach ($jsonData as $id)
                     {
-                        $sql->bind_param("s", $id);
+                        $sql->bind_param("i", $id);
                         $sql->execute();
                     }
 
@@ -323,7 +324,7 @@ switch ($_GET['method'])
 
                     foreach ($jsonData as $id)
                     {
-                        $sql->bind_param("s", $id);
+                        $sql->bind_param("i", $id);
                         $sql->execute();
                     }
 
@@ -441,6 +442,52 @@ switch ($_GET['method'])
         }
         break;
 
+    case "adminReportGetTanfQuestions":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {
+                    $jsonData = json_decode($_POST["data"], true);
+
+                    $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+                    $sql = $db_connection->prepare("SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) as tanfq1yes, SUM(case when tanfq1 = 0 then 1 else 0 end) as tanfq1no, SUM(case when tanfq2 = 1 then 1 else 0 end) as tanfq2yes, SUM(case when tanfq2 = 0 then 1 else 0 end) as tanfq2no from InitialFormStats WHERE date BETWEEN ? AND ?;");
+                    $sql->bind_param("ss", $jsonData['fromDate'], $jsonData['toDate']);
+
+                    $sql->execute();
+
+                    $result = $sql->get_result();
+
+                    $ResultsToReturn = array();
+
+                    while ($row = $result->fetch_assoc())
+                    {
+                        $ResultsToReturn[] = $row;
+                    }
+
+                    $db_connection->close();
+
+                    $response['code'] = 1;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
+
     case "adminUpdateCOHContact":
         {
             try
@@ -451,7 +498,7 @@ switch ($_GET['method'])
 
                     $db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-                    $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE ID = 1");
+                    $sql = $db_connection->prepare("UPDATE CoHContact SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE id = 1");
                     $sql->bind_param("ssss", $jsonData['newCOHfirstName'], $jsonData['newCOHlastName'], $jsonData['newCOHemail'], $jsonData['newCOHphone']);
 
                     $sql->execute();

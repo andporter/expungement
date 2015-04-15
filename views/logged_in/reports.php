@@ -16,7 +16,7 @@ date_default_timezone_set('America/Denver');
 
 <div id="reports" class="container-fluid" role="main">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Initial Form Attempts VS Success</h3>
@@ -27,16 +27,16 @@ date_default_timezone_set('America/Denver');
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th class="col-xs-2" data-field="attempts" data-sortable="true">Attempts</th>
-                                <th class="col-xs-2" data-field="success" data-sortable="true">Success</th>
-                                <th class="col-xs-2" data-field="percent" data-sortable="true">Percent</th>
+                                <th class="col-xs-2" data-field="attempts">Attempts</th>
+                                <th class="col-xs-2" data-field="success">Success</th>
+                                <th class="col-xs-2" data-field="percent">Percent</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Initial Form Frequently Missed</h3>
@@ -47,18 +47,39 @@ date_default_timezone_set('America/Denver');
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th class="col-xs-1" data-field="q1" data-sortable="true">q1</th>
-                                <th class="col-xs-1" data-field="q2" data-sortable="true">q2</th>
-                                <th class="col-xs-1" data-field="q3" data-sortable="true">q3</th>
-                                <th class="col-xs-1" data-field="q4" data-sortable="true">q4</th>
-                                <th class="col-xs-1" data-field="q5" data-sortable="true">q5</th>
-                                <th class="col-xs-1" data-field="q6" data-sortable="true">q6</th>
-                                <th class="col-xs-1" data-field="q7" data-sortable="true">q7</th>
-                                <th class="col-xs-1" data-field="q8" data-sortable="true">q8</th>
-                                <th class="col-xs-1" data-field="q9" data-sortable="true">q9</th>
-                                <th class="col-xs-1" data-field="q10" data-sortable="true">q10</th>
-                                <th class="col-xs-1" data-field="q11" data-sortable="true">q11</th>
-                                <th class="col-xs-1" data-field="q12" data-sortable="true">q12</th>
+                                <th class="col-xs-1" data-field="q1">Q1</th>
+                                <th class="col-xs-1" data-field="q2">Q2</th>
+                                <th class="col-xs-1" data-field="q3">Q3</th>
+                                <th class="col-xs-1" data-field="q4">Q4</th>
+                                <th class="col-xs-1" data-field="q5">Q5</th>
+                                <th class="col-xs-1" data-field="q6">Q6</th>
+                                <th class="col-xs-1" data-field="q7">Q7</th>
+                                <th class="col-xs-1" data-field="q8">Q8</th>
+                                <th class="col-xs-1" data-field="q9">Q9</th>
+                                <th class="col-xs-1" data-field="q10">Q10</th>
+                                <th class="col-xs-1" data-field="q11">Q11</th>
+                                <th class="col-xs-1" data-field="q12">Q12</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panal-content panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">TANF Questions</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="TANFQuestions"
+                           data-height="99"
+                           data-sortable="false">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1" data-field="tanfq1yes">Q1Y</th>
+                                <th class="col-xs-1" data-field="tanfq1no">Q1N</th>
+                                <th class="col-xs-1" data-field="tanfq2yes">Q2Y</th>
+                                <th class="col-xs-1" data-field="tanfq2no">Q2N</th>
                             </tr>
                         </thead>
                     </table>
@@ -71,7 +92,7 @@ date_default_timezone_set('America/Denver');
 <script>
     $(function () {
         runReports();
-        
+
         $("#fromdatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -95,6 +116,7 @@ date_default_timezone_set('America/Denver');
         $('#progressBarModal').modal('show');
         AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
+        AjaxSubmit_AdminReportGetTanfQuestions();
     }
 
     function getJSONDateRange()
@@ -135,6 +157,23 @@ date_default_timezone_set('America/Denver');
     {
         $('#initialFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
         $('#initialFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
+
+        setTimeout(function () {
+            $('#reports').fadeIn();
+            $('#progressBarModal').modal('hide');
+        }, 1000);
+    }
+    
+    function AjaxSubmit_AdminReportGetTanfQuestions()
+    {
+        var postJSONData = getJSONDateRange();
+        SendAjax("api/api.php?method=adminReportGetTanfQuestions", postJSONData, AjaxSuccess_AdminReportGetTanfQuestions, true);
+    }
+
+    function AjaxSuccess_AdminReportGetTanfQuestions(returnJSONData)
+    {
+        $('#TANFQuestions').bootstrapTable({data: returnJSONData.data});
+        $('#TANFQuestions').bootstrapTable('load', returnJSONData.data);
 
         setTimeout(function () {
             $('#reports').fadeIn();

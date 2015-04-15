@@ -5,9 +5,10 @@ function SendAjax(urlMethod, postJSONData, returnFunction, asyncTorF) {
         dataType: "json",
         url: urlMethod,
         async: asyncTorF,
-        success: function (returnJSONData)
+        success: function (returnJSONData, status, xhr)
         {
             console.log("Ajax Success! URL: " + urlMethod);
+            //console.log("Response: " + xhr.responseText);
 
             if (returnJSONData !== null && returnFunction !== "none")
             {
@@ -16,10 +17,7 @@ function SendAjax(urlMethod, postJSONData, returnFunction, asyncTorF) {
         },
         error: function (xhr, status, error)
         {
-            console.error("Ajax Error! URL: " + urlMethod);
-            console.error(xhr);
-            console.error(status);
-            console.error(error);
+            console.error("Ajax Error! - URL: " + urlMethod + " - Response: " + xhr.responseText);
         }
     });
 }
