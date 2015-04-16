@@ -3,7 +3,7 @@
 // checking for minimum PHP version
 if (version_compare(PHP_VERSION, '5.3.7', '<'))
 {
-    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
+    exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !" . " Your PHP Version: " . PHP_VERSION);
 }
 else if (version_compare(PHP_VERSION, '5.5.0', '<'))
 {
@@ -41,7 +41,21 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
                 $login->doLogout();
             }
             break;
-        
+
+        case "register":
+            {
+                // load the registration class
+                require_once("classes/Registration.php");
+
+                // create the registration object. when this object is created, it will do all registration stuff automatically
+                $registration = new Registration();
+
+                // show the register view (with the registration form, and messages/errors)
+                require("views/logged_in/admin_header_menu.php");
+                require("views/register/register.php");
+            }
+            break;
+
         //inbox is the default
         case "inbox":
         default:

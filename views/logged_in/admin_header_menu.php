@@ -20,7 +20,7 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo ucwords($_SESSION['user_name']); ?><span class="caret"></span>
                         <ul class="dropdown-menu">
-                            <li><a onclick="showEditAccountModal()" href="" id="editAccount" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit Account</a></li>
+                            <li><a onclick="showEditCOHContactModal()" href="" id="editCOHContact" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit COH Contact</a></li>
                             <li><a href="#adminLogoutConfirmModal" id="logout" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> 
                         </ul>
                 </li>
@@ -45,13 +45,13 @@
     </div>
 </div>
 
-<div id="editAccountModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="editCOHContactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="panel-content panel-success">
                 <div class="panel-heading">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Edit Account</h3>
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Edit COH Contact</h3>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" id="formAdminEditCOHContact" data-parsley-validate>
@@ -79,18 +79,6 @@
                                 <input type="text" class="form-control" id="COHphone" placeholder="COH Phone" required data-parsley-required-message="Please enter the COH Phone Number"/>
                             </div>
                         </div>
-                        <!--                        <div class="form-group">
-                                                    <label for="newPassword" class="col-sm-2 control-label">New Password:</label>
-                                                    <div class="col-xs-4">
-                                                        <input type="text" class="form-control" id="newPassword" placeholder="" required data-parsley-required-message="Please enter the new password"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="verifyNewPassword" class="col-sm-2 control-label">Verify:</label>
-                                                    <div class="col-xs-4">
-                                                        <input type="text" class="form-control" id="verifyNewPassword" placeholder="" required data-parsley-required-message="Please verify the new password"/>
-                                                    </div>
-                                                </div>-->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" value="Save" class="btn btn-success pull-right" />
@@ -125,10 +113,10 @@
         AjaxSubmit_AdminUpdateCOHContact();
     });
 
-    function showEditAccountModal()
+    function showEditCOHContactModal()
     {
         AjaxSubmit_GetCOHContact();
-        $('#editAccountModal').modal('show');
+        $('#editCOHContactModal').modal('show');
     }
 
     function AjaxSubmit_GetCOHContact()

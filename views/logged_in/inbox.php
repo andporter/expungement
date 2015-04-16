@@ -76,24 +76,37 @@
         AjaxSubmit_getInboxContacts();
     });
 
-    $('#deleteConfirmButton').click(function ()
+    $('#deleteConfirmButton').click(function (e)
     {
         $('#DeleteContactsConfirmModal').modal('hide');
-        var postJSONData = getSelectedRowIDs();
+        
+        if (e.handled !== true) //Checking for the event whether it has occurred or not.
+        { 
+            e.handled = true;
+            
+            var postJSONData = getSelectedRowIDs();
 
-        SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
+            SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
 
-        AjaxSubmit_getInboxContacts();
+            AjaxSubmit_getInboxContacts();
+        }
     });
 
-    $('#incrementConfirmButton').click(function ()
+    $('#incrementConfirmButton').click(function (e)
     {
         $('#IncrementCountConfirmModal').modal('hide');
-        var postJSONData = getSelectedRowIDs();
+        
+        if (e.handled !== true) //Checking for the event whether it has occurred or not.
+        { 
+            e.handled = true;
+            
+            var postJSONData = getSelectedRowIDs();
 
-        SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
+            SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
 
-        AjaxSubmit_getInboxContacts(); 
+            AjaxSubmit_getInboxContacts();
+        }
+
     });
 
     function getSelectedRowIDs()
@@ -118,7 +131,7 @@
     {
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
         $('#inboxTable').bootstrapTable('load', returnJSONData.data);
-        
+
         setTimeout(function () {
             $('#inboxContacts').fadeIn();
             $('#progressBarModal').modal('hide');

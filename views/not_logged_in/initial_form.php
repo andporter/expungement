@@ -403,7 +403,6 @@ if (isset($login))
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
-
             //$('#divContactModal').modal('show');
         }
 
