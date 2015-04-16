@@ -21,6 +21,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo ucwords($_SESSION['user_name']); ?><span class="caret"></span>
                         <ul class="dropdown-menu">
                             <li><a onclick="showEditCOHContactModal()" href="" id="editCOHContact" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit COH Contact</a></li>
+                            <li><a href="/index.php?register"><span class="glyphicon glyphicon-cog"></span> Register</a></li>
                             <li><a href="#adminLogoutConfirmModal" id="logout" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> 
                         </ul>
                 </li>
