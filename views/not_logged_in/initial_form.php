@@ -1,7 +1,10 @@
 <?php
-if (isset($login)) { // show potential errors / feedback (from login object)
-    if ($login->errors) {
-        foreach ($login->errors as $error) {
+if (isset($login))
+{ // show potential errors / feedback (from login object)
+    if ($login->errors)
+    {
+        foreach ($login->errors as $error)
+        {
             echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -9,8 +12,10 @@ if (isset($login)) { // show potential errors / feedback (from login object)
             echo "</div>";
         }
     }
-    if ($login->messages) {
-        foreach ($login->messages as $message) {
+    if ($login->messages)
+    {
+        foreach ($login->messages as $message)
+        {
             echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -250,20 +255,8 @@ if (isset($login)) { // show potential errors / feedback (from login object)
                                 <li data-target="#myCarousel" data-slide-to="11"></li>
                             </ol>
 
-
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" id="wrongQs">
-
-                                <!--
-                                <!script type="text/javascript">
-                                    if ($('input[name=initialq1 ]:checked', '#formInitial').val() === "1")
-                                    {
-                                        <div class = "item active" class = "hidden" id = "hidden1" >
-                                        <img src = "images/1.jpg" alt = "First slide" class = "active" > 
-                                        </div> 
-                                    }
-                                </script>
-                                -->
                                 <div class="item active" class="hidden" id="hidden1"></div>
                                 <div class="item" class="hidden" id="hidden2"></div>
                                 <div class="item" class="hidden" id="hidden3"></div>
@@ -276,43 +269,6 @@ if (isset($login)) { // show potential errors / feedback (from login object)
                                 <div class="item" class="hidden" id="hidden10"></div>
                                 <div class="item" class="hidden" id="hidden11"></div>
                                 <div class="item" class="hidden" id="hidden12"></div>
-
-                                <!--
-                                <div class="item" class="hidden" id="hidden2"></div>
-                                    <img src="images/2.jpg" alt="Second slide">
-                                </div>
-                                <div class="item" class="hidden" id="hidden3">
-                                    <img src="images/3.jpg" alt="Third slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden4">
-                                    <img src="images/4.jpg" alt="Fourth slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden5">
-                                    <img src="images/5.jpg" alt="Fifth Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden6">
-                                    <img src="images/6.jpg" alt="Sixth Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden7">
-                                    <img src="images/7.jpg" alt="Seventh Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden8">
-                                    <img src="images/8.jpg" alt="Eight Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden9">
-                                    <img src="images/9.jpg" alt="Ninth Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden10">
-                                    <img src="images/10.jpg" alt="Tenth Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden11">
-                                    <img src="images/11.jpg" alt="Eleventh Slide">
-                                </div>
-                                <div  class="item" class="hidden" id="hidden12">
-                                    <img src="images/12.jpg" alt="Twelfth Slide">
-                                </div>    
-                                -->
-
                             </div>
 
                             <!-- Controls -->
@@ -362,21 +318,8 @@ if (isset($login)) { // show potential errors / feedback (from login object)
                 {
                     if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
                     {
-
                         document.getElementById("hidden" + count.toString()).innerHTML = '<img src="images/' + i + '.jpg" alt="Second slide">';
                         count += 1;
-                        /*
-                         if (count === "0")
-                         {
-                         $('#wrongQs').append('<div class="item active" <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div> ') ;
-                         count + "1";
-                         }
-                         else
-                         {
-                         $('#wrongQs').append('<div class="item" <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div> ') ;
-                         }
-                         */
-
                     }
                 }
                 if (count > 1)
@@ -456,8 +399,6 @@ if (isset($login)) { // show potential errors / feedback (from login object)
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
-
-            //$('#divContactModal').modal('show');
         }
 
         function AjaxSubmit_InitialContactForm()
