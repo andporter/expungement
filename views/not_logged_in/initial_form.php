@@ -1,10 +1,7 @@
 <?php
-if (isset($login))
-{ // show potential errors / feedback (from login object)
-    if ($login->errors)
-    {
-        foreach ($login->errors as $error)
-        {
+if (isset($login)) { // show potential errors / feedback (from login object)
+    if ($login->errors) {
+        foreach ($login->errors as $error) {
             echo "<div id=\"alertErrors\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error: </strong>" . $error;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -12,10 +9,8 @@ if (isset($login))
             echo "</div>";
         }
     }
-    if ($login->messages)
-    {
-        foreach ($login->messages as $message)
-        {
+    if ($login->messages) {
+        foreach ($login->messages as $message) {
             echo "<div id=\"alertMessages\" class=\"container theme-showcase\">";
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message;
             echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
@@ -203,15 +198,42 @@ if (isset($login))
     </div>
 
 
+
+    <div id="notAbleModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="panel-content panel-success">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="panel-title">Next Step</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well">
+                            <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
+                            <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
+                            <p>Phone: Call Cottages of Hope (<span id="spanCOH_Phone"></span>) and ask for <span id="spanCOH_FirstName"></span> the Expungement Specialist.</p>
+                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10" >
+                            <input type="submit" value="Submit" class="btn btn-primary pull-right" id="submitter"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="carousel" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="panel-content panel-success">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="panel-title">Questions for Review</h3>
+                        <h3 class="panel-title">Next Step</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
                             <ol class="carousel-indicators">
                                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -232,42 +254,61 @@ if (isset($login))
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" id="wrongQs">
 
+                                <!--
+                                <!script type="text/javascript">
+                                    if ($('input[name=initialq1 ]:checked', '#formInitial').val() === "1")
+                                    {
+                                        <div class = "item active" class = "hidden" id = "hidden1" >
+                                        <img src = "images/1.jpg" alt = "First slide" class = "active" > 
+                                        </div> 
+                                    }
+                                </script>
+                                -->
+                                <div class="item active" class="hidden" id="hidden1"></div>
+                                <div class="item" class="hidden" id="hidden2"></div>
+                                <div class="item" class="hidden" id="hidden3"></div>
+                                <div class="item" class="hidden" id="hidden4"></div>
+                                <div class="item" class="hidden" id="hidden5"></div>
+                                <div class="item" class="hidden" id="hidden6"></div>
+                                <div class="item" class="hidden" id="hidden7"></div>
+                                <div class="item" class="hidden" id="hidden8"></div>
+                                <div class="item" class="hidden" id="hidden9"></div>
+                                <div class="item" class="hidden" id="hidden10"></div>
+                                <div class="item" class="hidden" id="hidden11"></div>
+                                <div class="item" class="hidden" id="hidden12"></div>
 
                                 <!--
-                                <div class="item active">
-                                    <img src="images/1.jpg" alt="First slide" class="active">
-                                </div>            
-                                <div class="item">
+                                <div class="item" class="hidden" id="hidden2"></div>
                                     <img src="images/2.jpg" alt="Second slide">
                                 </div>
-                                <div class="item">
+                                <div class="item" class="hidden" id="hidden3">
                                     <img src="images/3.jpg" alt="Third slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden4">
                                     <img src="images/4.jpg" alt="Fourth slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden5">
                                     <img src="images/5.jpg" alt="Fifth Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden6">
                                     <img src="images/6.jpg" alt="Sixth Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden7">
                                     <img src="images/7.jpg" alt="Seventh Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden8">
                                     <img src="images/8.jpg" alt="Eight Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden9">
                                     <img src="images/9.jpg" alt="Ninth Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden10">
                                     <img src="images/10.jpg" alt="Tenth Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden11">
                                     <img src="images/11.jpg" alt="Eleventh Slide">
                                 </div>
-                                <div  class="item">
+                                <div  class="item" class="hidden" id="hidden12">
                                     <img src="images/12.jpg" alt="Twelfth Slide">
                                 </div>    
                                 -->
@@ -291,7 +332,7 @@ if (isset($login))
 
 
     <script type="text/javascript">
-
+        var count = 1;
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -304,7 +345,6 @@ if (isset($login))
                 }
                 // else stop form submission
                 formInstance.submitEvent.preventDefault();
-
                 // and display a gentle message
                 $('.invalid-form-error-message')
                         .html("You must provide either your email address or phone number.")
@@ -318,28 +358,46 @@ if (isset($login))
                 AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
 
-
-                var count = "0";
-                for (var i = 0; i < 12; i++)
+                for (var i = 1; i < 13; i++)
                 {
                     if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
                     {
-                        if (count == "0")
-                        {
-                            $('#wrongQs').append('<div class="item active"> <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div>  >');
-                            count + "1";
-                        }
-                        else
-                        {
-                            $('#wrongQs').append('<div class="item"> <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div>  >');
-                        }
+
+                        document.getElementById("hidden" + count.toString()).innerHTML = '<img src="images/' + i + '.jpg" alt="Second slide">';
+                        count += 1;
+                        /*
+                         if (count === "0")
+                         {
+                         $('#wrongQs').append('<div class="item active" <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div> ') ;
+                         count + "1";
+                         }
+                         else
+                         {
+                         $('#wrongQs').append('<div class="item" <img src="images/' + i + '.jpg" alt="First slide" class="active"> </div> ') ;
+                         }
+                         */
 
                     }
                 }
-                //if(parseInt(count) != 0) $('#myCarousel').modal('show'); 
+                if (count > 1)
+                {
+                    for (var j = count; j < 13; j++)
+                    {
+                        var div = document.getElementById("hidden" + j);
+                        div.parentNode.removeChild(div);
+                    }
+                    $('#notAbleModal').modal('show');
+                }
+                else
+                {
+                    $('#divContactModal').modal('show');
+                }
+            });
 
+            $('#submitter').click(function (e)
+            {
+                $('#notAbleModal').modal('hide');
                 $('#carousel').modal('show');
-                //$('#divContactModal').modal('show');
             });
 
             $('#formContact').submit(function (e)
@@ -348,20 +406,16 @@ if (isset($login))
                 AjaxSubmit_InitialContactForm();
                 $('#divContactModal').modal('hide');
             });
-
             window.setTimeout(function () {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
-
                 $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
             }, 5000);
         });
-
         var alreadyUploadedInitialFormThisSession = false;
-
         function AjaxSubmit_InitialForm()
         {
             if (alreadyUploadedInitialFormThisSession === false)
@@ -380,7 +434,6 @@ if (isset($login))
                 var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
                 var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
                 var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
-
                 var postJSONData = '{"tanfq1" : ' + tanfq1 +
                         ',"tanfq2" : ' + tanfq2 +
                         ',"initialq1" : ' + initialq1 +
@@ -403,6 +456,7 @@ if (isset($login))
             {
                 console.log("Initial Form Already Uploaded for this session");
             }
+
             //$('#divContactModal').modal('show');
         }
 
@@ -415,7 +469,6 @@ if (isset($login))
             var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
             var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
             var ic_Phone = "";
-
             if ((ic_PhoneAreaCode !== "") && (ic_PhoneFirstThree !== "") && (ic_PhoneLastFour !== ""))
             {
                 ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
@@ -426,7 +479,6 @@ if (isset($login))
                     '","ic_Email" : "' + ic_Email +
                     '","ic_Phone" : "' + ic_Phone +
                     '"}';
-
             SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
         }
 
