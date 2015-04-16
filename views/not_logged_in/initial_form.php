@@ -202,25 +202,20 @@ if (isset($login))
         </div>
     </div>
 
-
-
-    <div id="notAbleModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modalMissedQuestionsNextSteps" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="panel-content panel-success">
+                <div class="panel-content panel-danger">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h3 class="panel-title">Next Step</h3>
                     </div>
                     <div class="panel-body">
                         <div class="well">
-                            <p>You have finished the initial expungement questionnaire.  Based on your responses you may qualify for expungement.  To further review your case please meet with Cottages of Hope’s Expungement Specialist.  Provide your contact information below and we will contact you to set up an appointment.</p>
-                            <p>Alternately you may contact us by phone or e-mail to set up an appointment.</p>
-                            <p>Phone: Call Cottages of Hope (<span id="spanCOH_Phone"></span>) and ask for <span id="spanCOH_FirstName"></span> the Expungement Specialist.</p>
-                            <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
+                            <p>You do not currently qualify for expungement based on your responses to questions (3, 5, 6 etc.).  It is important to note however, that you may still qualify for expungement in the future.  Please see the slideshow for details on each non-qualifying response to see if you may be able to qualify in the future.</p>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10" >
-                            <input type="submit" value="Submit" class="btn btn-primary pull-right" id="submitter"/>
+                            <input type="submit" value="View Slideshow" class="btn btn-primary pull-right" id="buttonViewMissedQuestionsSlideshow"/>
                         </div>
                     </div>
                 </div>
@@ -228,67 +223,45 @@ if (isset($login))
         </div>
     </div>
 
+    <div id="carouselModalMissedQuestions" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="panel-content panel-warning">
+                <div class="panel-heading">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="panel-title">Missed Questions</h3>
+                </div>
+                <div class="panel-body" >
+                    <div id="carouselMissedQuestionSlideShow" class="carousel slide carousel-fit" data-interval="false" data-ride="carousel" role="dialog" aria-hidden="true">
 
-
-    <div id="carousel" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="panel-content panel-success">
-                    <div class="panel-heading">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="panel-title">Next Step</h3>
-                    </div>
-                    <div class="panel-body" >
-                        <div id="myCarousel" class="carousel slide carousel-fit" data-ride="carousel" role="dialog" aria-hidden="true">
-                            <ol class="carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                                <li data-target="#myCarousel" data-slide-to="2"></li>
-                                <li data-target="#myCarousel" data-slide-to="3"></li>
-                                <li data-target="#myCarousel" data-slide-to="4"></li>
-                                <li data-target="#myCarousel" data-slide-to="5"></li>
-                                <li data-target="#myCarousel" data-slide-to="6"></li>
-                                <li data-target="#myCarousel" data-slide-to="7"></li>
-                                <li data-target="#myCarousel" data-slide-to="8"></li>
-                                <li data-target="#myCarousel" data-slide-to="9"></li>
-                                <li data-target="#myCarousel" data-slide-to="10"></li>
-                                <li data-target="#myCarousel" data-slide-to="11"></li>
-                            </ol>
-
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" id="wrongQs">
-                                <div class="item active" class="hidden" id="hidden1"></div>
-                                <div class="item" class="hidden" id="hidden2"></div>
-                                <div class="item" class="hidden" id="hidden3"></div>
-                                <div class="item" class="hidden" id="hidden4"></div>
-                                <div class="item" class="hidden" id="hidden5"></div>
-                                <div class="item" class="hidden" id="hidden6"></div>
-                                <div class="item" class="hidden" id="hidden7"></div>
-                                <div class="item" class="hidden" id="hidden8"></div>
-                                <div class="item" class="hidden" id="hidden9"></div>
-                                <div class="item" class="hidden" id="hidden10"></div>
-                                <div class="item" class="hidden" id="hidden11"></div>
-                                <div class="item" class="hidden" id="hidden12"></div>
-                            </div>
-
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
+                        <div class="carousel-inner" id="wrongQs">
+                            <div class="item active" class="hidden" id="hidden1"></div>
+                            <div class="item" class="hidden" id="hidden2"></div>
+                            <div class="item" class="hidden" id="hidden3"></div>
+                            <div class="item" class="hidden" id="hidden4"></div>
+                            <div class="item" class="hidden" id="hidden5"></div>
+                            <div class="item" class="hidden" id="hidden6"></div>
+                            <div class="item" class="hidden" id="hidden7"></div>
+                            <div class="item" class="hidden" id="hidden8"></div>
+                            <div class="item" class="hidden" id="hidden9"></div>
+                            <div class="item" class="hidden" id="hidden10"></div>
+                            <div class="item" class="hidden" id="hidden11"></div>
+                            <div class="item" class="hidden" id="hidden12"></div>
                         </div>
+
+                        <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <script type="text/javascript">
-        var count = 1;
+
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
@@ -308,39 +281,41 @@ if (isset($login))
                 return;
             });
 
+            var count = 1;
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
-                AjaxSubmit_GetCOHContact();
                 AjaxSubmit_InitialForm();
 
                 for (var i = 1; i < 13; i++)
                 {
                     if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
                     {
-                        document.getElementById("hidden" + count.toString()).innerHTML = '<img src="images/' + i + '.jpg" alt="Second slide">';
+                        document.getElementById("hidden" + count.toString()).innerHTML = '<img class="img-responsive center-block" src="http://placehold.it/600&text=' + i + '">';
                         count += 1;
                     }
                 }
-                if (count > 1)
+
+                if (count > 1) //they can't continue
                 {
                     for (var j = count; j < 13; j++)
                     {
                         var div = document.getElementById("hidden" + j);
                         div.parentNode.removeChild(div);
                     }
-                    $('#notAbleModal').modal('show');
+                    $('#modalMissedQuestionsNextSteps').modal('show');
                 }
-                else
+                else //they can continue
                 {
+                    AjaxSubmit_GetCOHContact();
                     $('#divContactModal').modal('show');
                 }
             });
 
-            $('#submitter').click(function (e)
+            $('#buttonViewMissedQuestionsSlideshow').click(function (e)
             {
-                $('#notAbleModal').modal('hide');
-                $('#carousel').modal('show');
+                $('#modalMissedQuestionsNextSteps').modal('hide');
+                $('#carouselModalMissedQuestions').modal('show');
             });
 
             $('#formContact').submit(function (e)
@@ -349,6 +324,7 @@ if (isset($login))
                 AjaxSubmit_InitialContactForm();
                 $('#divContactModal').modal('hide');
             });
+
             window.setTimeout(function () {
                 $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
                     $(this).remove();
@@ -358,6 +334,7 @@ if (isset($login))
                 });
             }, 5000);
         });
+
         var alreadyUploadedInitialFormThisSession = false;
         function AjaxSubmit_InitialForm()
         {
