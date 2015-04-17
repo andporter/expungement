@@ -14,7 +14,7 @@ date_default_timezone_set('America/Denver');
     </div>
 </div>
 
-<div id="reports" class="container-fluid" role="main">
+<div id="reports" class="container-fluid collapse" role="main">
     <div class="row">
         <div class="col-md-3">
             <div class="panel panal-content panel-primary">

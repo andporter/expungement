@@ -147,7 +147,7 @@ if (isset($login))
                 <div class="panel-content panel-success">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="panel-title">Next Step</h3>
+                        <h3 class="panel-title">Next Steps</h3>
                     </div>
                     <div class="panel-body">
                         <div class="well">
@@ -208,11 +208,12 @@ if (isset($login))
                 <div class="panel-content panel-danger">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h3 class="panel-title">Next Step</h3>
+                        <h3 class="panel-title">Unable to Continue</h3>
                     </div>
                     <div class="panel-body">
                         <div class="well">
-                            <p>You do not currently qualify for expungement based on your responses to questions (3, 5, 6 etc.).  It is important to note however, that you may still qualify for expungement in the future.  Please see the slideshow for details on each non-qualifying response to see if you may be able to qualify in the future.</p>
+                            <p>You do not currently qualify for expungement based on your responses to questions (#, #, #).</p>  
+                            <p>It is important to note however, that you may still qualify for expungement in the future.  Please see the slideshow for details on each non-qualifying response to see if you may be able to qualify in the future.</p>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10" >
                             <input type="submit" value="View Slideshow" class="btn btn-primary pull-right" id="buttonViewMissedQuestionsSlideshow"/>
@@ -224,36 +225,38 @@ if (isset($login))
     </div>
 
     <div id="carouselModalMissedQuestions" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="panel-content panel-warning">
-                <div class="panel-heading">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="panel-title">Missed Questions</h3>
-                </div>
-                <div class="panel-body" >
-                    <div id="carouselMissedQuestionSlideShow" class="carousel slide carousel-fit" data-interval="false" data-ride="carousel" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="panel-content panel-danger">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="panel-title">Questions to Review</h3>
+                    </div>
+                    <div class="panel-body" >
+                        <div id="carouselMissedQuestionSlideShow" class="carousel slide carousel-fit" data-interval="false" data-ride="carousel" role="dialog" aria-hidden="true">
 
-                        <div class="carousel-inner" id="wrongQs">
-                            <div class="item active" class="hidden" id="hidden1"></div>
-                            <div class="item" class="hidden" id="hidden2"></div>
-                            <div class="item" class="hidden" id="hidden3"></div>
-                            <div class="item" class="hidden" id="hidden4"></div>
-                            <div class="item" class="hidden" id="hidden5"></div>
-                            <div class="item" class="hidden" id="hidden6"></div>
-                            <div class="item" class="hidden" id="hidden7"></div>
-                            <div class="item" class="hidden" id="hidden8"></div>
-                            <div class="item" class="hidden" id="hidden9"></div>
-                            <div class="item" class="hidden" id="hidden10"></div>
-                            <div class="item" class="hidden" id="hidden11"></div>
-                            <div class="item" class="hidden" id="hidden12"></div>
+                            <div class="carousel-inner" id="wrongQs">
+                                <div class="item active" class="hidden" id="hidden1"></div>
+                                <div class="item" class="hidden" id="hidden2"></div>
+                                <div class="item" class="hidden" id="hidden3"></div>
+                                <div class="item" class="hidden" id="hidden4"></div>
+                                <div class="item" class="hidden" id="hidden5"></div>
+                                <div class="item" class="hidden" id="hidden6"></div>
+                                <div class="item" class="hidden" id="hidden7"></div>
+                                <div class="item" class="hidden" id="hidden8"></div>
+                                <div class="item" class="hidden" id="hidden9"></div>
+                                <div class="item" class="hidden" id="hidden10"></div>
+                                <div class="item" class="hidden" id="hidden11"></div>
+                                <div class="item" class="hidden" id="hidden12"></div>
+                            </div>
+
+                            <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
                         </div>
-
-                        <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -281,28 +284,38 @@ if (isset($login))
                 return;
             });
 
-            var count = 1;
+            var alreadyCreatedSlideshow = false;
+            var missedQuestionsCount = 1;
             $('#formInitial').submit(function (e)
             {
                 e.preventDefault();
                 AjaxSubmit_InitialForm();
 
-                for (var i = 1; i < 13; i++)
+                if (alreadyCreatedSlideshow === false)
                 {
-                    if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
+                    for (var i = 1; i < 13; i++)
                     {
-                        document.getElementById("hidden" + count.toString()).innerHTML = '<img class="img-responsive center-block" src="http://placehold.it/600&text=' + i + '">';
-                        count += 1;
+                        if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
+                        {
+                            document.getElementById("hidden" + missedQuestionsCount.toString()).innerHTML = '<img class="img-responsive center-block" src="http://placehold.it/600&text=' + i + '">';
+                            missedQuestionsCount += 1;
+                        }
                     }
+                    
+                    if (missedQuestionsCount > 1)
+                    {
+                        for (var j = missedQuestionsCount; j < 13; j++)
+                        {
+                            var div = document.getElementById("hidden" + j);
+                            div.parentNode.removeChild(div);
+                        }
+                    }
+                    
+                    alreadyCreatedSlideshow = true;
                 }
-
-                if (count > 1) //they can't continue
+                
+                if (missedQuestionsCount > 1) //they can't continue
                 {
-                    for (var j = count; j < 13; j++)
-                    {
-                        var div = document.getElementById("hidden" + j);
-                        div.parentNode.removeChild(div);
-                    }
                     $('#modalMissedQuestionsNextSteps').modal('show');
                 }
                 else //they can continue
