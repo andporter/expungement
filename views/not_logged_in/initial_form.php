@@ -140,7 +140,6 @@ if (isset($login))
         </div>
     </form>
 
-
     <div id="divContactModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -212,7 +211,7 @@ if (isset($login))
                     </div>
                     <div class="panel-body">
                         <div class="well">
-                            <p>You do not currently qualify for expungement based on your responses to questions (#, #, #).</p>  
+                            <p>You do not currently qualify for expungement based on your responses to questions (<span id="listOfMissedQuestions"></span>).</p>  
                             <p>It is important to note however, that you may still qualify for expungement in the future.  Please see the slideshow for details on each non-qualifying response to see if you may be able to qualify in the future.</p>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10" >
@@ -233,29 +232,23 @@ if (isset($login))
                         <h3 class="panel-title">Questions to Review</h3>
                     </div>
                     <div class="panel-body" >
-                        <div id="carouselMissedQuestionSlideShow" class="carousel slide carousel-fit" data-interval="false" data-ride="carousel" role="dialog" aria-hidden="true">
-
-                            <div class="carousel-inner" id="wrongQs">
-                                <div class="item active" class="hidden" id="hidden1"></div>
-                                <div class="item" class="hidden" id="hidden2"></div>
-                                <div class="item" class="hidden" id="hidden3"></div>
-                                <div class="item" class="hidden" id="hidden4"></div>
-                                <div class="item" class="hidden" id="hidden5"></div>
-                                <div class="item" class="hidden" id="hidden6"></div>
-                                <div class="item" class="hidden" id="hidden7"></div>
-                                <div class="item" class="hidden" id="hidden8"></div>
-                                <div class="item" class="hidden" id="hidden9"></div>
-                                <div class="item" class="hidden" id="hidden10"></div>
-                                <div class="item" class="hidden" id="hidden11"></div>
-                                <div class="item" class="hidden" id="hidden12"></div>
+                        <div id="carouselMissedQuestionSlideShow" class="carousel slide" data-interval="false" data-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item" id="hidden1"><img class="img-responsive center-block" src="http://placehold.it/600&text=1"></div>
+                                <div class="item" id="hidden2"><img class="img-responsive center-block" src="http://placehold.it/600&text=2"></div>
+                                <div class="item" id="hidden3"><img class="img-responsive center-block" src="http://placehold.it/600&text=3"></div>
+                                <div class="item" id="hidden4"><img class="img-responsive center-block" src="http://placehold.it/600&text=4"></div>
+                                <div class="item" id="hidden5"><img class="img-responsive center-block" src="http://placehold.it/600&text=5"></div>
+                                <div class="item" id="hidden6"><img class="img-responsive center-block" src="http://placehold.it/600&text=6"></div>
+                                <div class="item" id="hidden7"><img class="img-responsive center-block" src="http://placehold.it/600&text=7"></div>
+                                <div class="item" id="hidden8"><img class="img-responsive center-block" src="http://placehold.it/600&text=8"></div>
+                                <div class="item" id="hidden9"><img class="img-responsive center-block" src="http://placehold.it/600&text=9"></div>
+                                <div class="item" id="hidden10"><img class="img-responsive center-block" src="http://placehold.it/600&text=10"></div>
+                                <div class="item" id="hidden11"><img class="img-responsive center-block" src="http://placehold.it/600&text=11"></div>
+                                <div class="item" id="hidden12"><img class="img-responsive center-block" src="http://placehold.it/600&text=12"></div>
                             </div>
-
-                            <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
+                            <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                            <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                         </div>
                     </div>
                 </div>
@@ -263,169 +256,184 @@ if (isset($login))
         </div>
     </div>
 
-    <script type="text/javascript">
 
-        $(function () {
-            $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
+        {
+            // if one of these blocks is not failing do not prevent submission
+            // we use here group validation with option force (validate even non required fields)
+            if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
             {
-                // if one of these blocks is not failing do not prevent submission
-                // we use here group validation with option force (validate even non required fields)
-                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
-                {
-                    $('.invalid-form-error-message').html('');
-                    return;
-                }
-                // else stop form submission
-                formInstance.submitEvent.preventDefault();
-                // and display a gentle message
-                $('.invalid-form-error-message')
-                        .html("You must provide either your email address or phone number.")
-                        .addClass("parsley-required");
+                $('.invalid-form-error-message').html('');
                 return;
-            });
-
-            var alreadyCreatedSlideshow = false;
-            var missedQuestionsCount = 1;
-            $('#formInitial').submit(function (e)
-            {
-                e.preventDefault();
-                AjaxSubmit_InitialForm();
-
-                if (alreadyCreatedSlideshow === false)
-                {
-                    for (var i = 1; i < 13; i++)
-                    {
-                        if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
-                        {
-                            document.getElementById("hidden" + missedQuestionsCount.toString()).innerHTML = '<img class="img-responsive center-block" src="http://placehold.it/600&text=' + i + '">';
-                            missedQuestionsCount += 1;
-                        }
-                    }
-                    
-                    if (missedQuestionsCount > 1)
-                    {
-                        for (var j = missedQuestionsCount; j < 13; j++)
-                        {
-                            var div = document.getElementById("hidden" + j);
-                            div.parentNode.removeChild(div);
-                        }
-                    }
-                    
-                    alreadyCreatedSlideshow = true;
-                }
-                
-                if (missedQuestionsCount > 1) //they can't continue
-                {
-                    $('#modalMissedQuestionsNextSteps').modal('show');
-                }
-                else //they can continue
-                {
-                    AjaxSubmit_GetCOHContact();
-                    $('#divContactModal').modal('show');
-                }
-            });
-
-            $('#buttonViewMissedQuestionsSlideshow').click(function (e)
-            {
-                $('#modalMissedQuestionsNextSteps').modal('hide');
-                $('#carouselModalMissedQuestions').modal('show');
-            });
-
-            $('#formContact').submit(function (e)
-            {
-                e.preventDefault();
-                AjaxSubmit_InitialContactForm();
-                $('#divContactModal').modal('hide');
-            });
-
-            window.setTimeout(function () {
-                $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
-                    $(this).remove();
-                });
-                $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
-                    $(this).remove();
-                });
-            }, 5000);
+            }
+            // else stop form submission
+            formInstance.submitEvent.preventDefault();
+            // and display a gentle message
+            $('.invalid-form-error-message')
+                    .html("You must provide either your email address or phone number.")
+                    .addClass("parsley-required");
+            return;
         });
 
-        var alreadyUploadedInitialFormThisSession = false;
-        function AjaxSubmit_InitialForm()
+        var alreadyCreatedSlideshow = false;
+        var missedQuestionsList = Array();
+        var correctQuestionsList = Array();
+        $('#formInitial').submit(function (e)
         {
-            if (alreadyUploadedInitialFormThisSession === false)
-            {
-                var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
-                var tanfq2 = $('input[name=tanfq2]:checked', '#formInitial').val();
-                var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
-                var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
-                var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();
-                var initialq4 = $('input[name=initialq4]:checked', '#formInitial').val();
-                var initialq5 = $('input[name=initialq5]:checked', '#formInitial').val();
-                var initialq6 = $('input[name=initialq6]:checked', '#formInitial').val();
-                var initialq7 = $('input[name=initialq7]:checked', '#formInitial').val();
-                var initialq8 = $('input[name=initialq8]:checked', '#formInitial').val();
-                var initialq9 = $('input[name=initialq9]:checked', '#formInitial').val();
-                var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
-                var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
-                var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
-                var postJSONData = '{"tanfq1" : ' + tanfq1 +
-                        ',"tanfq2" : ' + tanfq2 +
-                        ',"initialq1" : ' + initialq1 +
-                        ',"initialq2" : ' + initialq2 +
-                        ',"initialq3" : ' + initialq3 +
-                        ',"initialq4" : ' + initialq4 +
-                        ',"initialq5" : ' + initialq5 +
-                        ',"initialq6" : ' + initialq6 +
-                        ',"initialq7" : ' + initialq7 +
-                        ',"initialq8" : ' + initialq8 +
-                        ',"initialq9" : ' + initialq9 +
-                        ',"initialq10" : ' + initialq10 +
-                        ',"initialq11" : ' + initialq11 +
-                        ',"initialq12" : ' + initialq12 +
-                        '}';
-                SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
-                alreadyUploadedInitialFormThisSession = true;
-            }
-            else
-            {
-                console.log("Initial Form Already Uploaded for this session");
-            }
-        }
+            e.preventDefault();
+            AjaxSubmit_InitialForm();
 
-        function AjaxSubmit_InitialContactForm()
-        {
-            var ic_FirstName = $('input[name=firstName]').val();
-            var ic_LastName = $('input[name=lastName]').val();
-            var ic_Email = $('input[name=email]').val();
-            var ic_PhoneAreaCode = $('input[name=phoneAreaCode]').val();
-            var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
-            var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
-            var ic_Phone = "";
-            if ((ic_PhoneAreaCode !== "") && (ic_PhoneFirstThree !== "") && (ic_PhoneLastFour !== ""))
+            if (alreadyCreatedSlideshow === false)
             {
-                ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
+                for (var i = 1; i <= 12; i++)
+                {
+                    if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
+                    {
+                        missedQuestionsList.push(i);
+                    }
+                    else
+                    {
+                        correctQuestionsList.push(i);
+                    }
+                }
+
+                if (missedQuestionsList.length >= 1)
+                {
+                    $("#listOfMissedQuestions").text(missedQuestionsList.toString());
+
+                    var alreadySetFirstElementActive = false;
+                    for (var i = 0; i < correctQuestionsList.length; i++)
+                    {
+                        if (alreadySetFirstElementActive === false) //set first element active
+                        {
+                            $("#hidden"+ missedQuestionsList[i]).addClass('active');
+                            alreadySetFirstElementActive = true;
+                        }
+                    
+                        $("#hidden"+ correctQuestionsList[i]).remove(); //remove correct questions from carousel
+                    }
+                }
+
+                alreadyCreatedSlideshow = true;
             }
 
-            var postJSONData = '{"ic_FirstName" : "' + ic_FirstName +
-                    '","ic_LastName" : "' + ic_LastName +
-                    '","ic_Email" : "' + ic_Email +
-                    '","ic_Phone" : "' + ic_Phone +
-                    '"}';
-            SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
-        }
+            if (missedQuestionsList.length >= 1) //they can't continue
+            {
+                $('#carouselMissedQuestionSlideShow').carousel();
+                $('#modalMissedQuestionsNextSteps').modal('show');
+            }
+            else //they can continue
+            {
+                AjaxSubmit_GetCOHContact();
+                $('#divContactModal').modal('show');
+            }
+        });
 
-        function AjaxSubmit_GetCOHContact()
+        $('#buttonViewMissedQuestionsSlideshow').click(function (e)
         {
-            var postJSONData = '{}';
-            SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
-        }
+            $('#modalMissedQuestionsNextSteps').modal('hide');
+            $('#carouselModalMissedQuestions').modal('show');
+        });
 
-        function AjaxSuccess_GetCOHContact(returnJSONData)
+        $('#formContact').submit(function (e)
         {
-            $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
-            $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
-            $('#spanCOH_Email').text(returnJSONData.data[0].email);
-            $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
+            e.preventDefault();
+            AjaxSubmit_InitialContactForm();
+            $('#divContactModal').modal('hide');
+        });
+
+        window.setTimeout(function () {
+            $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+            $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    });
+
+    var alreadyUploadedInitialFormThisSession = false;
+    function AjaxSubmit_InitialForm()
+    {
+        if (alreadyUploadedInitialFormThisSession === false)
+        {
+            var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
+            var tanfq2 = $('input[name=tanfq2]:checked', '#formInitial').val();
+            var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
+            var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
+            var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();
+            var initialq4 = $('input[name=initialq4]:checked', '#formInitial').val();
+            var initialq5 = $('input[name=initialq5]:checked', '#formInitial').val();
+            var initialq6 = $('input[name=initialq6]:checked', '#formInitial').val();
+            var initialq7 = $('input[name=initialq7]:checked', '#formInitial').val();
+            var initialq8 = $('input[name=initialq8]:checked', '#formInitial').val();
+            var initialq9 = $('input[name=initialq9]:checked', '#formInitial').val();
+            var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
+            var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
+            var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
+            var postJSONData = '{"tanfq1" : ' + tanfq1 +
+                    ',"tanfq2" : ' + tanfq2 +
+                    ',"initialq1" : ' + initialq1 +
+                    ',"initialq2" : ' + initialq2 +
+                    ',"initialq3" : ' + initialq3 +
+                    ',"initialq4" : ' + initialq4 +
+                    ',"initialq5" : ' + initialq5 +
+                    ',"initialq6" : ' + initialq6 +
+                    ',"initialq7" : ' + initialq7 +
+                    ',"initialq8" : ' + initialq8 +
+                    ',"initialq9" : ' + initialq9 +
+                    ',"initialq10" : ' + initialq10 +
+                    ',"initialq11" : ' + initialq11 +
+                    ',"initialq12" : ' + initialq12 +
+                    '}';
+            SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
+            alreadyUploadedInitialFormThisSession = true;
+        }
+        else
+        {
+            console.log("Initial Form Already Uploaded for this session");
+        }
+    }
+
+    function AjaxSubmit_InitialContactForm()
+    {
+        var ic_FirstName = $('input[name=firstName]').val();
+        var ic_LastName = $('input[name=lastName]').val();
+        var ic_Email = $('input[name=email]').val();
+        var ic_PhoneAreaCode = $('input[name=phoneAreaCode]').val();
+        var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
+        var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
+        var ic_Phone = "";
+        if ((ic_PhoneAreaCode !== "") && (ic_PhoneFirstThree !== "") && (ic_PhoneLastFour !== ""))
+        {
+            ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
         }
 
-    </script>
+        var postJSONData = '{"ic_FirstName" : "' + ic_FirstName +
+                '","ic_LastName" : "' + ic_LastName +
+                '","ic_Email" : "' + ic_Email +
+                '","ic_Phone" : "' + ic_Phone +
+                '"}';
+        SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
+    }
+
+    function AjaxSubmit_GetCOHContact()
+    {
+        var postJSONData = '{}';
+        SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
+    }
+
+    function AjaxSuccess_GetCOHContact(returnJSONData)
+    {
+        $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
+        $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
+        $('#spanCOH_Email').text(returnJSONData.data[0].email);
+        $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
+    }
+
+</script>
 </body>
