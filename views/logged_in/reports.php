@@ -16,13 +16,13 @@ date_default_timezone_set('America/Denver');
 
 <div id="reports" class="container-fluid collapse" role="main">
     <div class="row">
-        <div class="col-md-3">
+        <div  class="col-md-3">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Initial Form Attempts VS Success</h3>
                 </div>
                 <div class="panel-body">
-                    <table id="initialFormAttemptedSuccess"
+                    <table id="tableInitialFormAttemptedSuccess"
                            data-height="99"
                            data-sortable="false">
                         <thead>
@@ -33,6 +33,7 @@ date_default_timezone_set('America/Denver');
                             </tr>
                         </thead>
                     </table>
+                    <div id="pieChartInitialFormAttemptedSuccess"></div>
                 </div>
             </div>
         </div>
@@ -62,6 +63,7 @@ date_default_timezone_set('America/Denver');
                             </tr>
                         </thead>
                     </table>
+                    <div id="barChartInitialFormFrequentylMissed"></div>
                 </div>
             </div>
         </div>
@@ -83,6 +85,7 @@ date_default_timezone_set('America/Denver');
                             </tr>
                         </thead>
                     </table>
+                    <div id="barChartTANFQuestions"></div>
                 </div>
             </div>
         </div>
@@ -90,9 +93,11 @@ date_default_timezone_set('America/Denver');
 </div>
 
 <script>
-    $(function () {
-        runReports();
+    //$('#progressBarModal').modal('show');
+    
+    runReports();
 
+    $(function () {
         $("#fromdatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -111,9 +116,15 @@ date_default_timezone_set('America/Denver');
         });
     });
 
+    $(window).resize(function () {
+        setTimeout(function () {
+            runReports();
+        }, 1000);
+    });
+
+    google.load('visualization', '1', {'packages': ['corechart']});
     function runReports()
     {
-        $('#progressBarModal').modal('show');
         AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
         AjaxSubmit_AdminReportGetTanfQuestions();
@@ -130,6 +141,32 @@ date_default_timezone_set('America/Denver');
         return JSONDateRange;
     }
 
+    function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
+    {
+        var postJSONData = getJSONDateRange();
+        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
+    }
+
+    function AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess(returnJSONData)
+    {
+        $('#tableInitialFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
+        $('#tableInitialFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
+
+        $('#reports').fadeIn();
+
+        var data = google.visualization.arrayToDataTable([
+            ['Key', 'Value'],
+            ['Fail', returnJSONData.data[0].attempts - returnJSONData.data[0].success],
+            ['Success', returnJSONData.data[0].success]
+        ]);
+
+        drawPieChart(data, 'pieChartInitialFormAttemptedSuccess');
+
+//        setTimeout(function () {
+//            $('#progressBarModal').modal('hide');
+//        }, 1000);
+    }
+
     function AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed()
     {
         var postJSONData = getJSONDateRange();
@@ -141,29 +178,31 @@ date_default_timezone_set('America/Denver');
         $('#initialFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#initialFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
 
-        setTimeout(function () {
-            $('#reports').fadeIn();
-            $('#progressBarModal').modal('hide');
-        }, 1000);
+        $('#reports').fadeIn();
+
+        var data = google.visualization.arrayToDataTable([
+            ['Question', 'Value'],
+            ['Q1', parseInt(returnJSONData.data[0].q1)],
+            ['Q2', parseInt(returnJSONData.data[0].q2)],
+            ['Q3', parseInt(returnJSONData.data[0].q3)],
+            ['Q4', parseInt(returnJSONData.data[0].q4)],
+            ['Q5', parseInt(returnJSONData.data[0].q5)],
+            ['Q6', parseInt(returnJSONData.data[0].q6)],
+            ['Q7', parseInt(returnJSONData.data[0].q7)],
+            ['Q8', parseInt(returnJSONData.data[0].q8)],
+            ['Q9', parseInt(returnJSONData.data[0].q9)],
+            ['Q10', parseInt(returnJSONData.data[0].q10)],
+            ['Q11', parseInt(returnJSONData.data[0].q11)],
+            ['Q12', parseInt(returnJSONData.data[0].q12)]
+        ]);
+
+        drawBarChart(data, 'barChartInitialFormFrequentylMissed');
+
+//        setTimeout(function () {
+//            $('#progressBarModal').modal('hide');
+//        }, 1000);
     }
 
-    function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
-    {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
-    }
-
-    function AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess(returnJSONData)
-    {
-        $('#initialFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
-        $('#initialFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
-
-        setTimeout(function () {
-            $('#reports').fadeIn();
-            $('#progressBarModal').modal('hide');
-        }, 1000);
-    }
-    
     function AjaxSubmit_AdminReportGetTanfQuestions()
     {
         var postJSONData = getJSONDateRange();
@@ -175,10 +214,46 @@ date_default_timezone_set('America/Denver');
         $('#TANFQuestions').bootstrapTable({data: returnJSONData.data});
         $('#TANFQuestions').bootstrapTable('load', returnJSONData.data);
 
-        setTimeout(function () {
-            $('#reports').fadeIn();
-            $('#progressBarModal').modal('hide');
-        }, 1000);
+        $('#reports').fadeIn();
+
+        var data = google.visualization.arrayToDataTable([
+            ['Question', 'Value'],
+            ['Q1Y', parseInt(returnJSONData.data[0].tanfq1yes)],
+            ['Q1N', parseInt(returnJSONData.data[0].tanfq1no)],
+            ['Q2Y', parseInt(returnJSONData.data[0].tanfq2yes)],
+            ['Q2N', parseInt(returnJSONData.data[0].tanfq2no)]
+        ]);
+
+        drawBarChart(data, 'barChartTANFQuestions');
+
+//        setTimeout(function () {
+//            $('#progressBarModal').modal('hide');
+//        }, 1000);
+    }
+
+
+    function drawPieChart(data, divID)
+    {
+        var options = {
+            legend: {position: 'bottom'},
+            chartArea: {width: "100%", height: "75%"},
+            colors: ['#337ab7', '#449d44']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(divID));
+        chart.draw(data, options);
+    }
+
+    function drawBarChart(data, divID)
+    {
+        var options = {
+            legend: 'none',
+            chartArea: {width: "100%", height: "75%"},
+            colors: ['#337ab7']
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById(divID));
+        chart.draw(data, options);
     }
 
 </script>

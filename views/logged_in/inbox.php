@@ -14,7 +14,7 @@
            data-classes="table table-hover table-condensed"
            data-pagination="true"
            data-page-size="20"
-           data-height="810"
+           data-height="650"
            data-maintain-selected="true"
            data-show-footer="true"
            data-striped="true"
@@ -70,10 +70,19 @@
 </div>
 
 <script>
+    //$('#progressBarModal').modal('show');
+    
+    AjaxSubmit_getInboxContacts();
+    
     $(function () {
         //$('[rel="tooltip"]').tooltip();
-        $('#progressBarModal').modal('show');
-        AjaxSubmit_getInboxContacts();
+        //AjaxSubmit_getInboxContacts();
+    });
+    
+    $(window).resize(function () {
+        setTimeout(function () {
+            AjaxSubmit_getInboxContacts();
+        }, 1000);
     });
 
     $('#deleteConfirmButton').click(function (e)
@@ -131,11 +140,12 @@
     {
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
         $('#inboxTable').bootstrapTable('load', returnJSONData.data);
+        
+        $('#inboxContacts').fadeIn();
 
-        setTimeout(function () {
-            $('#inboxContacts').fadeIn();
-            $('#progressBarModal').modal('hide');
-        }, 1000);
+//        setTimeout(function () {
+//            $('#progressBarModal').modal('hide');
+//        }, 1000);
     }
 
 </script>

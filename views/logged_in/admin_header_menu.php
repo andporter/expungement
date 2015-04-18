@@ -149,6 +149,6 @@
 
         SendAjax("api/api.php?method=adminUpdateCOHContact", postJSONData, "none", true);
 
-        $('#editAccountModal').modal('hide');
+        $('#editCOHContactModal').modal('hide');
     }
 </script>
