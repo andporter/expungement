@@ -93,7 +93,7 @@ date_default_timezone_set('America/Denver');
 </div>
 
 <script>
-    //$('#progressBarModal').modal('show');
+    $('#progressBarModal').modal('show');
     
     runReports();
 
@@ -156,15 +156,15 @@ date_default_timezone_set('America/Denver');
 
         var data = google.visualization.arrayToDataTable([
             ['Key', 'Value'],
-            ['Fail', returnJSONData.data[0].attempts - returnJSONData.data[0].success],
-            ['Success', returnJSONData.data[0].success]
+            ['Fail', parseInt(returnJSONData.data[0].attempts) - parseInt(returnJSONData.data[0].success)],
+            ['Success', parseInt(returnJSONData.data[0].success)]
         ]);
 
         drawPieChart(data, 'pieChartInitialFormAttemptedSuccess');
 
-//        setTimeout(function () {
-//            $('#progressBarModal').modal('hide');
-//        }, 1000);
+        setTimeout(function () {
+            $('#progressBarModal').modal('hide');
+        }, 1000);
     }
 
     function AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed()

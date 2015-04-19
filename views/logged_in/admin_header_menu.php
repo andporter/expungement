@@ -9,19 +9,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/index.php?inbox">Cottages of Hope</a>
+            <a class="navbar-brand" href="index.php?inbox">Cottages of Hope</a>
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
-                <li><a href="/index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
-                <li><a href="/index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
+                <li><a href="index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
+                <li><a href="index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo ucwords($_SESSION['user_name']); ?><span class="caret"></span>
                         <ul class="dropdown-menu">
                             <li><a onclick="showEditCOHContactModal()" href="" id="editCOHContact" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Edit COH Contact</a></li>
-                            <li><a href="/index.php?register"><span class="glyphicon glyphicon-cog"></span> Register</a></li>
+                            <li><a href="index.php?register"><span class="glyphicon glyphicon-cog"></span> Register</a></li>
                             <li><a href="#adminLogoutConfirmModal" id="logout" data-toggle="modal"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> 
                         </ul>
                 </li>
@@ -40,7 +40,7 @@
                 <p>Are you sure you want to logout?</p>
             </div>
             <div class="modal-footer">
-                <a href="/index.php?logout" class="btn btn-danger btn-ok">Yes, Logout</a>
+                <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Logout</a>
             </div>
         </div>
     </div>
@@ -104,9 +104,6 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('a[href="' + this.location.pathname + this.location.search + '"]').parent().addClass('active');
-    });
 
     $('#formAdminEditCOHContact').submit(function (e)
     {

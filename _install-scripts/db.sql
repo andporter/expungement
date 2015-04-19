@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS expungement;
+-- CREATE DATABASE IF NOT EXISTS expungement;
 
-USE expungement;
+USE cottage6_expungement;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (

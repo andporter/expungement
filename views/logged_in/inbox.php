@@ -70,7 +70,7 @@
 </div>
 
 <script>
-    //$('#progressBarModal').modal('show');
+    $('#progressBarModal').modal('show');
     
     AjaxSubmit_getInboxContacts();
     
@@ -143,9 +143,9 @@
         
         $('#inboxContacts').fadeIn();
 
-//        setTimeout(function () {
-//            $('#progressBarModal').modal('hide');
-//        }, 1000);
+        setTimeout(function () {
+            $('#progressBarModal').modal('hide');
+        }, 1000);
     }
 
 </script>
