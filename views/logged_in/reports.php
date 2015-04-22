@@ -94,8 +94,9 @@ date_default_timezone_set('America/Denver');
 
 <script>
     $('#progressBarModal').modal('show');
-    
-    runReports();
+
+    google.load('visualization', '1', {'packages': ['corechart']});
+    google.setOnLoadCallback(runReports);
 
     $(function () {
         $("#fromdatepicker").datepicker({
@@ -112,6 +113,7 @@ date_default_timezone_set('America/Denver');
 
         $('#runreport').click(function ()
         {
+            $('#progressBarModal').modal('show');
             runReports();
         });
     });
@@ -122,7 +124,6 @@ date_default_timezone_set('America/Denver');
         }, 1000);
     });
 
-    google.load('visualization', '1', {'packages': ['corechart']});
     function runReports()
     {
         AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
@@ -197,10 +198,6 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartInitialFormFrequentylMissed');
-
-//        setTimeout(function () {
-//            $('#progressBarModal').modal('hide');
-//        }, 1000);
     }
 
     function AjaxSubmit_AdminReportGetTanfQuestions()
@@ -225,10 +222,6 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartTANFQuestions');
-
-//        setTimeout(function () {
-//            $('#progressBarModal').modal('hide');
-//        }, 1000);
     }
 
 

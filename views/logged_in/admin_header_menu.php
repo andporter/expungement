@@ -1,4 +1,16 @@
-<?php ?>
+<?php 
+
+function echoActiveClassIfRequestMatches($requestUri)
+{
+    $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
+
+    if ($current_file_name == $requestUri)
+    {
+        echo 'class="active"';
+    }  
+}
+
+?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid" id="navfluid">
@@ -13,8 +25,8 @@
         </div>
         <div class="collapse navbar-collapse" id="navigationbar">
             <ul class="nav navbar-nav">
-                <li><a href="index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
-                <li><a href="index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
+                <li <?=echoActiveClassIfRequestMatches("index.php?inbox")?>><a href="index.php?inbox"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
+                <li <?=echoActiveClassIfRequestMatches("index.php?reports")?>><a href="index.php?reports"><span class="glyphicon glyphicon glyphicon-stats"></span> Reports</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

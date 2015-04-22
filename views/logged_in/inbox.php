@@ -121,13 +121,13 @@
     function getSelectedRowIDs()
     {
         var jsonInboxContacts = $('#inboxTable').bootstrapTable('getSelections');
-        var postData = new Array();
+        var inboxContactIDs = new Array();
 
         jsonInboxContacts.forEach(function (obj) {
-            postData.push(obj.id);
+            inboxContactIDs.push(obj.id);
         });
 
-        return JSON.stringify(postData);
+        return JSON.stringify(inboxContactIDs);
     }
 
     function AjaxSubmit_getInboxContacts()

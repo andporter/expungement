@@ -109,7 +109,6 @@ switch ($_GET['method'])
                 $jsonData = json_decode($_POST["data"], true);
 
                 $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-                $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = $db_connection->prepare("INSERT INTO InitialFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (:tanfq1, :tanfq2, :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10, :q11, :q12)");
                 $sql->bindParam(':tanfq1', $jsonData['tanfq1']);
                 $sql->bindParam(':tanfq2', $jsonData['tanfq2']);
@@ -235,7 +234,6 @@ switch ($_GET['method'])
             }
             catch (Exception $e)
             {
-                echo $e;
                 $response['code'] = 0;
                 $response['data'] = $e->getMessage();
                 $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
