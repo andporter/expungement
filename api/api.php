@@ -148,21 +148,30 @@ switch ($_GET['method'])
                 $jsonData = json_decode($_POST["data"], true);
 
                 $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-                $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12) VALUES (:tanfq1, :tanfq2, :q1, :q2, :q3, :q4, :q5, :q6, :q7, :q8, :q9, :q10, :q11, :q12)");
+                $sql = $db_connection->prepare("INSERT INTO ExpungementFormStats (tanfq1, tanfq2, q1, q2, q3a, q3b, q4a, q4b, q5a, q5b, q6a, q6b, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17) VALUES (:tanfq1, :tanfq2, :q1, :q2, :q3a, :q3b, :q4a, :q4b, :q5a, :q5b, :q6a, :q6b, :q7, :q8, :q9, :q10, :q11, :q12, :q13, :q14, :q15, :q16, :q17)");
                 $sql->bindParam(':tanfq1', $jsonData['tanfq1']);
                 $sql->bindParam(':tanfq2', $jsonData['tanfq2']);
-                $sql->bindParam(':q1', $jsonData['initialq1']);
-                $sql->bindParam(':q2', $jsonData['initialq2']);
-                $sql->bindParam(':q3', $jsonData['initialq3']);
-                $sql->bindParam(':q4', $jsonData['initialq4']);
-                $sql->bindParam(':q5', $jsonData['initialq5']);
-                $sql->bindParam(':q6', $jsonData['initialq6']);
-                $sql->bindParam(':q7', $jsonData['initialq7']);
-                $sql->bindParam(':q8', $jsonData['initialq8']);
-                $sql->bindParam(':q9', $jsonData['initialq9']);
-                $sql->bindParam(':q10', $jsonData['initialq10']);
-                $sql->bindParam(':q11', $jsonData['initialq11']);
-                $sql->bindParam(':q12', $jsonData['initialq12']);
+                $sql->bindParam(':q1', $jsonData['expungementQ1']);
+                $sql->bindParam(':q2', $jsonData['expungementQ2']);
+                $sql->bindParam(':q3a', $jsonData['expungementQ3a']);
+                $sql->bindParam(':q3b', $jsonData['expungementQ3b']);
+                $sql->bindParam(':q4a', $jsonData['expungementQ4a']);
+                $sql->bindParam(':q4b', $jsonData['expungementQ4b']);
+                $sql->bindParam(':q5a', $jsonData['expungementQ5a']);
+                $sql->bindParam(':q5b', $jsonData['expungementQ5b']);
+                $sql->bindParam(':q6a', $jsonData['expungementQ6a']);
+                $sql->bindParam(':q6b', $jsonData['expungementQ6b']);
+                $sql->bindParam(':q7', $jsonData['expungementQ7']);
+                $sql->bindParam(':q8', $jsonData['expungementQ8']);
+                $sql->bindParam(':q9', $jsonData['expungementQ9']);
+                $sql->bindParam(':q10', $jsonData['expungementQ10']);
+                $sql->bindParam(':q11', $jsonData['expungementQ11']);
+                $sql->bindParam(':q12', $jsonData['expungementQ12']);
+                $sql->bindParam(':q13', $jsonData['expungementQ13']);
+                $sql->bindParam(':q14', $jsonData['expungementQ14']);
+                $sql->bindParam(':q15', $jsonData['expungementQ15']);
+                $sql->bindParam(':q16', $jsonData['expungementQ16']);
+                $sql->bindParam(':q17', $jsonData['expungementQ17']);
 
                 if ($sql->execute())
                 {
@@ -409,6 +418,49 @@ switch ($_GET['method'])
 
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate;");
+                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
+                    $sql->bindParam(':toDate', $jsonData['toDate']);
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn = array();
+
+                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
+                        {
+                            $ResultsToReturn[] = $row;
+                        }
+
+                        $response['code'] = 1;
+                        $response['data'] = $ResultsToReturn;
+                        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                    }
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
+
+    case "adminReportGetExpungementFormFrequentlyMissed":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {
+                    $jsonData = json_decode($_POST["data"], true);
+
+                    $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+                    $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3a) as q3a, SUM(q3b) as q3b, SUM(q4a) as q4a, SUM(q4b) as q4b, SUM(q5a) as q5a, SUM(q5b) as q5b, SUM(q6a) as q6a, SUM(q6b) as q6b, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12, SUM(q13) as q13, SUM(q14) as q14, SUM(q15) as q15, SUM(q16) as q16, SUM(q17) as q17 from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate;");
                     $sql->bindParam(':fromDate', $jsonData['fromDate']);
                     $sql->bindParam(':toDate', $jsonData['toDate']);
 

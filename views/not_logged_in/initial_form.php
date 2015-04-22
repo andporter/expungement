@@ -187,8 +187,8 @@ if (isset($login))
                                         <input type="number" class="form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="invalid-form-error-message"></div>
+                            </div><div class="invalid-form-error-message-require-emailORphone"></div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <input type="submit" value="Submit" class="btn btn-primary pull-right" />
@@ -258,182 +258,176 @@ if (isset($login))
 
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(function () {
-        $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
-        {
-            // if one of these blocks is not failing do not prevent submission
-            // we use here group validation with option force (validate even non required fields)
-            if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
+        $(function () {
+            $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
-                $('.invalid-form-error-message').html('');
-                return;
-            }
-            // else stop form submission
-            formInstance.submitEvent.preventDefault();
-            // and display a gentle message
-            $('.invalid-form-error-message')
-                    .html("You must provide either your email address or phone number.")
-                    .addClass("parsley-required");
-            return;
-        });
-
-        var alreadyCreatedSlideshow = false;
-        var missedQuestionsList = Array();
-        var correctQuestionsList = Array();
-        $('#formInitial').submit(function (e)
-        {
-            e.preventDefault();
-            AjaxSubmit_InitialForm();
-
-            if (alreadyCreatedSlideshow === false)
-            {
-                for (var i = 1; i <= 12; i++)
+                // if one of these blocks is not failing do not prevent submission
+                // we use here group validation with option force (validate even non required fields)
+                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
                 {
-                    if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
-                    {
-                        missedQuestionsList.push(i);
-                    }
-                    else
-                    {
-                        correctQuestionsList.push(i);
-                    }
+                    formInstance.submitEvent.preventDefault();
+                    $('.invalid-form-error-message-require-emailORphone').html('');
+                    AjaxSubmit_InitialContactForm();
+                    $('#divContactModal').modal('hide');
                 }
-
-                if (missedQuestionsList.length >= 1)
+                else // else stop form submission
                 {
-                    $("#listOfMissedQuestions").text(missedQuestionsList.toString());
+                    formInstance.submitEvent.preventDefault();
+                    // and display a gentle message
+                    $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
+                }
+            });
 
-                    var alreadySetFirstElementActive = false;
-                    for (var i = 0; i < correctQuestionsList.length; i++)
+            var alreadyCreatedSlideshow = false;
+            var missedQuestionsList = Array();
+            var correctQuestionsList = Array();
+            $('#formInitial').submit(function (e)
+            {
+                e.preventDefault();
+                AjaxSubmit_InitialForm();
+
+                if (alreadyCreatedSlideshow === false)
+                {
+                    for (var i = 1; i <= 12; i++)
                     {
-                        if (alreadySetFirstElementActive === false) //set first element active
+                        if ($('input[name=initialq' + i + ' ]:checked', '#formInitial').val() === "1")
                         {
-                            $("#missedQuestionSlide"+ missedQuestionsList[i]).addClass('active');
-                            alreadySetFirstElementActive = true;
+                            missedQuestionsList.push(i);
                         }
-                    
-                        $("#missedQuestionSlide"+ correctQuestionsList[i]).remove(); //remove correct questions from carousel
+                        else
+                        {
+                            correctQuestionsList.push(i);
+                        }
                     }
+
+                    if (missedQuestionsList.length >= 1)
+                    {
+                        $("#listOfMissedQuestions").text(missedQuestionsList.toString());
+
+                        var alreadySetFirstElementActive = false;
+                        for (var i = 0; i < correctQuestionsList.length; i++)
+                        {
+                            if (alreadySetFirstElementActive === false) //set first element active
+                            {
+                                $("#missedQuestionSlide" + missedQuestionsList[i]).addClass('active');
+                                alreadySetFirstElementActive = true;
+                            }
+
+                            $("#missedQuestionSlide" + correctQuestionsList[i]).remove(); //remove correct questions from carousel
+                        }
+                    }
+
+                    alreadyCreatedSlideshow = true;
                 }
 
-                alreadyCreatedSlideshow = true;
-            }
-
-            if (missedQuestionsList.length >= 1) //they can't continue
-            {
-                $('#carouselMissedQuestionSlideShow').carousel();
-                $('#modalMissedQuestionsNextSteps').modal('show');
-            }
-            else //they can continue
-            {
-                AjaxSubmit_GetCOHContact();
-                $('#divContactModal').modal('show');
-            }
-        });
-
-        $('#buttonViewMissedQuestionsSlideshow').click(function (e)
-        {
-            $('#modalMissedQuestionsNextSteps').modal('hide');
-            $('#carouselModalMissedQuestions').modal('show');
-        });
-
-        $('#formContact').submit(function (e)
-        {
-            e.preventDefault();
-            AjaxSubmit_InitialContactForm();
-            $('#divContactModal').modal('hide');
-        });
-
-        window.setTimeout(function () {
-            $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
-                $(this).remove();
+                if (missedQuestionsList.length >= 1) //they can't continue
+                {
+                    $('#carouselMissedQuestionSlideShow').carousel();
+                    $('#modalMissedQuestionsNextSteps').modal('show');
+                }
+                else //they can continue
+                {
+                    AjaxSubmit_GetCOHContact();
+                    $('#divContactModal').modal('show');
+                }
             });
-            $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
-                $(this).remove();
+
+            $('#buttonViewMissedQuestionsSlideshow').click(function (e)
+            {
+                $('#modalMissedQuestionsNextSteps').modal('hide');
+                $('#carouselModalMissedQuestions').modal('show');
             });
-        }, 5000);
-    });
 
-    var alreadyUploadedInitialFormThisSession = false;
-    function AjaxSubmit_InitialForm()
-    {
-        if (alreadyUploadedInitialFormThisSession === false)
-        {
-            var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
-            var tanfq2 = $('input[name=tanfq2]:checked', '#formInitial').val();
-            var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
-            var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
-            var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();
-            var initialq4 = $('input[name=initialq4]:checked', '#formInitial').val();
-            var initialq5 = $('input[name=initialq5]:checked', '#formInitial').val();
-            var initialq6 = $('input[name=initialq6]:checked', '#formInitial').val();
-            var initialq7 = $('input[name=initialq7]:checked', '#formInitial').val();
-            var initialq8 = $('input[name=initialq8]:checked', '#formInitial').val();
-            var initialq9 = $('input[name=initialq9]:checked', '#formInitial').val();
-            var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
-            var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
-            var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
-            var postJSONData = '{"tanfq1" : ' + tanfq1 +
-                    ',"tanfq2" : ' + tanfq2 +
-                    ',"initialq1" : ' + initialq1 +
-                    ',"initialq2" : ' + initialq2 +
-                    ',"initialq3" : ' + initialq3 +
-                    ',"initialq4" : ' + initialq4 +
-                    ',"initialq5" : ' + initialq5 +
-                    ',"initialq6" : ' + initialq6 +
-                    ',"initialq7" : ' + initialq7 +
-                    ',"initialq8" : ' + initialq8 +
-                    ',"initialq9" : ' + initialq9 +
-                    ',"initialq10" : ' + initialq10 +
-                    ',"initialq11" : ' + initialq11 +
-                    ',"initialq12" : ' + initialq12 +
-                    '}';
-            SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
-            alreadyUploadedInitialFormThisSession = true;
-        }
-        else
-        {
-            console.log("Initial Form Already Uploaded for this session");
-        }
-    }
+            window.setTimeout(function () {
+                $("#alertErrors").fadeTo(1500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+                $("#alertMessages").fadeTo(1500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 5000);
+        });
 
-    function AjaxSubmit_InitialContactForm()
-    {
-        var ic_FirstName = $('input[name=firstName]').val();
-        var ic_LastName = $('input[name=lastName]').val();
-        var ic_Email = $('input[name=email]').val();
-        var ic_PhoneAreaCode = $('input[name=phoneAreaCode]').val();
-        var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
-        var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
-        var ic_Phone = "";
-        if ((ic_PhoneAreaCode !== "") && (ic_PhoneFirstThree !== "") && (ic_PhoneLastFour !== ""))
+        var alreadyUploadedInitialFormThisSession = false;
+        function AjaxSubmit_InitialForm()
         {
-            ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
+            if (alreadyUploadedInitialFormThisSession === false)
+            {
+                var tanfq1 = $('input[name=tanfq1]:checked', '#formInitial').val();
+                var tanfq2 = $('input[name=tanfq2]:checked', '#formInitial').val();
+                var initialq1 = $('input[name=initialq1]:checked', '#formInitial').val();
+                var initialq2 = $('input[name=initialq2]:checked', '#formInitial').val();
+                var initialq3 = $('input[name=initialq3]:checked', '#formInitial').val();
+                var initialq4 = $('input[name=initialq4]:checked', '#formInitial').val();
+                var initialq5 = $('input[name=initialq5]:checked', '#formInitial').val();
+                var initialq6 = $('input[name=initialq6]:checked', '#formInitial').val();
+                var initialq7 = $('input[name=initialq7]:checked', '#formInitial').val();
+                var initialq8 = $('input[name=initialq8]:checked', '#formInitial').val();
+                var initialq9 = $('input[name=initialq9]:checked', '#formInitial').val();
+                var initialq10 = $('input[name=initialq10]:checked', '#formInitial').val();
+                var initialq11 = $('input[name=initialq11]:checked', '#formInitial').val();
+                var initialq12 = $('input[name=initialq12]:checked', '#formInitial').val();
+                var postJSONData = '{"tanfq1" : ' + tanfq1 +
+                        ',"tanfq2" : ' + tanfq2 +
+                        ',"initialq1" : ' + initialq1 +
+                        ',"initialq2" : ' + initialq2 +
+                        ',"initialq3" : ' + initialq3 +
+                        ',"initialq4" : ' + initialq4 +
+                        ',"initialq5" : ' + initialq5 +
+                        ',"initialq6" : ' + initialq6 +
+                        ',"initialq7" : ' + initialq7 +
+                        ',"initialq8" : ' + initialq8 +
+                        ',"initialq9" : ' + initialq9 +
+                        ',"initialq10" : ' + initialq10 +
+                        ',"initialq11" : ' + initialq11 +
+                        ',"initialq12" : ' + initialq12 +
+                        '}';
+                SendAjax("api/api.php?method=initialForm", postJSONData, "none", true);
+                alreadyUploadedInitialFormThisSession = true;
+            }
+            else
+            {
+                console.log("Initial Form Already Uploaded for this session");
+            }
         }
 
-        var postJSONData = '{"ic_FirstName" : "' + ic_FirstName +
-                '","ic_LastName" : "' + ic_LastName +
-                '","ic_Email" : "' + ic_Email +
-                '","ic_Phone" : "' + ic_Phone +
-                '"}';
-        SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
-    }
+        function AjaxSubmit_InitialContactForm()
+        {
+            var ic_FirstName = $('input[name=firstName]').val();
+            var ic_LastName = $('input[name=lastName]').val();
+            var ic_Email = $('input[name=email]').val();
+            var ic_PhoneAreaCode = $('input[name=phoneAreaCode]').val();
+            var ic_PhoneFirstThree = $('input[name=phoneFirstThree]').val();
+            var ic_PhoneLastFour = $('input[name=phoneLastFour]').val();
+            var ic_Phone = "";
+            if ((ic_PhoneAreaCode !== "") && (ic_PhoneFirstThree !== "") && (ic_PhoneLastFour !== ""))
+            {
+                ic_Phone = ic_PhoneAreaCode + '-' + ic_PhoneFirstThree + '-' + ic_PhoneLastFour;
+            }
 
-    function AjaxSubmit_GetCOHContact()
-    {
-        var postJSONData = '{}';
-        SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
-    }
+            var postJSONData = '{"ic_FirstName" : "' + ic_FirstName +
+                    '","ic_LastName" : "' + ic_LastName +
+                    '","ic_Email" : "' + ic_Email +
+                    '","ic_Phone" : "' + ic_Phone +
+                    '"}';
+            SendAjax("api/api.php?method=contactForm", postJSONData, "none", true);
+        }
 
-    function AjaxSuccess_GetCOHContact(returnJSONData)
-    {
-        $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
-        $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
-        $('#spanCOH_Email').text(returnJSONData.data[0].email);
-        $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
-    }
+        function AjaxSubmit_GetCOHContact()
+        {
+            var postJSONData = '{}';
+            SendAjax("api/api.php?method=getCOHContact", postJSONData, AjaxSuccess_GetCOHContact, false);
+        }
 
-</script>
+        function AjaxSuccess_GetCOHContact(returnJSONData)
+        {
+            $('#spanCOH_Phone').text(returnJSONData.data[0].phone);
+            $('#spanCOH_FirstName').text(returnJSONData.data[0].firstname);
+            $('#spanCOH_Email').text(returnJSONData.data[0].email);
+            $('#aCOH_Email').attr("href", "mailto:" + returnJSONData.data[0].email + "?Subject=Expungement");
+        }
+
+    </script>
 </body>

@@ -1,15 +1,12 @@
 <?php
 
-$mysql_host = "localhost";
-$mysql_database = "cottage6_expungement";
-$mysql_user = "cottage6_weber";
-$mysql_password = "cottages3750";
-# MySQL with PDO_MYSQL  
-$db = new PDO("mysql:host=$mysql_host;dbname=$mysql_database", $mysql_user, $mysql_password);
+require_once("../config/db.php");
+
+$db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 
 $query = file_get_contents("db.sql");
 
-$stmt = $db->prepare($query);
+$stmt = $db_connection->prepare($query);
 
 if ($stmt->execute())
 {
