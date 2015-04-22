@@ -232,20 +232,21 @@ if (isset($login))
                         <h3 class="panel-title">Questions to Review</h3>
                     </div>
                     <div class="panel-body" >
-                        <div id="carouselMissedQuestionSlideShow" class="carousel slide" data-interval="false" data-ride="carousel">
+                        <div id="carouselMissedQuestionSlideShow" class="carousel slide" data-interval="false" data-wrap="false" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <div class="item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="https://placehold.it/600&text=1"></div>
-                                <div class="item" id="missedQuestionSlide2"><img class="img-responsive center-block" src="https://placehold.it/600&text=2"></div>
-                                <div class="item" id="missedQuestionSlide3"><img class="img-responsive center-block" src="https://placehold.it/600&text=3"></div>
-                                <div class="item" id="missedQuestionSlide4"><img class="img-responsive center-block" src="https://placehold.it/600&text=4"></div>
-                                <div class="item" id="missedQuestionSlide5"><img class="img-responsive center-block" src="https://placehold.it/600&text=5"></div>
-                                <div class="item" id="missedQuestionSlide6"><img class="img-responsive center-block" src="https://placehold.it/600&text=6"></div>
-                                <div class="item" id="missedQuestionSlide7"><img class="img-responsive center-block" src="https://placehold.it/600&text=7"></div>
-                                <div class="item" id="missedQuestionSlide8"><img class="img-responsive center-block" src="https://placehold.it/600&text=8"></div>
-                                <div class="item" id="missedQuestionSlide9"><img class="img-responsive center-block" src="https://placehold.it/600&text=9"></div>
-                                <div class="item" id="missedQuestionSlide10"><img class="img-responsive center-block" src="https://placehold.it/600&text=10"></div>
-                                <div class="item" id="missedQuestionSlide11"><img class="img-responsive center-block" src="https://placehold.it/600&text=11"></div>
-                                <div class="item" id="missedQuestionSlide12"><img class="img-responsive center-block" src="https://placehold.it/600&text=12"></div>
+                                <div class="item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="images/slide_1.png"></div>
+                                <div class="item" id="missedQuestionSlide2"><img class="img-responsive center-block" src="images/slide_2.png"></div>
+                                <div class="item" id="missedQuestionSlide3"><img class="img-responsive center-block" src="images/slide_3.png"></div>
+                                <div class="item" id="missedQuestionSlide4"><img class="img-responsive center-block" src="images/slide_4.png"></div>
+                                <div class="item" id="missedQuestionSlide5"><img class="img-responsive center-block" src="images/slide_5.png"></div>
+                                <div class="item" id="missedQuestionSlide6"><img class="img-responsive center-block" src="images/slide_6.png"></div>
+                                <div class="item" id="missedQuestionSlide7"><img class="img-responsive center-block" src="images/slide_7.png"></div>
+                                <div class="item" id="missedQuestionSlide8"><img class="img-responsive center-block" src="images/slide_8.png"></div>
+                                <div class="item" id="missedQuestionSlide9"><img class="img-responsive center-block" src="images/slide_9.png"></div>
+                                <div class="item" id="missedQuestionSlide10"><img class="img-responsive center-block" src="images/slide_10.png"></div>
+                                <div class="item" id="missedQuestionSlide11"><img class="img-responsive center-block" src="images/slide_11.png"></div>
+                                <div class="item" id="missedQuestionSlide12"><img class="img-responsive center-block" src="images/slide_12.png"></div>
+                                <div class="item" id="missedQuestionSlideFinal"><img class="img-responsive center-block" src="images/slide_final.png"></div>
                             </div>
                             <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                             <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
