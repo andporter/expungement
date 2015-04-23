@@ -35,3 +35,7 @@ a.right.carousel-control,
 a.left.carousel-control {
     width: 75px;
 }
+
+ul li{
+    list-style: none;
+}
