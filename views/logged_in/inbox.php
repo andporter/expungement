@@ -6,7 +6,7 @@ date_default_timezone_set('America/Denver');
     <div id="inboxToolbar" class="btn-group">
         <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
-        <a href="api/api.php?method=adminGetInboxContacts&format=excel&filename=Expungement%20Contacts%20<?php echo date('m-d-Y'); ?>" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Excel"><i class="glyphicon glyphicon-export"></i></a>
+        <a href="api/api.php?method=adminGetInboxContacts&format=excel&filename=Expungement%20Contacts%20<?php echo date('m-d-Y'); ?>" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
     </div>
     <table id="inboxTable"
            data-click-to-select="true"
