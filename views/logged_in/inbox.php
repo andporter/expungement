@@ -4,12 +4,12 @@
     <div id="inboxToolbar" class="btn-group">
         <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+        <a href="api/api.php?method=adminGetInboxContacts&format=excel&filename=Expungement%20Contacts%20xx-xx-xxxx" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Export"><i class="glyphicon glyphicon-export"></i></a>
     </div>
     <table id="inboxTable"
            data-click-to-select="true"
            data-search="true"
-           data-show-export="true"
-           data-export-types="['csv', 'excel']"
+           data-toolbar-align="left"
            data-toolbar="#inboxToolbar"
            data-classes="table table-hover table-condensed"
            data-pagination="true"
@@ -75,8 +75,7 @@
     AjaxSubmit_getInboxContacts();
     
     $(function () {
-        //$('[rel="tooltip"]').tooltip();
-        //AjaxSubmit_getInboxContacts();
+        $('[rel="tooltip"]').tooltip();
     });
     
     $(window).resize(function () {

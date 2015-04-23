@@ -234,7 +234,7 @@ if (isset($login))
                     <div class="panel-body" >
                         <div id="carouselMissedQuestionSlideShow" class="carousel slide" data-interval="false" data-wrap="false" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <div class="item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="images/slide_1.png"></div>
+                                <div class="active item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="images/slide_1.png"></div>
                                 <div class="item" id="missedQuestionSlide2"><img class="img-responsive center-block" src="images/slide_2.png"></div>
                                 <div class="item" id="missedQuestionSlide3"><img class="img-responsive center-block" src="images/slide_3.png"></div>
                                 <div class="item" id="missedQuestionSlide4"><img class="img-responsive center-block" src="images/slide_4.png"></div>

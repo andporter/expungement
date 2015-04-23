@@ -5,7 +5,7 @@
 
   Output: A JSON formatted HTTP response
 
-  Original Script: http://markroland.com/blog/restful-php-api/
+  Original Script: thtp://markroland.com/blog/restful-php-api/
  */
 
 require_once("../classes/Login.php");
@@ -36,7 +36,7 @@ $api_response_code = array(
  * @param string $api_response The desired HTTP response data
  * @return void (will echo json)
  * */
-function deliver_response($api_response)
+function deliver_response($api_response, $format, $filename)
 {
     // Define HTTP responses
     $http_response_code = array(
@@ -50,14 +50,34 @@ function deliver_response($api_response)
     // Set HTTP Response
     header('HTTP/1.1 ' . $api_response['status'] . ' ' . $http_response_code[$api_response['status']]);
 
-    // Set HTTP Response Content Type
-    header('Content-Type: application/json; charset=utf-8');
+    // Process different content types
+    if (strcasecmp($format, 'excel') == 0)
+    {        
+        require_once("../classes/PHPExcel.php");
+        
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+        
+        $objPHPExcel->getActiveSheet()->fromArray($api_response['data'], NULL, 'A1');
+        
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 
-    // Format data into a JSON response
-    $json_response = json_encode($api_response);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    else //json is default
+    {
+        // Set HTTP Response Content Type
+        header('Content-Type: application/json; charset=utf-8');
 
-    // Deliver formatted data
-    echo $json_response;
+        // Format data into a JSON response
+        $json_response = json_encode($api_response);
+
+        // Deliver formatted data
+        echo $json_response;
+    }
 
     // End script process
     exit;
@@ -577,4 +597,4 @@ switch ($_GET['method'])
 }
 
 // --- Step 4: Deliver Response
-deliver_response($response);
+deliver_response($response, $_GET['format'], $_GET['filename']);
