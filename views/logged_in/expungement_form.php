@@ -271,8 +271,10 @@
                             console.log(i);
                         }
                     }
+                    
                 $('#print').show();
                 $('#submit').hide();
+                $('#divTanf').hide();
             });
 
 
