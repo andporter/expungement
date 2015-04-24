@@ -91,7 +91,28 @@ date_default_timezone_set('America/Denver');
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div  class="col-md-3">
+            <div class="panel panal-content panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Expungement Form Attempts VS Success</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="tableExpungmentFormAttemptedSuccess"
+                           data-height="79"
+                           data-sortable="false">
+                        <thead>
+                            <tr>
+                                <th data-field="attempts">Attempts</th>
+                                <th data-field="success">Success</th>
+                                <th data-field="percent">Percent</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="pieChartExpungmentFormAttemptedSuccess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
             <div class="panel panal-content panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Expungement Form Frequently Missed</h3>
@@ -170,6 +191,7 @@ date_default_timezone_set('America/Denver');
         AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
         AjaxSubmit_AdminReportGetTanfQuestions();
+        AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed();
     }
 
@@ -264,6 +286,28 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartTANFQuestions');
+    }
+    
+    function AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess()
+    {
+        var postJSONData = getJSONDateRange();
+        SendAjax("api/api.php?method=adminReportGetExpungmentFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess, true);
+    }
+    
+    function AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess(returnJSONData)
+    {
+        $('#tableExpungmentFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
+        $('#tableExpungmentFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
+        
+        $('#reports').fadeIn();
+
+        var data = google.visualization.arrayToDataTable([
+            ['Key', 'Value'],
+            ['Fail', parseInt(returnJSONData.data[0].attempts) - parseInt(returnJSONData.data[0].success)],
+            ['Success', parseInt(returnJSONData.data[0].success)]
+        ]);
+
+        drawPieChart(data, 'pieChartExpungmentFormAttemptedSuccess');
     }
 
     function AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed()

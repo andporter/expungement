@@ -60,7 +60,7 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
 
                 // show the register view (with the registration form, and messages/errors)
                 require("views/logged_in/admin_header_menu.php");
-                require("views/register/register.php");
+                require("views/logged_in/register.php");
             }
             break;
 

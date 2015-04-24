@@ -513,6 +513,49 @@ switch ($_GET['method'])
             }
         }
         break;
+        
+        case "adminReportGetExpungmentFormAttemptedSuccess":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {
+                    $jsonData = json_decode($_POST["data"], true);
+
+                    $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+                    $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate) as attempts, (SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0) as success, (SELECT ROUND(((SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0)/(SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate)*100), 1)) as percent");
+                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
+                    $sql->bindParam(':toDate', $jsonData['toDate']);
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn = array();
+
+                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
+                        {
+                            $ResultsToReturn[] = $row;
+                        }
+
+                        $response['code'] = 1;
+                        $response['data'] = $ResultsToReturn;
+                        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                    }
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
 
     case "adminReportGetTanfQuestions":
         {
@@ -523,7 +566,7 @@ switch ($_GET['method'])
                     $jsonData = json_decode($_POST["data"], true);
 
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-                    $sql = $db_connection->prepare("SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) as tanfq1yes, SUM(case when tanfq1 = 0 then 1 else 0 end) as tanfq1no, SUM(case when tanfq2 = 1 then 1 else 0 end) as tanfq2yes, SUM(case when tanfq2 = 0 then 1 else 0 end) as tanfq2no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate;");
+                    $sql = $db_connection->prepare("SELECT tanfq1yes, tanfq1no, tanfq2yes, tanfq2no FROM ((SELECT SUM(tanfq1yes) AS tanfq1yes FROM (SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1yes) AS tanfq1yes, (SELECT SUM(tanfq1no) AS tanfq1no FROM (SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1no) AS tanfq1no, (SELECT SUM(tanfq2yes) AS tanfq2yes FROM (SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate) AS tanfq2yes) AS tanfq2yes, (SELECT SUM(tanfq2no) AS tanfq2no FROM (SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate ) AS tanfq2no) AS tanfq2no);");
                     $sql->bindParam(':fromDate', $jsonData['fromDate']);
                     $sql->bindParam(':toDate', $jsonData['toDate']);
 

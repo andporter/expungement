@@ -28,7 +28,7 @@ if (isset($registration))
 ?>
 
 <!-- register form -->
-<form method="post" action="/index.php?register" name="registerform">
+<form method="post" action="index.php?register" name="registerform">
     <div class="container theme-showcase">
         <div class="panel panal-content panel-primary">
             <div class="panel-heading">

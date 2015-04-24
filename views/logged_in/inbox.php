@@ -77,7 +77,7 @@ date_default_timezone_set('America/Denver');
     AjaxSubmit_getInboxContacts();
     
     $(function () {
-        $('[rel="tooltip"]').tooltip();
+        //$('[rel="tooltip"]').tooltip();
     });
     
     $(window).resize(function () {
