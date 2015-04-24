@@ -11,6 +11,14 @@ else if (version_compare(PHP_VERSION, '5.5.0', '<'))
     require_once("libraries/password_compatibility_library.php");
 }
 
+// Define whether an HTTPS connection is required
+$HTTPS_required = TRUE;
+
+if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
+{
+    exit("This website requires a secure HTTPS connection!");
+}
+
 // include the configs / constants for the database connection
 require_once("config/db.php");
 
