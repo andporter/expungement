@@ -2,10 +2,10 @@
 date_default_timezone_set('America/Denver');
 ?>
 
-<div id="inboxContacts" class="container-fluid" role="main">
+<div id="divInboxContacts" class="container-fluid" role="main">
     <div id="inboxToolbar" class="btn-group">
-        <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment"><i class="glyphicon glyphicon-plus"></i></a>
-        <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+        <a href="#IncrementCountConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Increment Selected"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="#DeleteContactsConfirmModal" data-toggle="modal" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Delete Selected"><i class="glyphicon glyphicon-trash"></i></a>
         <a href="api/api.php?method=adminGetInboxContacts&format=excel&filename=Expungement%20Contacts%20<?php echo date('m-d-Y'); ?>" rel="tooltip" role="button" class="btn btn-default" data-placement="bottom" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
     </div>
     <table id="inboxTable"
@@ -76,10 +76,6 @@ date_default_timezone_set('America/Denver');
     
     AjaxSubmit_getInboxContacts();
     
-    $(function () {
-        //$('[rel="tooltip"]').tooltip();
-    });
-    
     $(window).resize(function () {
         setTimeout(function () {
             AjaxSubmit_getInboxContacts();
@@ -141,8 +137,6 @@ date_default_timezone_set('America/Denver');
     {
         $('#inboxTable').bootstrapTable({data: returnJSONData.data});
         $('#inboxTable').bootstrapTable('load', returnJSONData.data);
-        
-        $('#inboxContacts').fadeIn();
 
         setTimeout(function () {
             $('#progressBarModal').modal('hide');

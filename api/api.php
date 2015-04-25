@@ -58,7 +58,8 @@ function deliver_response($api_response, $format, $filename)
         // Create new PHPExcel object
         $objPHPExcel = new PHPExcel();
         
-        $objPHPExcel->getActiveSheet()->fromArray($api_response['data'], NULL, 'A1');
+        $objPHPExcel->getActiveSheet()->fromArray(array_keys($api_response['data'][0]), NULL, 'A1'); //header row
+        $objPHPExcel->getActiveSheet()->fromArray($api_response['data'], NULL, 'A2'); //data rows
         
         // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -72,11 +73,8 @@ function deliver_response($api_response, $format, $filename)
         // Set HTTP Response Content Type
         header('Content-Type: application/json; charset=utf-8');
 
-        // Format data into a JSON response
-        $json_response = json_encode($api_response);
-
-        // Deliver formatted data
-        echo $json_response;
+        // Deliver JSON formatted data
+        echo json_encode($api_response);
     }
 
     // End script process
@@ -391,12 +389,10 @@ switch ($_GET['method'])
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $jsonData = json_decode($_POST["data"], true);
-
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN :fromDate AND :toDate) as attempts, (SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as success, (SELECT ROUND(((SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/(SELECT COUNT(1) FROM InitialFormStats WHERE date BETWEEN :fromDate AND :toDate)*100), 1)) as percent");
-                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
-                    $sql->bindParam(':toDate', $jsonData['toDate']);
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
 
                     if ($sql->execute())
                     {
@@ -434,12 +430,10 @@ switch ($_GET['method'])
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $jsonData = json_decode($_POST["data"], true);
-
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3) as q3, SUM(q4) as q4, SUM(q5) as q5, SUM(q6) as q6, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12 from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate;");
-                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
-                    $sql->bindParam(':toDate', $jsonData['toDate']);
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
 
                     if ($sql->execute())
                     {
@@ -477,12 +471,10 @@ switch ($_GET['method'])
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $jsonData = json_decode($_POST["data"], true);
-
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT SUM(q1) as q1, SUM(q2) as q2, SUM(q3a) as q3a, SUM(q3b) as q3b, SUM(q4a) as q4a, SUM(q4b) as q4b, SUM(q5a) as q5a, SUM(q5b) as q5b, SUM(q6a) as q6a, SUM(q6b) as q6b, SUM(q7) as q7, SUM(q8) as q8, SUM(q9) as q9, SUM(q10) as q10, SUM(q11) as q11, SUM(q12) as q12, SUM(q13) as q13, SUM(q14) as q14, SUM(q15) as q15, SUM(q16) as q16, SUM(q17) as q17 from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate;");
-                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
-                    $sql->bindParam(':toDate', $jsonData['toDate']);
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
 
                     if ($sql->execute())
                     {
@@ -520,12 +512,10 @@ switch ($_GET['method'])
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $jsonData = json_decode($_POST["data"], true);
-
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT (SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate) as attempts, (SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0) as success, (SELECT ROUND(((SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0)/(SELECT COUNT(1) FROM ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate)*100), 1)) as percent");
-                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
-                    $sql->bindParam(':toDate', $jsonData['toDate']);
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
 
                     if ($sql->execute())
                     {
@@ -563,12 +553,10 @@ switch ($_GET['method'])
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
-                    $jsonData = json_decode($_POST["data"], true);
-
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
                     $sql = $db_connection->prepare("SELECT tanfq1yes, tanfq1no, tanfq2yes, tanfq2no FROM ((SELECT SUM(tanfq1yes) AS tanfq1yes FROM (SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1yes) AS tanfq1yes, (SELECT SUM(tanfq1no) AS tanfq1no FROM (SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1no) AS tanfq1no, (SELECT SUM(tanfq2yes) AS tanfq2yes FROM (SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate) AS tanfq2yes) AS tanfq2yes, (SELECT SUM(tanfq2no) AS tanfq2no FROM (SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate ) AS tanfq2no) AS tanfq2no);");
-                    $sql->bindParam(':fromDate', $jsonData['fromDate']);
-                    $sql->bindParam(':toDate', $jsonData['toDate']);
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
 
                     if ($sql->execute())
                     {

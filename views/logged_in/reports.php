@@ -14,12 +14,13 @@ date_default_timezone_set('America/Denver');
     </div>
 </div>
 
-<div id="reports" class="container-fluid collapse" role="main">
+<div id="reports" class="container-fluid" role="main">
     <div class="row">
         <div  class="col-md-3">
-            <div class="panel panal-content panel-primary">
+            <div id="panelInitialFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Initial Form Attempts VS Success</h3>
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess','Initial%20Form%20Attempts'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <h3 class="panel-title">Initial Form Attempts</h3>
                 </div>
                 <div class="panel-body">
                     <table id="tableInitialFormAttemptedSuccess"
@@ -38,8 +39,9 @@ date_default_timezone_set('America/Denver');
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panal-content panel-primary">
+            <div id="panelInitialFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed','Initial%20Form%20Frequently%20Missed'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Initial Form Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
@@ -68,8 +70,9 @@ date_default_timezone_set('America/Denver');
             </div>
         </div>
         <div class="col-md-3">
-            <div class="panel panal-content panel-primary">
+            <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
+                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions','TANF%20Questions'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">TANF Questions</h3>
                 </div>
                 <div class="panel-body">
@@ -92,9 +95,10 @@ date_default_timezone_set('America/Denver');
     </div>
     <div class="row">
         <div  class="col-md-3">
-            <div class="panel panal-content panel-primary">
+            <div id="panelExpungmentFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Expungement Form Attempts VS Success</h3>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess','Expungement%20Attempts'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <h3 class="panel-title">Expungement Attempts</h3>
                 </div>
                 <div class="panel-body">
                     <table id="tableExpungmentFormAttemptedSuccess"
@@ -113,9 +117,10 @@ date_default_timezone_set('America/Denver');
             </div>
         </div>
         <div class="col-md-9">
-            <div class="panel panal-content panel-primary">
+            <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Expungement Form Frequently Missed</h3>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed','Expungement%20Frequently%20Missed'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <h3 class="panel-title">Expungement Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
                     <table id="expungmentFormFrequentylMissed"
@@ -160,7 +165,8 @@ date_default_timezone_set('America/Denver');
     google.load('visualization', '1', {'packages': ['corechart']});
     google.setOnLoadCallback(runReports);
 
-    $(function () {
+    $(function ()
+    {
         $("#fromdatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -172,18 +178,18 @@ date_default_timezone_set('America/Denver');
             changeYear: true,
             dateFormat: 'yy-mm-dd'
         });
-
-        $('#runreport').click(function ()
-        {
-            $('#progressBarModal').modal('show');
-            runReports();
-        });
     });
 
     $(window).resize(function () {
         setTimeout(function () {
             runReports();
         }, 1000);
+    });
+
+    $('#runreport').click(function ()
+    {
+        $('#progressBarModal').modal('show');
+        runReports();
     });
 
     function runReports()
@@ -195,21 +201,20 @@ date_default_timezone_set('America/Denver');
         AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed();
     }
 
-    function getJSONDateRange()
+    function getFromDate()
     {
-        var fromDate = ($("#fromdatepicker").val() + ' ' + '00:00:00');
-        var toDate = ($("#todatepicker").val() + ' ' + '23:59:59');
-        var JSONDateRange = '{"fromDate" : "' + fromDate +
-                '","toDate" : "' + toDate +
-                '"}';
+        return $("#fromdatepicker").val() + '%20' + '00:00:00';
+    }
 
-        return JSONDateRange;
+    function getToDate()
+    {
+        return $("#todatepicker").val() + '%20' + '23:59:59';
     }
 
     function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
     {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
     }
 
     function AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess(returnJSONData)
@@ -217,7 +222,7 @@ date_default_timezone_set('America/Denver');
         $('#tableInitialFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
         $('#tableInitialFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
 
-        $('#reports').fadeIn();
+        $("#panelInitialFormAttemptedSuccess").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Key', 'Value'],
@@ -226,16 +231,13 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawPieChart(data, 'pieChartInitialFormAttemptedSuccess');
-
-        setTimeout(function () {
-            $('#progressBarModal').modal('hide');
-        }, 1000);
+        closeProgressBarWhenReportsAreLoaded();
     }
 
     function AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed()
     {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetInitialFormFrequentlyMissed", postJSONData, AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed, true);
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetInitialFormFrequentlyMissed&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed, true);
     }
 
     function AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed(returnJSONData)
@@ -243,7 +245,7 @@ date_default_timezone_set('America/Denver');
         $('#initialFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#initialFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
 
-        $('#reports').fadeIn();
+        $("#panelInitialFormFrequentylMissed").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
@@ -262,12 +264,13 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartInitialFormFrequentylMissed');
+        closeProgressBarWhenReportsAreLoaded();
     }
 
     function AjaxSubmit_AdminReportGetTanfQuestions()
     {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetTanfQuestions", postJSONData, AjaxSuccess_AdminReportGetTanfQuestions, true);
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetTanfQuestions, true);
     }
 
     function AjaxSuccess_AdminReportGetTanfQuestions(returnJSONData)
@@ -275,7 +278,7 @@ date_default_timezone_set('America/Denver');
         $('#TANFQuestions').bootstrapTable({data: returnJSONData.data});
         $('#TANFQuestions').bootstrapTable('load', returnJSONData.data);
 
-        $('#reports').fadeIn();
+        $("#panelTANFQuestions").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
@@ -286,20 +289,21 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartTANFQuestions');
+        closeProgressBarWhenReportsAreLoaded();
     }
-    
+
     function AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess()
     {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetExpungmentFormAttemptedSuccess", postJSONData, AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess, true);
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetExpungmentFormAttemptedSuccess&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess, true);
     }
-    
+
     function AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess(returnJSONData)
     {
         $('#tableExpungmentFormAttemptedSuccess').bootstrapTable({data: returnJSONData.data});
         $('#tableExpungmentFormAttemptedSuccess').bootstrapTable('load', returnJSONData.data);
-        
-        $('#reports').fadeIn();
+
+        $("#panelExpungmentFormAttemptedSuccess").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Key', 'Value'],
@@ -308,12 +312,13 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawPieChart(data, 'pieChartExpungmentFormAttemptedSuccess');
+        closeProgressBarWhenReportsAreLoaded();
     }
 
     function AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed()
     {
-        var postJSONData = getJSONDateRange();
-        SendAjax("api/api.php?method=adminReportGetExpungementFormFrequentlyMissed", postJSONData, AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed, true);
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetExpungementFormFrequentlyMissed&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed, true);
     }
 
     function AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed(returnJSONData)
@@ -321,7 +326,7 @@ date_default_timezone_set('America/Denver');
         $('#expungmentFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#expungmentFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
 
-        $('#reports').fadeIn();
+        $("#panelExpungmentFormFrequentylMissed").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
@@ -349,6 +354,7 @@ date_default_timezone_set('America/Denver');
         ]);
 
         drawBarChart(data, 'barChartExpungmentFormFrequentylMissed');
+        closeProgressBarWhenReportsAreLoaded();
     }
 
     function drawPieChart(data, divID)
@@ -373,6 +379,27 @@ date_default_timezone_set('America/Denver');
 
         var chart = new google.visualization.ColumnChart(document.getElementById(divID));
         chart.draw(data, options);
+    }
+
+    var numberOfFinishedReports = 0;
+    var totalNumberOfReports = 5;
+    function closeProgressBarWhenReportsAreLoaded()
+    {
+        numberOfFinishedReports += 1;
+
+        if (numberOfFinishedReports === totalNumberOfReports)
+        {
+            setTimeout(function () {
+                $('#progressBarModal').modal('hide');
+            }, 1000);
+
+            numberOfFinishedReports = 0;
+        }
+    }
+    
+    function exportToExcel(methodName, fileName)
+    {
+        document.location.href = "api/api.php?method=" + methodName + "&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "&format=excel&filename=" + fileName + "";
     }
 
 </script>
