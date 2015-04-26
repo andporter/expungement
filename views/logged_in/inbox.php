@@ -85,6 +85,7 @@ date_default_timezone_set('America/Denver');
     $('#deleteConfirmButton').click(function (e)
     {
         $('#DeleteContactsConfirmModal').modal('hide');
+        $('#progressBarModal').modal('show');
         
         if (e.handled !== true) //Checking for the event whether it has occurred or not.
         { 
@@ -92,15 +93,14 @@ date_default_timezone_set('America/Denver');
             
             var postJSONData = getSelectedRowIDs();
 
-            SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, "none", false);
-
-            AjaxSubmit_getInboxContacts();
+            SendAjax("api/api.php?method=adminDeleteInboxContact", postJSONData, AjaxSuccess_DeleteORIncrementContacts, true);
         }
     });
 
     $('#incrementConfirmButton').click(function (e)
     {
         $('#IncrementCountConfirmModal').modal('hide');
+        $('#progressBarModal').modal('show');
         
         if (e.handled !== true) //Checking for the event whether it has occurred or not.
         { 
@@ -108,12 +108,15 @@ date_default_timezone_set('America/Denver');
             
             var postJSONData = getSelectedRowIDs();
 
-            SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, "none", false);
-
-            AjaxSubmit_getInboxContacts();
+            SendAjax("api/api.php?method=adminIncrementInboxContactAttempt", postJSONData, AjaxSuccess_DeleteORIncrementContacts, true);
         }
 
     });
+    
+    function AjaxSuccess_DeleteORIncrementContacts()
+    {
+        AjaxSubmit_getInboxContacts();
+    }
 
     function getSelectedRowIDs()
     {

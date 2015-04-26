@@ -24,6 +24,7 @@ button.btn.btn-default, a.btn.btn-default {
 label.btn.btn-default.active{
     color: white;
     background-color: #337ab7;
+    font-weight: bold;
 }
 
 li.parsley-required {

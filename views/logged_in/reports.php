@@ -9,7 +9,7 @@ date_default_timezone_set('America/Denver');
             <input type="text" placeholder="yyyy-mm-dd" value="<?php echo date('Y-m-01'); ?>" id="fromdatepicker"/>
             <span class="add-on">to</span>
             <input type="text" placeholder="yyyy-mm-dd" value="<?php echo date('Y-m-d'); ?>" id="todatepicker"/>
-            <input type="submit" id="runreport" value="Run Reports" class="btn btn-sm btn-success btn-ok">
+            <input type="submit" id="runReports" value="Run Reports" class="btn btn-sm btn-success btn-ok">
         </div>
     </div>
 </div>
@@ -19,7 +19,8 @@ date_default_timezone_set('America/Denver');
         <div  class="col-md-3">
             <div id="panelInitialFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess','Initial%20Form%20Attempts'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess', 'Initial%20Form%20Attempts');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Initial Form Attempts</h3>
                 </div>
                 <div class="panel-body">
@@ -41,7 +42,8 @@ date_default_timezone_set('America/Denver');
         <div class="col-md-6">
             <div id="panelInitialFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed','Initial%20Form%20Frequently%20Missed'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed', 'Initial%20Form%20Frequently%20Missed');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Initial Form Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
@@ -72,7 +74,8 @@ date_default_timezone_set('America/Denver');
         <div class="col-md-3">
             <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions','TANF%20Questions'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">TANF Questions</h3>
                 </div>
                 <div class="panel-body">
@@ -97,7 +100,8 @@ date_default_timezone_set('America/Denver');
         <div  class="col-md-3">
             <div id="panelExpungmentFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess','Expungement%20Attempts'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess', 'Expungement%20Attempts');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Expungement Attempts</h3>
                 </div>
                 <div class="panel-body">
@@ -119,7 +123,8 @@ date_default_timezone_set('America/Denver');
         <div class="col-md-9">
             <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed','Expungement%20Frequently%20Missed'); return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Expungement Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
@@ -186,7 +191,7 @@ date_default_timezone_set('America/Denver');
         }, 1000);
     });
 
-    $('#runreport').click(function ()
+    $('#runReports').click(function ()
     {
         $('#progressBarModal').modal('show');
         runReports();
@@ -396,7 +401,7 @@ date_default_timezone_set('America/Denver');
             numberOfFinishedReports = 0;
         }
     }
-    
+
     function exportToExcel(methodName, fileName)
     {
         document.location.href = "api/api.php?method=" + methodName + "&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "&format=excel&filename=" + fileName + "";
