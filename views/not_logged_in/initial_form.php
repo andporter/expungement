@@ -38,7 +38,7 @@ if (isset($login))
                 </div>
                 <div class="panel-body">
                     <ol>
-                        <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
+                        <h4><li>Are you the legal guardian of a child under the age of 18 years old?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default"><input type="radio" name="tanfq1" value="1" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
                             <label class="btn btn-default"><input type="radio" name="tanfq1" value="0" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>
@@ -159,13 +159,13 @@ if (isset($login))
                             <div class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" name="firstName" placeholder="First Name" required data-parsley-required-message="Please enter your First Name">
+                                    <input type="text" class="form-control" name="firstName" placeholder="First Name" data-parsley-group="firstName" required data-parsley-required-message="Please enter your First Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" name="lastName" placeholder="Last Name" required data-parsley-required-message="Please enter your Last Name">
+                                    <input type="text" class="form-control" name="lastName" placeholder="Last Name" data-parsley-group="lastName" required data-parsley-required-message="Please enter your Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -178,13 +178,13 @@ if (isset($login))
                                 <label for="phone" class="col-sm-2 control-label">Phone:</label>
                                 <div class="col-xs-4" id="phone">
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" name="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="text" class="form-control" name="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" name="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="text" class="form-control" name="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="number" class="form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
+                                        <input type="text" class="form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
                                     </div>
                                 </div>
                             </div><div class="invalid-form-error-message-require-emailORphone"></div>
@@ -263,10 +263,9 @@ if (isset($login))
 
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
-            {
+            {               
                 // if one of these blocks is not failing do not prevent submission
-                // we use here group validation with option force (validate even non required fields)
-                if (formInstance.isValid('email', true) || formInstance.isValid('phone', true))
+                if ((formInstance.isValid('firstName', true) && formInstance.isValid('lastName', true)) && (formInstance.isValid('email', true) || formInstance.isValid('phone', true)))
                 {
                     formInstance.submitEvent.preventDefault();
                     $('.invalid-form-error-message-require-emailORphone').html('');
@@ -325,7 +324,6 @@ if (isset($login))
 
                 if (missedQuestionsList.length >= 1) //they can't continue
                 {
-                    $('#carouselMissedQuestionSlideShow').carousel();
                     $('#modalMissedQuestionsNextSteps').modal('show');
                 }
                 else //they can continue
@@ -338,6 +336,7 @@ if (isset($login))
             $('#buttonViewMissedQuestionsSlideshow').click(function (e)
             {
                 $('#modalMissedQuestionsNextSteps').modal('hide');
+                $('#carouselMissedQuestionSlideShow').carousel();
                 $('#carouselModalMissedQuestions').modal('show');
             });
 

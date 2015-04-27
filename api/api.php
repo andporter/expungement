@@ -247,12 +247,7 @@ switch ($_GET['method'])
 
                 if ($sql->execute())
                 {
-                    $ResultsToReturn = array();
-
-                    while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                    {
-                        $ResultsToReturn[] = $row;
-                    }
+                    $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                     $response['code'] = 1;
                     $response['data'] = $ResultsToReturn;
@@ -281,12 +276,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;
@@ -396,12 +386,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;
@@ -437,12 +422,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;
@@ -478,12 +458,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;
@@ -519,12 +494,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;
@@ -560,12 +530,7 @@ switch ($_GET['method'])
 
                     if ($sql->execute())
                     {
-                        $ResultsToReturn = array();
-
-                        while ($row = $sql->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $ResultsToReturn[] = $row;
-                        }
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
 
                         $response['code'] = 1;
                         $response['data'] = $ResultsToReturn;

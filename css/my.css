@@ -27,7 +27,7 @@ label.btn.btn-default.active{
     font-weight: bold;
 }
 
-li.parsley-required {
+li.parsley-required, li.parsley-type, div.invalid-form-error-message-require-emailORphone.parsley-required, li.parsley-range {
     color: red;
     font-weight: bold;
 }

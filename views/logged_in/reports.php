@@ -16,7 +16,7 @@ date_default_timezone_set('America/Denver');
 
 <div id="reports" class="container-fluid" role="main">
     <div class="row">
-        <div  class="col-md-3">
+        <div  class="col-md-2">
             <div id="panelInitialFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess', 'Initial%20Form%20Attempts');
@@ -39,7 +39,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div id="panelInitialFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed', 'Initial%20Form%20Frequently%20Missed');
@@ -71,12 +71,12 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
-                    <h3 class="panel-title">TANF Questions</h3>
+                    <h3 class="panel-title">Initial TANF</h3>
                 </div>
                 <div class="panel-body">
                     <table id="TANFQuestions"
@@ -97,7 +97,7 @@ date_default_timezone_set('America/Denver');
         </div>
     </div>
     <div class="row">
-        <div  class="col-md-3">
+        <div  class="col-md-2">
             <div id="panelExpungmentFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess', 'Expungement%20Attempts');
@@ -120,7 +120,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');
@@ -158,6 +158,30 @@ date_default_timezone_set('America/Denver');
                         </thead>
                     </table>
                     <div id="barChartExpungmentFormFrequentylMissed"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
+                <div class="panel-heading">
+                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <h3 class="panel-title">Expungement TANF</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="TANFQuestions"
+                           data-height="79"
+                           data-sortable="false">
+                        <thead>
+                            <tr>
+                                <th data-field="tanfq1yes">Q1Y</th>
+                                <th data-field="tanfq1no">Q1N</th>
+                                <th data-field="tanfq2yes">Q2Y</th>
+                                <th data-field="tanfq2no">Q2N</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="barChartTANFQuestions"></div>
                 </div>
             </div>
         </div>

@@ -45,6 +45,7 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
         case "expungementForm":
             {
                 //show the expungement page and then log out
+                require("views/not_logged_in/header_menu.php");
                 require("views/logged_in/expungement_form.php");
                 $login->doLogout();
             }
