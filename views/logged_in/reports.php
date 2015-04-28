@@ -16,7 +16,7 @@ date_default_timezone_set('America/Denver');
 
 <div id="reports" class="container-fluid" role="main">
     <div class="row">
-        <div  class="col-md-2">
+        <div  class="col-md-3">
             <div id="panelInitialFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess', 'Initial%20Form%20Attempts');
@@ -39,7 +39,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div id="panelInitialFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed', 'Initial%20Form%20Frequently%20Missed');
@@ -71,7 +71,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
@@ -97,7 +97,7 @@ date_default_timezone_set('America/Denver');
         </div>
     </div>
     <div class="row">
-        <div  class="col-md-2">
+        <div  class="col-md-3">
             <div id="panelExpungmentFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess', 'Expungement%20Attempts');
@@ -120,7 +120,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');
@@ -161,7 +161,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+<!--        <div class="col-md-2">
             <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
@@ -184,7 +184,7 @@ date_default_timezone_set('America/Denver');
                     <div id="barChartTANFQuestions"></div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 

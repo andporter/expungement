@@ -29,7 +29,7 @@
                 </div>
                 <div class="panel-body">
                     <ol>
-                        <h4><li>Are you the legal guardian over a child under the age of 18 years old?</li></h4>
+                        <h4><li>Are you the legal guardian of a child under the age of 18 years old?</li></h4>
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default"><input type="radio" name="tanfq1" value="1" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>Yes</label>
                             <label class="btn btn-default"><input type="radio" name="tanfq1" value="0" required data-parsley-errors-container="#tq1-invalid-form-error-message" data-parsley-required-message="Answering this question is required"/>No</label>

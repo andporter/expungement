@@ -257,13 +257,32 @@ if (isset($login))
         </div>
     </div>
 
-
+    <div id="modalContactInfoUploaded" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="panel-content panel-success">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="panel-title">Success!</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well">
+                            <p>We have successfully received your contact information. We will be contacting you soon!</p>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10" >
+                            <input type="submit" value="Close" class="btn btn-primary pull-right" id="buttonCloseContactInfoUploaded"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
 
         $(function () {
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
-            {               
+            {
                 // if one of these blocks is not failing do not prevent submission
                 if ((formInstance.isValid('firstName', true) && formInstance.isValid('lastName', true)) && (formInstance.isValid('email', true) || formInstance.isValid('phone', true)))
                 {
@@ -271,6 +290,7 @@ if (isset($login))
                     $('.invalid-form-error-message-require-emailORphone').html('');
                     AjaxSubmit_InitialContactForm();
                     $('#divContactModal').modal('hide');
+                    $('#modalContactInfoUploaded').modal('show');
                 }
                 else // else stop form submission
                 {
@@ -338,6 +358,11 @@ if (isset($login))
                 $('#modalMissedQuestionsNextSteps').modal('hide');
                 $('#carouselMissedQuestionSlideShow').carousel();
                 $('#carouselModalMissedQuestions').modal('show');
+            });
+
+            $('#buttonCloseContactInfoUploaded').click(function (e)
+            {
+                location.href = "http://www.cottagesofhope.org";
             });
 
             window.setTimeout(function () {
