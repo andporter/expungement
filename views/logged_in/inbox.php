@@ -77,6 +77,7 @@ date_default_timezone_set('America/Denver');
     AjaxSubmit_getInboxContacts();
     
     $(window).resize(function () {
+        $('#progressBarModal').modal('show');
         setTimeout(function () {
             AjaxSubmit_getInboxContacts();
         }, 1000);

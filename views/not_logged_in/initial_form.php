@@ -156,25 +156,25 @@ if (isset($login))
                             <p>Email: Email <span id="spanCOH_FirstName"></span> at <a id="aCOH_Email"><span id="spanCOH_Email"></span></a> Please use “Expungement” as the subject</p>
                         </div>
                         <form class="form-horizontal" id="formContact" data-parsley-validate>
-                            <div class="form-group">
+                            <div id="divFirstName" class="form-group">
                                 <label for="firstName" class="col-sm-2 control-label">First Name:</label>
                                 <div class="col-xs-4">
                                     <input type="text" class="form-control" name="firstName" placeholder="First Name" data-parsley-group="firstName" required data-parsley-required-message="Please enter your First Name">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div id="divLastName" class="form-group">
                                 <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
                                 <div class="col-xs-4">
                                     <input type="text" class="form-control" name="lastName" placeholder="Last Name" data-parsley-group="lastName" required data-parsley-required-message="Please enter your Last Name">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div id="divEmail" class="form-group">
                                 <label for="email" class="col-sm-2 control-label">Email:</label>
                                 <div class="col-xs-4">
                                     <input type="email" class="form-control" name="email" placeholder="Email" data-parsley-group="email"/>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div id="divPhone" class="form-group">
                                 <label for="phone" class="col-sm-2 control-label">Phone:</label>
                                 <div class="col-xs-4" id="phone">
                                     <div class="col-xs-4">
@@ -295,7 +295,43 @@ if (isset($login))
                 else // else stop form submission
                 {
                     formInstance.submitEvent.preventDefault();
-                    // and display a gentle message
+                    
+                    if (formInstance.isValid('firstName', true))
+                    {
+                        $('#divFirstName').removeClass("has-error");
+                    }
+                    else
+                    {
+                        $('#divFirstName').addClass("has-error");
+                    }
+                    
+                    if (formInstance.isValid('lastName', true))
+                    {
+                        $('#divLastName').removeClass("has-error");
+                    }
+                    else
+                    {
+                        $('#divLastName').addClass("has-error");
+                    }
+                    
+                    if (formInstance.isValid('email', true))
+                    {
+                        $('#divEmail').removeClass("has-error");
+                    }
+                    else
+                    {
+                        $('#divEmail').addClass("has-error");
+                    }
+                    
+                    if (formInstance.isValid('phone', true))
+                    {
+                        $('#divPhone').removeClass("has-error");
+                    }
+                    else
+                    {
+                        $('#divPhone').addClass("has-error");
+                    }
+                    
                     $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
                 }
             });

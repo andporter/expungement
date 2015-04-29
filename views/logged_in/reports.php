@@ -210,6 +210,7 @@ date_default_timezone_set('America/Denver');
     });
 
     $(window).resize(function () {
+        $('#progressBarModal').modal('show');
         setTimeout(function () {
             runReports();
         }, 1000);
