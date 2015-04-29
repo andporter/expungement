@@ -311,36 +311,44 @@ if (isset($login))
                     if (formInstance.isValid('firstName', true))
                     {
                         $('#divFirstName').removeClass("has-error");
+                        $('#divFirstName').addClass("has-success");
                     }
                     else //error
                     {
+                        $('#divFirstName').removeClass("has-success");
                         $('#divFirstName').addClass("has-error");
                     }
 
                     if (formInstance.isValid('lastName', true))
                     {
                         $('#divLastName').removeClass("has-error");
+                        $('#divLastName').addClass("has-success");
                     }
                     else //error
                     {
+                        $('#divLastName').removeClass("has-success");
                         $('#divLastName').addClass("has-error");
                     }
 
                     if (formInstance.isValid('email', true))
                     {
                         $('#divEmail').removeClass("has-error");
+                        $('#divEmail').addClass("has-success");
                     }
                     else //error
                     {
+                        $('#divEmail').removeClass("has-success");
                         $('#divEmail').addClass("has-error");
                     }
 
                     if (formInstance.isValid('phone', true))
                     {
                         $('#divPhone').removeClass("has-error");
+                        $('#divPhone').addClass("has-success");
                     }
                     else //error
                     {
+                        $('#divPhone').removeClass("has-success");
                         $('#divPhone').addClass("has-error");
                     }
 
