@@ -16,12 +16,12 @@ date_default_timezone_set('America/Denver');
 
 <div id="reports" class="container-fluid" role="main">
     <div class="row">
-        <div  class="col-md-3">
+        <div  class="col-md-2">
             <div id="panelInitialFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormAttemptedSuccess', 'Initial%20Form%20Attempts');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
-                    <h3 class="panel-title">Initial Form Attempts</h3>
+                    <h3 class="panel-title">Initial Attempts</h3>
                 </div>
                 <div class="panel-body">
                     <table id="tableInitialFormAttemptedSuccess"
@@ -31,7 +31,6 @@ date_default_timezone_set('America/Denver');
                             <tr>
                                 <th data-field="attempts">Attempts</th>
                                 <th data-field="success">Success</th>
-                                <th data-field="percent">Percent</th>
                             </tr>
                         </thead>
                     </table>
@@ -39,12 +38,12 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div id="panelInitialFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed', 'Initial%20Form%20Frequently%20Missed');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
-                    <h3 class="panel-title">Initial Form Frequently Missed</h3>
+                    <h3 class="panel-title">Initial Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
                     <table id="initialFormFrequentylMissed"
@@ -71,33 +70,31 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
+        <div class="col-md-2">
+            <div id="panelInitialTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialTanfQuestions', 'Initial%20TANF%20Questions');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Initial TANF</h3>
                 </div>
                 <div class="panel-body">
-                    <table id="TANFQuestions"
+                    <table id="InitialTANFQuestions"
                            data-height="79"
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th data-field="tanfq1yes">Q1Y</th>
-                                <th data-field="tanfq1no">Q1N</th>
-                                <th data-field="tanfq2yes">Q2Y</th>
-                                <th data-field="tanfq2no">Q2N</th>
+                                <th data-field="tanfYes">Yes</th>
+                                <th data-field="tanfNo">No</th>
                             </tr>
                         </thead>
                     </table>
-                    <div id="barChartTANFQuestions"></div>
+                    <div id="pieChartInitialTANFQuestions"></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div  class="col-md-3">
+        <div  class="col-md-2">
             <div id="panelExpungmentFormAttemptedSuccess" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungmentFormAttemptedSuccess', 'Expungement%20Attempts');
@@ -112,7 +109,6 @@ date_default_timezone_set('America/Denver');
                             <tr>
                                 <th data-field="attempts">Attempts</th>
                                 <th data-field="success">Success</th>
-                                <th data-field="percent">Percent</th>
                             </tr>
                         </thead>
                     </table>
@@ -120,7 +116,7 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');
@@ -161,30 +157,28 @@ date_default_timezone_set('America/Denver');
                 </div>
             </div>
         </div>
-<!--        <div class="col-md-2">
-            <div id="panelTANFQuestions" class="panel panal-content panel-primary collapse">
+        <div class="col-md-2">
+            <div id="panelExpungementTANFQuestions" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetTanfQuestions', 'TANF%20Questions');
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungementTanfQuestions', 'Expungement%20TANF%20Questions');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Expungement TANF</h3>
                 </div>
                 <div class="panel-body">
-                    <table id="TANFQuestions"
+                    <table id="ExpungementTANFQuestions"
                            data-height="79"
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th data-field="tanfq1yes">Q1Y</th>
-                                <th data-field="tanfq1no">Q1N</th>
-                                <th data-field="tanfq2yes">Q2Y</th>
-                                <th data-field="tanfq2no">Q2N</th>
+                                <th data-field="tanfYes">Yes</th>
+                                <th data-field="tanfNo">No</th>
                             </tr>
                         </thead>
                     </table>
-                    <div id="barChartTANFQuestions"></div>
+                    <div id="pieChartExpungementTANFQuestions"></div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>
 
@@ -226,9 +220,10 @@ date_default_timezone_set('America/Denver');
     {
         AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
-        AjaxSubmit_AdminReportGetTanfQuestions();
+        AjaxSubmit_AdminReportGetInitialTanfQuestions();
         AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess();
         AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed();
+        AjaxSubmit_AdminReportGetExpungementTanfQuestions();
     }
 
     function getFromDate()
@@ -297,28 +292,26 @@ date_default_timezone_set('America/Denver');
         closeProgressBarWhenReportsAreLoaded();
     }
 
-    function AjaxSubmit_AdminReportGetTanfQuestions()
+    function AjaxSubmit_AdminReportGetInitialTanfQuestions()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetTanfQuestions, true);
+        SendAjax("api/api.php?method=adminReportGetInitialTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialTanfQuestions, true);
     }
 
-    function AjaxSuccess_AdminReportGetTanfQuestions(returnJSONData)
+    function AjaxSuccess_AdminReportGetInitialTanfQuestions(returnJSONData)
     {
-        $('#TANFQuestions').bootstrapTable({data: returnJSONData.data});
-        $('#TANFQuestions').bootstrapTable('load', returnJSONData.data);
+        $('#InitialTANFQuestions').bootstrapTable({data: returnJSONData.data});
+        $('#InitialTANFQuestions').bootstrapTable('load', returnJSONData.data);
 
-        $("#panelTANFQuestions").fadeIn();
+        $("#panelInitialTANFQuestions").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
-            ['Q1Y', parseInt(returnJSONData.data[0].tanfq1yes)],
-            ['Q1N', parseInt(returnJSONData.data[0].tanfq1no)],
-            ['Q2Y', parseInt(returnJSONData.data[0].tanfq2yes)],
-            ['Q2N', parseInt(returnJSONData.data[0].tanfq2no)]
+            ['Yes', parseInt(returnJSONData.data[0].tanfYes)],
+            ['No', parseInt(returnJSONData.data[0].tanfNo)]
         ]);
 
-        drawBarChart(data, 'barChartTANFQuestions');
+        drawPieChart(data, 'pieChartInitialTANFQuestions');
         closeProgressBarWhenReportsAreLoaded();
     }
 
@@ -386,6 +379,29 @@ date_default_timezone_set('America/Denver');
         drawBarChart(data, 'barChartExpungmentFormFrequentylMissed');
         closeProgressBarWhenReportsAreLoaded();
     }
+    
+    function AjaxSubmit_AdminReportGetExpungementTanfQuestions()
+    {
+        var postJSONData = {};
+        SendAjax("api/api.php?method=adminReportGetExpungementTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementTanfQuestions, true);
+    }
+
+    function AjaxSuccess_AdminReportGetExpungementTanfQuestions(returnJSONData)
+    {
+        $('#ExpungementTANFQuestions').bootstrapTable({data: returnJSONData.data});
+        $('#ExpungementTANFQuestions').bootstrapTable('load', returnJSONData.data);
+
+        $("#panelExpungementTANFQuestions").fadeIn();
+
+        var data = google.visualization.arrayToDataTable([
+            ['Question', 'Value'],
+            ['Yes', parseInt(returnJSONData.data[0].tanfYes)],
+            ['No', parseInt(returnJSONData.data[0].tanfNo)]
+        ]);
+
+        drawPieChart(data, 'pieChartExpungementTANFQuestions');
+        closeProgressBarWhenReportsAreLoaded();
+    }
 
     function drawPieChart(data, divID)
     {
@@ -412,7 +428,7 @@ date_default_timezone_set('America/Denver');
     }
 
     var numberOfFinishedReports = 0;
-    var totalNumberOfReports = 5;
+    var totalNumberOfReports = 6;
     function closeProgressBarWhenReportsAreLoaded()
     {
         numberOfFinishedReports += 1;

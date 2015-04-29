@@ -517,14 +517,50 @@ switch ($_GET['method'])
         }
         break;
 
-    case "adminReportGetTanfQuestions":
+    case "adminReportGetInitialTanfQuestions":
         {
             try
             {
                 if ($login->isUserLoggedIn() == true) //requires login
                 {
                     $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-                    $sql = $db_connection->prepare("SELECT tanfq1yes, tanfq1no, tanfq2yes, tanfq2no FROM ((SELECT SUM(tanfq1yes) AS tanfq1yes FROM (SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 1 then 1 else 0 end) AS tanfq1yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1yes) AS tanfq1yes, (SELECT SUM(tanfq1no) AS tanfq1no FROM (SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq1 = 0 then 1 else 0 end) AS tanfq1no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate )AS tanfq1no) AS tanfq1no, (SELECT SUM(tanfq2yes) AS tanfq2yes FROM (SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 1 then 1 else 0 end) AS tanfq2yes from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate) AS tanfq2yes) AS tanfq2yes, (SELECT SUM(tanfq2no) AS tanfq2no FROM (SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate UNION ALL SELECT SUM(case when tanfq2 = 0 then 1 else 0 end) AS tanfq2no from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate ) AS tanfq2no) AS tanfq2no);");
+                    $sql = $db_connection->prepare("SELECT SUM(case when (tanfq1 = 1 and tanfq2 = 1) then 1 else 0 end) as tanfYes, SUM(case when (tanfq1 = 0 and tanfq2 = 1) or (tanfq1 = 0 and tanfq2 = 0) or (tanfq1 = 1 and tanfq2 = 0) then 1 else 0 end) as tanfNo from InitialFormStats WHERE date BETWEEN :fromDate AND :toDate;");
+                    $sql->bindParam(':fromDate', $_GET['fromDate']);
+                    $sql->bindParam(':toDate', $_GET['toDate']);
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+                        $response['code'] = 1;
+                        $response['data'] = $ResultsToReturn;
+                        $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                    }
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
+        
+        case "adminReportGetExpungementTanfQuestions":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {
+                    $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+                    $sql = $db_connection->prepare("SELECT SUM(case when (tanfq1 = 1 and tanfq2 = 1) then 1 else 0 end) as tanfYes, SUM(case when (tanfq1 = 0 and tanfq2 = 1) or (tanfq1 = 0 and tanfq2 = 0) or (tanfq1 = 1 and tanfq2 = 0) then 1 else 0 end) as tanfNo from ExpungementFormStats WHERE date BETWEEN :fromDate AND :toDate;");
                     $sql->bindParam(':fromDate', $_GET['fromDate']);
                     $sql->bindParam(':toDate', $_GET['toDate']);
 
