@@ -39,6 +39,7 @@
                     <p><input id="admin_login_input_password" class="login_input form-control" type="password" name="user_password" placeholder=" Password" autocomplete="off" required minlength="2" data-parsley-required-message="Please enter your password" /></p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <input type="submit" name="login" value="Login" class="btn btn-success btn-ok">                 
                 </div>
             </form>
@@ -58,6 +59,7 @@
                     <p><input id="login_input_password" class="login_input form-control" type="password" name="user_password" placeholder=" Password" autocomplete="off" required minlength="2" data-parsley-required-message="Please enter your password" /></p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <input type="submit" name="login" value="Show Form" class="btn btn-success btn-ok">                 
                 </div>
             </form>

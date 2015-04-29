@@ -203,13 +203,6 @@ date_default_timezone_set('America/Denver');
         });
     });
 
-    $(window).resize(function () {
-        $('#progressBarModal').modal('show');
-        setTimeout(function () {
-            runReports();
-        }, 1000);
-    });
-
     $('#runReports').click(function ()
     {
         $('#progressBarModal').modal('show');
@@ -226,14 +219,24 @@ date_default_timezone_set('America/Denver');
         AjaxSubmit_AdminReportGetExpungementTanfQuestions();
     }
 
-    function getFromDate()
+    function getFromDateAndTime()
     {
         return $("#fromdatepicker").val() + '%20' + '00:00:00';
     }
 
-    function getToDate()
+    function getToDateAndTime()
     {
         return $("#todatepicker").val() + '%20' + '23:59:59';
+    }
+    
+    function getFromDate()
+    {
+        return $("#fromdatepicker").val();
+    }
+
+    function getToDate()
+    {
+        return $("#todatepicker").val();
     }
 
     function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
@@ -445,7 +448,7 @@ date_default_timezone_set('America/Denver');
 
     function exportToExcel(methodName, fileName)
     {
-        document.location.href = "api/api.php?method=" + methodName + "&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "&format=excel&filename=" + fileName + "";
+        document.location.href = "api/api.php?method=" + methodName + "&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "&format=excel&filename=" + fileName + "%20" + getFromDate() + "-" + getToDate() + "";
     }
 
 </script>

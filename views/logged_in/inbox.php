@@ -75,13 +75,6 @@ date_default_timezone_set('America/Denver');
     $('#progressBarModal').modal('show');
     
     AjaxSubmit_getInboxContacts();
-    
-    $(window).resize(function () {
-        $('#progressBarModal').modal('show');
-        setTimeout(function () {
-            AjaxSubmit_getInboxContacts();
-        }, 1000);
-    });
 
     $('#deleteConfirmButton').click(function (e)
     {

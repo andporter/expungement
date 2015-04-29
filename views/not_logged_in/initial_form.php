@@ -178,16 +178,17 @@ if (isset($login))
                                 <label for="phone" class="col-sm-2 control-label">Phone:</label>
                                 <div class="col-xs-4" id="phone">
                                     <div class="col-xs-4">
-                                        <input type="text" class="form-control" name="phoneAreaCode" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="text" class="phonenumber form-control" name="phoneAreaCode" placeholder="###" data-parsley-group="phone" maxlength="3" size="3" data-parsley-length="[3, 3]" data-parsley-error-message="3 Digits Required"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="text" class="form-control" name="phoneFirstThree" placeholder="###" data-parsley-group="phone" min="100" max="999"/>
+                                        <input type="text" class="phonenumber form-control" name="phoneFirstThree" placeholder="###" data-parsley-group="phone" maxlength="3" size="3" data-parsley-length="[3, 3]" data-parsley-error-message="3 Digits Required"/>
                                     </div>
                                     <div class="col-xs-4">
-                                        <input type="text" class="form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" min="1000" max="9999"/>
+                                        <input type="text" class="phonenumber form-control" name="phoneLastFour" placeholder="####" data-parsley-group="phone" maxlength="4" size="4" data-parsley-length="[4, 4]" data-parsley-error-message="4 Digits Required"/>
                                     </div>
                                 </div>
-                            </div><div class="invalid-form-error-message-require-emailORphone"></div>
+                            </div>
+                            <div class="invalid-form-error-message-require-emailORphone"></div>
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
@@ -281,12 +282,25 @@ if (isset($login))
     <script type="text/javascript">
 
         $(function () {
+            $.autotab({tabOnSelect: true});
+            $('.phonenumber').autotab('filter', 'number');
+
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
+                formInstance.submitEvent.preventDefault();
+
                 // if one of these blocks is not failing do not prevent submission
                 if ((formInstance.isValid('firstName', true) && formInstance.isValid('lastName', true)) && (formInstance.isValid('email', true) || formInstance.isValid('phone', true)))
                 {
-                    formInstance.submitEvent.preventDefault();
+                    $('#divFirstName').removeClass("has-error");
+                    $('#divFirstName').addClass("has-success");
+                    $('#divLastName').removeClass("has-error");
+                    $('#divLastName').addClass("has-success");
+                    $('#divEmail').removeClass("has-error");
+                    $('#divEmail').addClass("has-success");
+                    $('#divPhone').removeClass("has-error");
+                    $('#divPhone').addClass("has-success");
+
                     $('.invalid-form-error-message-require-emailORphone').html('');
                     AjaxSubmit_InitialContactForm();
                     $('#divContactModal').modal('hide');
@@ -294,44 +308,42 @@ if (isset($login))
                 }
                 else // else stop form submission
                 {
-                    formInstance.submitEvent.preventDefault();
-                    
                     if (formInstance.isValid('firstName', true))
                     {
                         $('#divFirstName').removeClass("has-error");
                     }
-                    else
+                    else //error
                     {
                         $('#divFirstName').addClass("has-error");
                     }
-                    
+
                     if (formInstance.isValid('lastName', true))
                     {
                         $('#divLastName').removeClass("has-error");
                     }
-                    else
+                    else //error
                     {
                         $('#divLastName').addClass("has-error");
                     }
-                    
+
                     if (formInstance.isValid('email', true))
                     {
                         $('#divEmail').removeClass("has-error");
                     }
-                    else
+                    else //error
                     {
                         $('#divEmail').addClass("has-error");
                     }
-                    
+
                     if (formInstance.isValid('phone', true))
                     {
                         $('#divPhone').removeClass("has-error");
                     }
-                    else
+                    else //error
                     {
                         $('#divPhone').addClass("has-error");
                     }
-                    
+
                     $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
                 }
             });

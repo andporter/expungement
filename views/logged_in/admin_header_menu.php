@@ -52,6 +52,7 @@ function echoActiveClassIfRequestMatches($requestUri)
                 <p>Are you sure you want to logout?</p>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <a href="index.php?logout" class="btn btn-danger btn-ok">Yes, Logout</a>
             </div>
         </div>
