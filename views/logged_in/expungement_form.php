@@ -270,6 +270,7 @@
                 $('#print').show();
                 $('#submit').hide();
                 $('#divTanf').hide();
+                window.scrollTo(0, 0);
             });
         });
 
