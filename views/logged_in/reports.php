@@ -205,18 +205,43 @@ date_default_timezone_set('America/Denver');
 
     $('#runReports').click(function ()
     {
-        $('#progressBarModal').modal('show');
         runReports();
     });
 
     function runReports()
     {
-        AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
-        AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
-        AjaxSubmit_AdminReportGetInitialTanfQuestions();
-        AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess();
-        AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed();
-        AjaxSubmit_AdminReportGetExpungementTanfQuestions();
+        $('#progressBarModal').modal('show');
+
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess();
+                }, 0);
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed();
+                }, 300);
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetInitialTanfQuestions();
+                }, 600);
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess();
+                }, 900);
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed();
+                }, 1200);
+        setTimeout(
+                function ()
+                {
+                    AjaxSubmit_AdminReportGetExpungementTanfQuestions();
+                }, 1500);
     }
 
     function getFromDateAndTime()
@@ -228,7 +253,7 @@ date_default_timezone_set('America/Denver');
     {
         return $("#todatepicker").val() + '%20' + '23:59:59';
     }
-    
+
     function getFromDate()
     {
         return $("#fromdatepicker").val();
@@ -242,7 +267,7 @@ date_default_timezone_set('America/Denver');
     function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
+        SendAjax("api/api.php?method=adminReportGetInitialFormAttemptedSuccess&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess, true);
     }
 
     function AjaxSuccess_AdminReportGetInitialFormAttemptedSuccess(returnJSONData)
@@ -265,7 +290,7 @@ date_default_timezone_set('America/Denver');
     function AjaxSubmit_AdminReportGetInitialFormFrequentlyMissed()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetInitialFormFrequentlyMissed&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed, true);
+        SendAjax("api/api.php?method=adminReportGetInitialFormFrequentlyMissed&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed, true);
     }
 
     function AjaxSuccess_AdminReportGetInitialFormFrequentlyMissed(returnJSONData)
@@ -298,7 +323,7 @@ date_default_timezone_set('America/Denver');
     function AjaxSubmit_AdminReportGetInitialTanfQuestions()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetInitialTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetInitialTanfQuestions, true);
+        SendAjax("api/api.php?method=adminReportGetInitialTanfQuestions&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetInitialTanfQuestions, true);
     }
 
     function AjaxSuccess_AdminReportGetInitialTanfQuestions(returnJSONData)
@@ -321,7 +346,7 @@ date_default_timezone_set('America/Denver');
     function AjaxSubmit_AdminReportGetExpungementFormAttemptedSuccess()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetExpungmentFormAttemptedSuccess&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess, true);
+        SendAjax("api/api.php?method=adminReportGetExpungmentFormAttemptedSuccess&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess, true);
     }
 
     function AjaxSuccess_AdminReportGetExpungementFormAttemptedSuccess(returnJSONData)
@@ -344,7 +369,7 @@ date_default_timezone_set('America/Denver');
     function AjaxSubmit_AdminReportGetExpungementFormFrequentlyMissed()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetExpungementFormFrequentlyMissed&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed, true);
+        SendAjax("api/api.php?method=adminReportGetExpungementFormFrequentlyMissed&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed, true);
     }
 
     function AjaxSuccess_AdminReportGetExpungementFormFrequentlyMissed(returnJSONData)
@@ -382,11 +407,11 @@ date_default_timezone_set('America/Denver');
         drawBarChart(data, 'barChartExpungmentFormFrequentylMissed');
         closeProgressBarWhenReportsAreLoaded();
     }
-    
+
     function AjaxSubmit_AdminReportGetExpungementTanfQuestions()
     {
         var postJSONData = {};
-        SendAjax("api/api.php?method=adminReportGetExpungementTanfQuestions&fromDate=" + getFromDate() + "&toDate=" + getToDate() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementTanfQuestions, true);
+        SendAjax("api/api.php?method=adminReportGetExpungementTanfQuestions&fromDate=" + getFromDateAndTime() + "&toDate=" + getToDateAndTime() + "", postJSONData, AjaxSuccess_AdminReportGetExpungementTanfQuestions, true);
     }
 
     function AjaxSuccess_AdminReportGetExpungementTanfQuestions(returnJSONData)

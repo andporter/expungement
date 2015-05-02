@@ -7,7 +7,7 @@ function SendAjax(urlMethod, postJSONData, returnFunction, asyncTorF) {
         async: asyncTorF,
         success: function (returnJSONData, status, xhr)
         {
-            console.log("Ajax Success! URL: " + urlMethod);
+            //console.log("Ajax Success! URL: " + urlMethod);
             //console.log("Response: " + xhr.responseText);
 
             if (returnJSONData !== null && returnFunction !== "none")

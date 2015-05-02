@@ -171,7 +171,7 @@ if (isset($login))
                             <div id="divEmail" class="form-group">
                                 <label for="email" class="col-sm-2 control-label">Email:</label>
                                 <div class="col-xs-4">
-                                    <input type="email" class="form-control" name="email" placeholder="Email" data-parsley-group="email"/>
+                                    <input id="email" type="email" class="form-control" name="email" placeholder="Email" data-parsley-group="email"/>
                                 </div>
                             </div>
                             <div id="divPhone" class="form-group">
@@ -235,19 +235,19 @@ if (isset($login))
                     <div class="panel-body" >
                         <div id="carouselMissedQuestionSlideShow" class="carousel slide" data-interval="false" data-wrap="false" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <div class="active item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="images/slide_1.png"></div>
-                                <div class="item" id="missedQuestionSlide2"><img class="img-responsive center-block" src="images/slide_2.png"></div>
-                                <div class="item" id="missedQuestionSlide3"><img class="img-responsive center-block" src="images/slide_3.png"></div>
-                                <div class="item" id="missedQuestionSlide4"><img class="img-responsive center-block" src="images/slide_4.png"></div>
-                                <div class="item" id="missedQuestionSlide5"><img class="img-responsive center-block" src="images/slide_5.png"></div>
-                                <div class="item" id="missedQuestionSlide6"><img class="img-responsive center-block" src="images/slide_6.png"></div>
-                                <div class="item" id="missedQuestionSlide7"><img class="img-responsive center-block" src="images/slide_7.png"></div>
-                                <div class="item" id="missedQuestionSlide8"><img class="img-responsive center-block" src="images/slide_8.png"></div>
-                                <div class="item" id="missedQuestionSlide9"><img class="img-responsive center-block" src="images/slide_9.png"></div>
-                                <div class="item" id="missedQuestionSlide10"><img class="img-responsive center-block" src="images/slide_10.png"></div>
-                                <div class="item" id="missedQuestionSlide11"><img class="img-responsive center-block" src="images/slide_11.png"></div>
-                                <div class="item" id="missedQuestionSlide12"><img class="img-responsive center-block" src="images/slide_12.png"></div>
-                                <div class="item" id="missedQuestionSlideFinal"><img class="img-responsive center-block" src="images/slide_final.png"></div>
+                                <div class="active item" id="missedQuestionSlide1"><img class="img-responsive center-block" src="images/slide_1.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide2"><img class="img-responsive center-block" src="images/slide_2.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide3"><img class="img-responsive center-block" src="images/slide_3.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide4"><img class="img-responsive center-block" src="images/slide_4.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide5"><img class="img-responsive center-block" src="images/slide_5.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide6"><img class="img-responsive center-block" src="images/slide_6.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide7"><img class="img-responsive center-block" src="images/slide_7.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide8"><img class="img-responsive center-block" src="images/slide_8.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide9"><img class="img-responsive center-block" src="images/slide_9.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide10"><img class="img-responsive center-block" src="images/slide_10.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide11"><img class="img-responsive center-block" src="images/slide_11.jpeg"></div>
+                                <div class="item" id="missedQuestionSlide12"><img class="img-responsive center-block" src="images/slide_12.jpeg"></div>
+                                <div class="item" id="missedQuestionSlideFinal"><img class="img-responsive center-block" src="images/slide_final.jpeg"></div>
                             </div>
                             <a class="left carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                             <a class="right carousel-control" href="#carouselMissedQuestionSlideShow" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -288,6 +288,21 @@ if (isset($login))
             $('#formContact').parsley().subscribe('parsley:form:validate', function (formInstance)
             {
                 formInstance.submitEvent.preventDefault();
+
+                if ($('#email').val().length > 0 && $('#email').val() !== "Email")
+                {
+                    if (formInstance.isValid('email', true))
+                    {
+                        $('#divEmail').removeClass("has-error");
+                        $('#divEmail').addClass("has-success");
+                    }
+                    else //error
+                    {
+                        $('#divEmail').removeClass("has-success");
+                        $('#divEmail').addClass("has-error");
+                        return false;
+                    }
+                }
 
                 // if one of these blocks is not failing do not prevent submission
                 if ((formInstance.isValid('firstName', true) && formInstance.isValid('lastName', true)) && (formInstance.isValid('email', true) || formInstance.isValid('phone', true)))
@@ -339,6 +354,7 @@ if (isset($login))
                     {
                         $('#divEmail').removeClass("has-success");
                         $('#divEmail').addClass("has-error");
+                        $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
                     }
 
                     if (formInstance.isValid('phone', true))
@@ -350,9 +366,9 @@ if (isset($login))
                     {
                         $('#divPhone').removeClass("has-success");
                         $('#divPhone').addClass("has-error");
+                        $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
                     }
 
-                    $('.invalid-form-error-message-require-emailORphone').html("You must provide either your email address or phone number.").addClass("parsley-required");
                 }
             });
 

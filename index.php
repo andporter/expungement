@@ -72,10 +72,24 @@ if ($login->isUserLoggedIn() == true)  //the user is logged in.
                 require("views/logged_in/admin_header_menu.php");
                 require("views/logged_in/inbox.php");
             }
+            break;
     }
 }
 else //the user is not logged in.
 {
-    require("views/not_logged_in/header_menu.php");
-    require("views/not_logged_in/initial_form.php");
+    switch (key($_GET))
+    {
+        case "info":
+            {
+                
+            }
+            break;
+
+        default:
+            {
+                require("views/not_logged_in/header_menu.php");
+                require("views/not_logged_in/initial_form.php");
+            }
+            break;
+    }
 }
