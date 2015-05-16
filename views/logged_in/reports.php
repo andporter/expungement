@@ -193,13 +193,19 @@ date_default_timezone_set('America/Denver');
         $("#fromdatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
-            dateFormat: 'yy-mm-dd'
+            dateFormat: 'yy-mm-dd',
+            showButtonPanel: true,
+            showOtherMonths: true,
+            selectOtherMonths: true
         });
 
         $("#todatepicker").datepicker({
             changeMonth: true,
             changeYear: true,
-            dateFormat: 'yy-mm-dd'
+            dateFormat: 'yy-mm-dd',
+            showButtonPanel: true,
+            showOtherMonths: true,
+            selectOtherMonths: true
         });
     });
 

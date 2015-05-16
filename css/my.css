@@ -9,7 +9,7 @@ body {
 }
 
 #fromdatepicker,#todatepicker {
-    background: white url(../images/calendar_icon.png) right no-repeat;
+    background: white url(../css/images/calendar_icon.png) right no-repeat;
     padding-right: 17px;
 }
 
