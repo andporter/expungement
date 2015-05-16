@@ -12,7 +12,7 @@ else if (version_compare(PHP_VERSION, '5.5.0', '<'))
 }
 
 // Define whether an HTTPS connection is required
-$HTTPS_required = TRUE;
+$HTTPS_required = FALSE;
 
 if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
 {
