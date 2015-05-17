@@ -52,6 +52,25 @@ if (isset($registration))
     </div>
 </div>
 
+<div id="divChangePassword" class="container theme-showcase">
+    <div class="panel panal-content panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Change Password For: <em><?php echo $_SESSION['user_name']; ?></em></h3>
+        </div>
+        <div class="panel-body">
+            <form method="post" action="index.php?settings" name="registerform">
+                <label for="login_input_password_old">Old Password:</label>
+                <input id="login_input_password_old" class="login_input form-control" type="password" name="user_password_new" placeholder=" Old Password" pattern=".{6,}" required autocomplete="off" /><br>
+                <label for="login_input_password_new">New Password (min. 6 characters):</label>
+                <input id="login_input_password_new" class="login_input form-control" type="password" name="user_password_new" placeholder=" New Password" pattern=".{6,}" required autocomplete="off" /><br>
+                <label for="login_input_password_repeat">Repeat New password:</label>
+                <input id="login_input_password_repeat" class="login_input form-control" type="password" name="user_password_repeat" placeholder=" Repeat New Password" pattern=".{6,}" required autocomplete="off" /><br>
+                <input type="submit"  name="changepassword" value="Change Password" class="btn btn-primary pull-right" />
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="divRegisterUser" class="container theme-showcase">
     <div class="panel panal-content panel-primary">
         <div class="panel-heading">
@@ -60,17 +79,13 @@ if (isset($registration))
         <div class="panel-body">
             <form method="post" action="index.php?settings" name="registerform">
                 <label for="login_input_username">Username (only letters and numbers, 2 to 64 characters):</label>
-                <input id="login_input_username" class="login_input form-control" type="text" placeholder=" Username" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required />
-                <br>
+                <input id="login_input_username" class="login_input form-control" type="text" placeholder=" Username" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required /><br>
                 <label for="login_input_email">User's email:</label>
-                <input id="login_input_email" class="login_input form-control" type="email" placeholder=" Email" name="user_email" required />
-                <br>
+                <input id="login_input_email" class="login_input form-control" type="email" placeholder=" Email" name="user_email" required /><br>
                 <label for="login_input_password_new">Password (min. 6 characters):</label>
-                <input id="login_input_password_new" class="login_input form-control" type="password" name="user_password_new" placeholder=" Password" pattern=".{6,}" required autocomplete="off" />
-                <br>
+                <input id="login_input_password_new" class="login_input form-control" type="password" name="user_password_new" placeholder=" Password" pattern=".{6,}" required autocomplete="off" /><br>
                 <label for="login_input_password_repeat">Repeat password:</label>
-                <input id="login_input_password_repeat" class="login_input form-control" type="password" name="user_password_repeat" placeholder=" Repeat Password" pattern=".{6,}" required autocomplete="off" />
-                <br>
+                <input id="login_input_password_repeat" class="login_input form-control" type="password" name="user_password_repeat" placeholder=" Repeat Password" pattern=".{6,}" required autocomplete="off" /><br>
                 <input type="submit"  name="register" value="Register" class="btn btn-primary pull-right" />
             </form>
         </div>
@@ -98,7 +113,7 @@ if (isset($registration))
     $('#buttonSave_formAdminEditCOHContact').on('click', function ()
     {
         var btn = $(this).button('loading')
-        
+
         var newCOHfirstName = ($('#COHfirstName').val());
         var newCOHlastName = ($('#COHlastName').val());
         var newCOHemail = ($('#COHemail').val());
@@ -111,7 +126,7 @@ if (isset($registration))
                 '"}';
 
         SendAjax("api/api.php?method=adminUpdateCOHContact", postJSONData, "none", true);
-        
+
         setTimeout(function () {
             btn.button('reset')
         }, 1500)
