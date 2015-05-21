@@ -268,6 +268,7 @@
                 }
 
                 $('#print').show();
+                $('.btn-group').hide();
                 $('#submit').hide();
                 $('#divTanf').hide();
                 window.scrollTo(0, 0);
