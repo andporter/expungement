@@ -35,7 +35,11 @@ class Login
         // if user tried to log out (happen when user clicks logout button)
         if (isset($_GET["logout"]))
         {
-            $this->doLogout();
+            $this->doLogout("You have been logged out.");
+        }
+        elseif (isset($_GET["deleteuserlogout"]))
+        {
+            $this->doLogout("Your account has been deleted and you have been logged out.");
         }
         // login via post data (if user just submitted a login form)
         elseif (isset($_POST["login"]))
@@ -117,7 +121,7 @@ class Login
     /**
      * perform the logout
      */
-    public function doLogout()
+    public function doLogout($logoutmessage)
     {
         // delete the session of the user
         $_SESSION = array();
@@ -125,7 +129,7 @@ class Login
         session_unset();
         session_destroy();
         // return a little feeedback message
-        $this->messages[] = "You have been logged out.";
+        $this->messages[] = $logoutmessage;
     }
 
     /**
