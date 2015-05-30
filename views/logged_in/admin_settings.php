@@ -78,7 +78,7 @@ if (isset($registration))
         </div>
         <div class="panel-body">
             <div class="alert alert-danger" role="alert">
-                <strong>Warning: </strong>This will delete your account and you will be logged out. Please ensure you have another admin account you can log into.
+                <strong>Warning: </strong>This will delete your account and you will be logged out. Please ensure you have another admin account you can use.
             </div>
             <form method="post" action="index.php?settings" name="registerform">
                 <label for="login_input_password">Account Password:</label>

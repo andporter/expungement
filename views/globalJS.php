@@ -18,4 +18,5 @@
 <script src="js/bootstrap-table.min.js"></script>
 <script src="js/parsley.min.js"></script>
 <script src="js/jquery.autotab.min.js"></script>
+<script src="js/math.min.js"></script>
 <script src="js/my.js"></script>

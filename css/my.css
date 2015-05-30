@@ -3,7 +3,7 @@ body {
 }
 
 #logout:hover {
-    background-color: rgb(201, 48, 44);
+    background-color: Crimson;
     color: white;
     font-weight: bold;
 }

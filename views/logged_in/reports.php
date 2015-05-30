@@ -270,6 +270,43 @@ date_default_timezone_set('America/Denver');
         return $("#todatepicker").val();
     }
 
+    function getBarColor(value, max, min, mean, stdev)
+    {
+        if (value === max)
+        {
+            return "Crimson";
+        }
+        else if (value === min)
+        {
+            return "DarkGreen";
+        }
+
+        if (value >= (mean + (2 * stdev))) //Group 6
+        {
+            return "Crimson";
+        }
+        else if (value >= (mean + stdev)) //Group 5
+        {
+            return "DarkOrange";
+        }
+        else if (value >= (mean)) //Group 4
+        {
+            return "Gold";
+        }
+        else if (value >= (mean - stdev)) //Group 3
+        {
+            return "YellowGreen";
+        }
+        else if (value >= (mean - (2 * stdev))) //Group 2
+        {
+            return "OliveDrab";
+        }
+        else if (value >= 0) //Group 1
+        {
+            return "DarkGreen";
+        }
+    }
+
     function AjaxSubmit_AdminReportGetInitialFormAttemptedSuccess()
     {
         var postJSONData = {};
@@ -304,23 +341,50 @@ date_default_timezone_set('America/Denver');
         $('#initialFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#initialFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
 
+        var array = [];
+
+        for (var x in returnJSONData.data[0]) {
+            array.push(parseInt(returnJSONData.data[0][x]));
+        }
+
+        var max = math.max(array);
+        var min = math.min(array);
+        var mean = math.mean(array);
+        var stdev = math.std(array);
+
         $("#panelInitialFormFrequentylMissed").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
-            ['Question', 'Value'],
-            ['Q1', parseInt(returnJSONData.data[0].q1)],
-            ['Q2', parseInt(returnJSONData.data[0].q2)],
-            ['Q3', parseInt(returnJSONData.data[0].q3)],
-            ['Q4', parseInt(returnJSONData.data[0].q4)],
-            ['Q5', parseInt(returnJSONData.data[0].q5)],
-            ['Q6', parseInt(returnJSONData.data[0].q6)],
-            ['Q7', parseInt(returnJSONData.data[0].q7)],
-            ['Q8', parseInt(returnJSONData.data[0].q8)],
-            ['Q9', parseInt(returnJSONData.data[0].q9)],
-            ['Q10', parseInt(returnJSONData.data[0].q10)],
-            ['Q11', parseInt(returnJSONData.data[0].q11)],
-            ['Q12', parseInt(returnJSONData.data[0].q12)]
+            ['Question', 'Value', {role: 'style'}],
+            ['Q1', array[0], getBarColor(array[0], max, min, mean, stdev)],
+            ['Q2', array[1], getBarColor(array[1], max, min, mean, stdev)],
+            ['Q3', array[2], getBarColor(array[2], max, min, mean, stdev)],
+            ['Q4', array[3], getBarColor(array[3], max, min, mean, stdev)],
+            ['Q5', array[4], getBarColor(array[4], max, min, mean, stdev)],
+            ['Q6', array[5], getBarColor(array[5], max, min, mean, stdev)],
+            ['Q7', array[6], getBarColor(array[6], max, min, mean, stdev)],
+            ['Q8', array[7], getBarColor(array[7], max, min, mean, stdev)],
+            ['Q9', array[8], getBarColor(array[8], max, min, mean, stdev)],
+            ['Q10', array[9], getBarColor(array[9], max, min, mean, stdev)],
+            ['Q11', array[10], getBarColor(array[10], max, min, mean, stdev)],
+            ['Q12', array[11], getBarColor(array[11], max, min, mean, stdev)]
         ]);
+        
+//        var data = google.visualization.arrayToDataTable([
+//            ['Question', 'Value', {role: 'style'}],
+//            ['Q1', 1, getBarColor(array[0], max, min, mean, stdev)],
+//            ['Q2', 1, getBarColor(array[1], max, min, mean, stdev)],
+//            ['Q3', 1, getBarColor(array[2], max, min, mean, stdev)],
+//            ['Q4', 1, getBarColor(array[3], max, min, mean, stdev)],
+//            ['Q5', 1, getBarColor(array[4], max, min, mean, stdev)],
+//            ['Q6', 1, getBarColor(array[5], max, min, mean, stdev)],
+//            ['Q7', 1, getBarColor(array[6], max, min, mean, stdev)],
+//            ['Q8', 1, getBarColor(array[7], max, min, mean, stdev)],
+//            ['Q9', 1, getBarColor(array[8], max, min, mean, stdev)],
+//            ['Q10', 1, getBarColor(array[9], max, min, mean, stdev)],
+//            ['Q11', 1, getBarColor(array[10], max, min, mean, stdev)],
+//            ['Q12', 1, getBarColor(array[11], max, min, mean, stdev)]
+//        ]);
 
         drawBarChart(data, 'barChartInitialFormFrequentylMissed');
         closeProgressBarWhenReportsAreLoaded();
@@ -424,13 +488,11 @@ date_default_timezone_set('America/Denver');
     {
         $('#ExpungementTANFQuestions').bootstrapTable({data: returnJSONData.data});
         $('#ExpungementTANFQuestions').bootstrapTable('load', returnJSONData.data);
-
         $("#panelExpungementTANFQuestions").fadeIn();
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
-            ['Yes', parseInt(returnJSONData.data[0].tanfYes)],
-            ['No', parseInt(returnJSONData.data[0].tanfNo)]
+            ['Yes', parseInt(returnJSONData.data[0].tanfYes)], ['No', parseInt(returnJSONData.data[0].tanfNo)]
         ]);
 
         drawPieChart(data, 'pieChartExpungementTANFQuestions');
@@ -442,7 +504,8 @@ date_default_timezone_set('America/Denver');
         var options = {
             legend: {position: 'bottom'},
             chartArea: {width: "100%", height: "75%"},
-            colors: ['#337ab7', '#449d44']
+            colors: ['Crimson', 'blue'],
+            tooltip: {trigger: 'none'}
         };
 
         var chart = new google.visualization.PieChart(document.getElementById(divID));
@@ -454,7 +517,7 @@ date_default_timezone_set('America/Denver');
         var options = {
             legend: 'none',
             chartArea: {width: "100%", height: "75%"},
-            colors: ['#337ab7']
+            tooltip: {trigger: 'none'}
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById(divID));
