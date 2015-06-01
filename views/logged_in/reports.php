@@ -369,22 +369,6 @@ date_default_timezone_set('America/Denver');
             ['Q11', array[10], getBarColor(array[10], max, min, mean, stdev)],
             ['Q12', array[11], getBarColor(array[11], max, min, mean, stdev)]
         ]);
-        
-//        var data = google.visualization.arrayToDataTable([
-//            ['Question', 'Value', {role: 'style'}],
-//            ['Q1', 1, getBarColor(array[0], max, min, mean, stdev)],
-//            ['Q2', 1, getBarColor(array[1], max, min, mean, stdev)],
-//            ['Q3', 1, getBarColor(array[2], max, min, mean, stdev)],
-//            ['Q4', 1, getBarColor(array[3], max, min, mean, stdev)],
-//            ['Q5', 1, getBarColor(array[4], max, min, mean, stdev)],
-//            ['Q6', 1, getBarColor(array[5], max, min, mean, stdev)],
-//            ['Q7', 1, getBarColor(array[6], max, min, mean, stdev)],
-//            ['Q8', 1, getBarColor(array[7], max, min, mean, stdev)],
-//            ['Q9', 1, getBarColor(array[8], max, min, mean, stdev)],
-//            ['Q10', 1, getBarColor(array[9], max, min, mean, stdev)],
-//            ['Q11', 1, getBarColor(array[10], max, min, mean, stdev)],
-//            ['Q12', 1, getBarColor(array[11], max, min, mean, stdev)]
-//        ]);
 
         drawBarChart(data, 'barChartInitialFormFrequentylMissed');
         closeProgressBarWhenReportsAreLoaded();
@@ -446,32 +430,43 @@ date_default_timezone_set('America/Denver');
     {
         $('#expungmentFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#expungmentFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
+        
+        var array = [];
+
+        for (var x in returnJSONData.data[0]) {
+            array.push(parseInt(returnJSONData.data[0][x]));
+        }
+
+        var max = math.max(array);
+        var min = math.min(array);
+        var mean = math.mean(array);
+        var stdev = math.std(array);
 
         $("#panelExpungmentFormFrequentylMissed").fadeIn();
-
+        
         var data = google.visualization.arrayToDataTable([
-            ['Question', 'Value'],
-            ['Q1', parseInt(returnJSONData.data[0].q1)],
-            ['Q2', parseInt(returnJSONData.data[0].q2)],
-            ['Q3a', parseInt(returnJSONData.data[0].q3a)],
-            ['Q3b', parseInt(returnJSONData.data[0].q3b)],
-            ['Q4a', parseInt(returnJSONData.data[0].q4a)],
-            ['Q4b', parseInt(returnJSONData.data[0].q4b)],
-            ['Q5a', parseInt(returnJSONData.data[0].q5a)],
-            ['Q5b', parseInt(returnJSONData.data[0].q5b)],
-            ['Q6a', parseInt(returnJSONData.data[0].q6a)],
-            ['Q6b', parseInt(returnJSONData.data[0].q6b)],
-            ['Q7', parseInt(returnJSONData.data[0].q7)],
-            ['Q8', parseInt(returnJSONData.data[0].q8)],
-            ['Q9', parseInt(returnJSONData.data[0].q9)],
-            ['Q10', parseInt(returnJSONData.data[0].q10)],
-            ['Q11', parseInt(returnJSONData.data[0].q11)],
-            ['Q12', parseInt(returnJSONData.data[0].q12)],
-            ['Q13', parseInt(returnJSONData.data[0].q13)],
-            ['Q14', parseInt(returnJSONData.data[0].q14)],
-            ['Q15', parseInt(returnJSONData.data[0].q15)],
-            ['Q16', parseInt(returnJSONData.data[0].q16)],
-            ['Q17', parseInt(returnJSONData.data[0].q17)]
+            ['Question', 'Value', {role: 'style'}],
+            ['Q1', array[0], getBarColor(array[0], max, min, mean, stdev)],
+            ['Q2', array[1], getBarColor(array[1], max, min, mean, stdev)],
+            ['Q3a', array[2], getBarColor(array[2], max, min, mean, stdev)],
+            ['Q3b', array[3], getBarColor(array[3], max, min, mean, stdev)],
+            ['Q4a', array[4], getBarColor(array[4], max, min, mean, stdev)],
+            ['Q4b', array[5], getBarColor(array[5], max, min, mean, stdev)],
+            ['Q5a', array[6], getBarColor(array[6], max, min, mean, stdev)],
+            ['Q5b', array[7], getBarColor(array[7], max, min, mean, stdev)],
+            ['Q6a', array[8], getBarColor(array[8], max, min, mean, stdev)],
+            ['Q6b', array[9], getBarColor(array[9], max, min, mean, stdev)],
+            ['Q7', array[10], getBarColor(array[10], max, min, mean, stdev)],
+            ['Q8', array[11], getBarColor(array[11], max, min, mean, stdev)],
+            ['Q9', array[12], getBarColor(array[12], max, min, mean, stdev)],
+            ['Q10', array[13], getBarColor(array[13], max, min, mean, stdev)],
+            ['Q11', array[14], getBarColor(array[14], max, min, mean, stdev)],
+            ['Q12', array[15], getBarColor(array[15], max, min, mean, stdev)],
+            ['Q13', array[16], getBarColor(array[16], max, min, mean, stdev)],
+            ['Q14', array[17], getBarColor(array[17], max, min, mean, stdev)],
+            ['Q15', array[18], getBarColor(array[18], max, min, mean, stdev)],
+            ['Q16', array[19], getBarColor(array[19], max, min, mean, stdev)],
+            ['Q17', array[20], getBarColor(array[20], max, min, mean, stdev)]
         ]);
 
         drawBarChart(data, 'barChartExpungmentFormFrequentylMissed');
@@ -492,7 +487,8 @@ date_default_timezone_set('America/Denver');
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
-            ['Yes', parseInt(returnJSONData.data[0].tanfYes)], ['No', parseInt(returnJSONData.data[0].tanfNo)]
+            ['Yes', parseInt(returnJSONData.data[0].tanfYes)], 
+            ['No', parseInt(returnJSONData.data[0].tanfNo)]
         ]);
 
         drawPieChart(data, 'pieChartExpungementTANFQuestions');
