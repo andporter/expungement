@@ -500,7 +500,8 @@ date_default_timezone_set('America/Denver');
         var options = {
             legend: {position: 'bottom'},
             chartArea: {width: "100%", height: "75%"},
-            colors: ['Crimson', 'blue'],
+//            colors: ['Crimson', 'blue'],
+            colors: ['#337ab7', '#449d44'],
             tooltip: {trigger: 'none'}
         };
 
