@@ -25,11 +25,11 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="tableInitialFormAttemptedSuccess"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th data-field="attempts">Attempts</th>
+                                <th data-field="attempts">Attempt</th>
                                 <th data-field="success">Success</th>
                             </tr>
                         </thead>
@@ -47,7 +47,7 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="initialFormFrequentylMissed"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
@@ -79,7 +79,7 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="InitialTANFQuestions"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
@@ -103,11 +103,11 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="tableExpungmentFormAttemptedSuccess"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
-                                <th data-field="attempts">Attempts</th>
+                                <th data-field="attempts">Attempt</th>
                                 <th data-field="success">Success</th>
                             </tr>
                         </thead>
@@ -125,7 +125,7 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="expungmentFormFrequentylMissed"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
@@ -166,7 +166,7 @@ date_default_timezone_set('America/Denver');
                 </div>
                 <div class="panel-body">
                     <table id="ExpungementTANFQuestions"
-                           data-height="79"
+                           data-height="96"
                            data-sortable="false">
                         <thead>
                             <tr>
