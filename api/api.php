@@ -13,7 +13,7 @@ require_once("../config/db.php");
 $login = new Login();
 
 // Define whether an HTTPS connection is required
-$HTTPS_required = FALSE;
+$HTTPS_required = TRUE;
 
 // Set default HTTP response
 $response['code'] = 0;
