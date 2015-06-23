@@ -43,6 +43,8 @@ date_default_timezone_set('America/Denver');
                 <div class="panel-heading">
                     <a href="#" onclick="exportToExcel('adminReportGetInitialFormFrequentlyMissed', 'Initial%20Form%20Frequently%20Missed');
                             return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetInitialMonthlyTotals', 'Initial%20Monthly%20Totals');
+                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Monthly Totals Export to Excel"><i class="glyphicon glyphicon-calendar"></i><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Initial Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
@@ -119,8 +121,8 @@ date_default_timezone_set('America/Denver');
         <div class="col-md-8">
             <div id="panelExpungmentFormFrequentylMissed" class="panel panal-content panel-primary collapse">
                 <div class="panel-heading">
-                    <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');
-                            return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungementFormFrequentlyMissed', 'Expungement%20Frequently%20Missed');return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Export to Excel"><i class="glyphicon glyphicon-export"></i></a>
+                    <a href="#" onclick="exportToExcel('adminReportGetExpungementMonthlyTotals', 'Expungement%20Monthly%20Totals');return false;" rel="tooltip" class="btn-sm btn-default pull-right" title="Monthly Totals Export to Excel"><i class="glyphicon glyphicon-calendar"></i><i class="glyphicon glyphicon-export"></i></a>
                     <h3 class="panel-title">Expungement Frequently Missed</h3>
                 </div>
                 <div class="panel-body">
@@ -430,7 +432,7 @@ date_default_timezone_set('America/Denver');
     {
         $('#expungmentFormFrequentylMissed').bootstrapTable({data: returnJSONData.data});
         $('#expungmentFormFrequentylMissed').bootstrapTable('load', returnJSONData.data);
-        
+
         var array = [];
 
         for (var x in returnJSONData.data[0]) {
@@ -443,7 +445,7 @@ date_default_timezone_set('America/Denver');
         var stdev = math.std(array);
 
         $("#panelExpungmentFormFrequentylMissed").fadeIn();
-        
+
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value', {role: 'style'}],
             ['Q1', array[0], getBarColor(array[0], max, min, mean, stdev)],
@@ -487,7 +489,7 @@ date_default_timezone_set('America/Denver');
 
         var data = google.visualization.arrayToDataTable([
             ['Question', 'Value'],
-            ['Yes', parseInt(returnJSONData.data[0].tanfYes)], 
+            ['Yes', parseInt(returnJSONData.data[0].tanfYes)],
             ['No', parseInt(returnJSONData.data[0].tanfNo)]
         ]);
 

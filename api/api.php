@@ -12,6 +12,8 @@ require_once("../classes/Login.php");
 require_once("../config/db.php");
 $login = new Login();
 
+date_default_timezone_set('America/Denver');
+
 // Define whether an HTTPS connection is required
 $HTTPS_required = FALSE;
 
@@ -30,56 +32,6 @@ $api_response_code = array(
     5 => array('HTTP Response' => 404, 'Message' => 'Invalid Request'),
     6 => array('HTTP Response' => 400, 'Message' => 'Invalid Response Format')
 );
-
-/**
- * Deliver HTTP Response
- * @param string $api_response The desired HTTP response data
- * @return void (will echo json)
- * */
-function deliver_response($api_response, $format, $filename)
-{
-    // Define HTTP responses
-    $http_response_code = array(
-        200 => 'OK',
-        400 => 'Bad Request',
-        401 => 'Unauthorized',
-        403 => 'Forbidden',
-        404 => 'Not Found'
-    );
-
-    // Set HTTP Response
-    header('HTTP/1.1 ' . $api_response['status'] . ' ' . $http_response_code[$api_response['status']]);
-
-    // Process different content types
-    if (strcasecmp($format, 'excel') == 0)
-    {        
-        require_once("../classes/PHPExcel.php");
-        
-        // Create new PHPExcel object
-        $objPHPExcel = new PHPExcel();
-        
-        $objPHPExcel->getActiveSheet()->fromArray(array_keys($api_response['data'][0]), NULL, 'A1'); //header row
-        $objPHPExcel->getActiveSheet()->fromArray($api_response['data'], NULL, 'A2'); //data rows
-        
-        // Redirect output to a client’s web browser (Excel2007)
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
-
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->save('php://output');
-    }
-    else //json is default
-    {
-        // Set HTTP Response Content Type
-        header('Content-Type: application/json; charset=utf-8');
-
-        // Deliver JSON formatted data
-        echo json_encode($api_response);
-    }
-
-    // End script process
-    exit;
-}
 
 // --- Step 2: Optionally require connections to be made via HTTPS
 if ($HTTPS_required && $_SERVER['HTTPS'] != 'on')
@@ -480,8 +432,8 @@ switch ($_GET['method'])
             }
         }
         break;
-        
-        case "adminReportGetExpungmentFormAttemptedSuccess":
+
+    case "adminReportGetExpungmentFormAttemptedSuccess":
         {
             try
             {
@@ -552,8 +504,8 @@ switch ($_GET['method'])
             }
         }
         break;
-        
-        case "adminReportGetExpungementTanfQuestions":
+
+    case "adminReportGetExpungementTanfQuestions":
         {
             try
             {
@@ -572,6 +524,166 @@ switch ($_GET['method'])
                         $response['data'] = $ResultsToReturn;
                         $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                     }
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
+
+    case "adminReportGetInitialMonthlyTotals":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {
+                    $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+
+                    //Find month intervals. This will return month ranges.
+                    $start = new DateTime($_GET['fromDate']);
+                    $interval = new DateInterval('P1M');
+                    $end = new DateTime($_GET['toDate']);
+                    $period = new DatePeriod($start, $interval, $end);
+
+                    //loop through each month
+                    $loopCount = 1;
+                    foreach ($period as $dt)
+                    {
+                        $sql = $db_connection->prepare('SELECT :monthName AS `Month`, count(1) AS `Attempts`, sum((tanfq1 + tanfq2) > 1) AS `TANF Yes`, (SELECT COUNT(1) FROM InitialFormStats WHERE YEAR(date) = :year AND MONTH(date) = :monthNumber AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as Success, sum(q1) AS `Miss Q1`, sum(q2) AS `Miss Q2`, sum(q3) AS `Miss Q3`, sum(q4) AS `Miss Q4`, sum(q5) AS `Miss Q5`, sum(q6) AS `Miss Q6`, sum(q7) AS `Miss Q7`, sum(q8) AS `Miss Q8`, sum(q9) AS `Miss Q9`, sum(q10) AS `Miss Q10`, sum(q11) AS `Miss Q11`, sum(q12) AS `Miss Q12` FROM InitialFormStats WHERE YEAR(date) = :year AND MONTH(date) = :monthNumber');
+                        $sql->bindParam(':monthName', $dt->format('Y M'));
+                        $sql->bindParam(':year', $dt->format('Y'));
+                        $sql->bindParam(':monthNumber', $dt->format('m'));
+
+                        if ($sql->execute())
+                        {
+                            if ($loopCount == 1) //first row of data with headers
+                            {
+                                $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                $fromDate = $dt;
+                                $toDate = $dt;
+                                $loopCount++;
+                            }
+                            else //all remaining rows without headers
+                            {
+                                $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                                $toDate = $dt;
+                            }
+                        }
+                    }
+
+                    //Add Total Row
+                    $sql = $db_connection->prepare('SELECT "TOTALS:" AS `Month`, count(1) AS `Attempts`, sum((tanfq1 + tanfq2) > 1) AS `TANF Yes`, (SELECT COUNT(1) FROM InitialFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0) as Success, sum(q1) AS `Miss Q1`, sum(q2) AS `Miss Q2`, sum(q3) AS `Miss Q3`, sum(q4) AS `Miss Q4`, sum(q5) AS `Miss Q5`, sum(q6) AS `Miss Q6`, sum(q7) AS `Miss Q7`, sum(q8) AS `Miss Q8`, sum(q9) AS `Miss Q9`, sum(q10) AS `Miss Q10`, sum(q11) AS `Miss Q11`, sum(q12) AS `Miss Q12` FROM InitialFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH ');
+                    $sql->bindParam(':fromDate', $fromDate->format('Y-m-d'));
+                    $sql->bindParam(':toDate', $toDate->format('Y-m-d'));
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                    }
+
+                    //Add Percentages Row
+                    $sql = $db_connection->prepare('SELECT "PERCENTAGE:" AS `Month`, "" AS `Attempts`, ROUND((sum((tanfq1 + tanfq2) > 1)/count(1))*100,1) AS `TANF Yes`, ROUND(((SELECT COUNT(1) FROM InitialFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH AND q1=0 AND q2=0 AND q3=0 AND q4=0 AND q5=0 AND q6=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0)/count(1))*100,1) as Success, ROUND((sum(q1)/count(1))*100,1) AS `Miss Q1`, ROUND((sum(q2)/count(1))*100,1) AS `Miss Q2`, ROUND((sum(q3)/count(1))*100,1) AS `Miss Q3`, ROUND((sum(q4)/count(1))*100,1) AS `Miss Q4`, ROUND((sum(q5)/count(1))*100,1) AS `Miss Q5`, ROUND((sum(q6)/count(1))*100,1) AS `Miss Q6`, ROUND((sum(q7)/count(1))*100,1) AS `Miss Q7`, ROUND((sum(q8)/count(1))*100,1) AS `Miss Q8`, ROUND((sum(q9)/count(1))*100,1) AS `Miss Q9`, ROUND((sum(q10)/count(1))*100,1) AS `Miss Q10`, ROUND((sum(q11)/count(1))*100,1) AS `Miss Q11`, ROUND((sum(q12)/count(1))*100,1) AS `Miss Q12` FROM InitialFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH ');
+                    $sql->bindParam(':fromDate', $fromDate->format('Y-m-d'));
+                    $sql->bindParam(':toDate', $toDate->format('Y-m-d'));
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                    }
+
+                    $response['code'] = 1;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+                else //not logged in
+                {
+                    $response['code'] = 3;
+                    $response['data'] = $api_response_code[$response['code']]['Message'];
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+                }
+            }
+            catch (Exception $e)
+            {
+                $response['code'] = 0;
+                $response['data'] = $e->getMessage();
+                $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
+            }
+        }
+        break;
+
+    case "adminReportGetExpungementMonthlyTotals":
+        {
+            try
+            {
+                if ($login->isUserLoggedIn() == true) //requires login
+                {                    
+                    $db_connection = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+
+                    //Find month intervals. This will return month ranges.
+                    $start = new DateTime($_GET['fromDate']);
+                    $interval = new DateInterval('P1M');
+                    $end = new DateTime($_GET['toDate']);
+                    $period = new DatePeriod($start, $interval, $end);
+
+                    //loop through each month
+                    $loopCount = 1;
+                    foreach ($period as $dt)
+                    {
+                        $sql = $db_connection->prepare('SELECT :monthName AS `Month`, count(1) AS `Attempts`, sum((tanfq1 + tanfq2) > 1) AS `TANF Yes`, (SELECT COUNT(1) FROM ExpungementFormStats WHERE YEAR(date) = :year AND MONTH(date) = :monthNumber AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0) as Success, sum(q1) AS `Miss Q1`, sum(q2) AS `Miss Q2`, sum(q3a) AS `Miss Q3a`, sum(q3b) AS `Miss Q3b`, sum(q4a) AS `Miss Q4a`, sum(q4b) AS `Miss Q4b`, sum(q5a) AS `Miss Q5a`, sum(q5b) AS `Miss Q5b`, sum(q6a) AS `Miss Q6a`, sum(q6b) AS `Miss Q6b`, sum(q7) AS `Miss Q7`, sum(q8) AS `Miss Q8`, sum(q9) AS `Miss Q9`, sum(q10) AS `Miss Q10`, sum(q11) AS `Miss Q11`, sum(q12) AS `Miss Q12`, sum(q13) AS `Miss Q13`, sum(q14) AS `Miss Q14`, sum(q15) AS `Miss Q15`, sum(q16) AS `Miss Q16`, sum(q17) AS `Miss Q17` FROM ExpungementFormStats WHERE YEAR(date) = :year AND MONTH(date) = :monthNumber');
+                        $sql->bindParam(':monthName', $dt->format('Y M'));
+                        $sql->bindParam(':year', $dt->format('Y'));
+                        $sql->bindParam(':monthNumber', $dt->format('m'));
+
+                        if ($sql->execute())
+                        {
+                            if ($loopCount == 1) //first row of data with headers
+                            {
+                                $ResultsToReturn = $sql->fetchAll(PDO::FETCH_ASSOC);
+                                $fromDate = $dt;
+                                $toDate = $dt;
+                                $loopCount++;
+                            }
+                            else //all remaining rows without headers
+                            {
+                                $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                                $toDate = $dt;
+                            }
+                        }
+                    }
+
+                    //Add Total Row
+                    $sql = $db_connection->prepare('SELECT "TOTALS:" AS `Month`, count(1) AS `Attempts`, sum((tanfq1 + tanfq2) > 1) AS `TANF Yes`, (SELECT COUNT(1) FROM ExpungementFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0) as Success, sum(q1) AS `Miss Q1`, sum(q2) AS `Miss Q2`, sum(q3a) AS `Miss Q3a`, sum(q3b) AS `Miss Q3b`, sum(q4a) AS `Miss Q4a`, sum(q4b) AS `Miss Q4b`, sum(q5a) AS `Miss Q5a`, sum(q5b) AS `Miss Q5b`, sum(q6a) AS `Miss Q6a`, sum(q6b) AS `Miss Q6b`, sum(q7) AS `Miss Q7`, sum(q8) AS `Miss Q8`, sum(q9) AS `Miss Q9`, sum(q10) AS `Miss Q10`, sum(q11) AS `Miss Q11`, sum(q12) AS `Miss Q12`, sum(q13) AS `Miss Q13`, sum(q14) AS `Miss Q14`, sum(q15) AS `Miss Q15`, sum(q16) AS `Miss Q16`, sum(q17) AS `Miss Q17` FROM ExpungementFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH ');
+                    $sql->bindParam(':fromDate', $fromDate->format('Y-m-d'));
+                    $sql->bindParam(':toDate', $toDate->format('Y-m-d'));
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                    }
+
+                    //Add Percentages Row
+                    $sql = $db_connection->prepare('SELECT "PERCENTAGE:" AS `Month`, "" AS `Attempts`, ROUND((sum((tanfq1 + tanfq2) > 1)/count(1))*100,1) AS `TANF Yes`, ROUND(((SELECT COUNT(1) FROM ExpungementFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH AND q1=0 AND q2=0 AND q3a=0 AND q3b=0 AND q4a=0 AND q4b=0 AND q5a=0 AND q5b=0 AND q6a=0 AND q6b=0 AND q7=0 AND q8=0 AND q9=0 AND q10=0 AND q11=0 AND q12=0 AND q13=0 AND q14=0 AND q15=0 AND q16=0 AND q17=0)/count(1))*100,1) as Success, ROUND((sum(q1)/count(1))*100,1) AS `Miss Q1`, ROUND((sum(q2)/count(1))*100,1) AS `Miss Q2`, ROUND((sum(q3a)/count(1))*100,1) AS `Miss Q3a`, ROUND((sum(q3b)/count(1))*100,1) AS `Miss Q3b`, ROUND((sum(q4a)/count(1))*100,1) AS `Miss Q4a`, ROUND((sum(q4b)/count(1))*100,1) AS `Miss Q4b`, ROUND((sum(q5a)/count(1))*100,1) AS `Miss Q5a`, ROUND((sum(q5b)/count(1))*100,1) AS `Miss Q5b`, ROUND((sum(q6a)/count(1))*100,1) AS `Miss Q6a`, ROUND((sum(q6b)/count(1))*100,1) AS `Miss Q6b`, ROUND((sum(q7)/count(1))*100,1) AS `Miss Q7`, ROUND((sum(q8)/count(1))*100,1) AS `Miss Q8`, ROUND((sum(q9)/count(1))*100,1) AS `Miss Q9`, ROUND((sum(q10)/count(1))*100,1) AS `Miss Q10`, ROUND((sum(q11)/count(1))*100,1) AS `Miss Q11`, ROUND((sum(q12)/count(1))*100,1) AS `Miss Q12`, ROUND((sum(q13)/count(1))*100,1) AS `Miss Q13`, ROUND((sum(q14)/count(1))*100,1) AS `Miss Q14`, ROUND((sum(q15)/count(1))*100,1) AS `Miss Q15`, ROUND((sum(q16)/count(1))*100,1) AS `Miss Q16`, ROUND((sum(q17)/count(1))*100,1) AS `Miss Q17` FROM ExpungementFormStats WHERE date >= :fromDate AND date  < :toDate + INTERVAL 1 MONTH ');
+                    $sql->bindParam(':fromDate', $fromDate->format('Y-m-d'));
+                    $sql->bindParam(':toDate', $toDate->format('Y-m-d'));
+
+                    if ($sql->execute())
+                    {
+                        $ResultsToReturn[] = $sql->fetch(PDO::FETCH_NUM);
+                    }
+                    
+                    $response['code'] = 1;
+                    $response['data'] = $ResultsToReturn;
+                    $response['status'] = $api_response_code[$response['code']]['HTTP Response'];
                 }
                 else //not logged in
                 {
@@ -630,3 +742,53 @@ switch ($_GET['method'])
 
 // --- Step 4: Deliver Response
 deliver_response($response, $_GET['format'], $_GET['filename']);
+
+
+/**
+ * Deliver HTTP Response
+ * @param string $api_response The desired HTTP response data
+ * @return void (will echo json)
+ * */
+function deliver_response($api_response, $format, $filename)
+{
+    // Define HTTP responses
+    $http_response_code = array(
+        200 => 'OK',
+        400 => 'Bad Request',
+        401 => 'Unauthorized',
+        403 => 'Forbidden',
+        404 => 'Not Found'
+    );
+
+    // Set HTTP Response
+    header('HTTP/1.1 ' . $api_response['status'] . ' ' . $http_response_code[$api_response['status']]);
+
+    // Process different content types
+    if (strcasecmp($format, 'excel') == 0)
+    {
+        require_once("../classes/PHPExcel.php");
+
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+
+        $objPHPExcel->getActiveSheet()->fromArray(array_keys($api_response['data'][0]), NULL, 'A1'); //header row
+        $objPHPExcel->getActiveSheet()->fromArray($api_response['data'], NULL, 'A2'); //data rows
+        // Redirect output to a client’s web browser (Excel2007)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('php://output');
+    }
+    else //json is default
+    {
+        // Set HTTP Response Content Type
+        header('Content-Type: application/json; charset=utf-8');
+
+        // Deliver JSON formatted data
+        echo json_encode($api_response);
+    }
+
+    // End script process
+    exit;
+}
